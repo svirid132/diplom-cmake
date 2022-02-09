@@ -1,0 +1,8 @@
+22040
+maxAmp 32000 borderAmp 24000
+22040
+maxAmp 32000 borderAmp 24000
+22042
+maxAmp 32000 borderAmp 24000
+22040
+maxAmp 32000 borderAmp 24000

@@ -9,3 +9,6 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 add_subdirectory(main) 
 add_subdirectory(math-logic)
 add_subdirectory(tests)
+add_subdirectory(API)
+add_subdirectory(smath)
+

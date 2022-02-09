@@ -1,24 +1,10 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.15)
 
-project(tests LANGUAGES CXX)
-
-include_directories(../math-logic)
-
-find_package(QT NAMES Qt5 Qt6 COMPONENTS Test REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Test REQUIRED)
-
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 enable_testing()
+project(diplom-cmake LANGUAGES CXX)
 
-add_executable(math-logic-test math-logic-test.cpp)
-add_test(NAME math-logic-test COMMAND math-logic-test)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 
-target_link_libraries(math-logic-test PRIVATE Qt${QT_VERSION_MAJOR}::Test math-logic)
-
+#add_subdirectory(math-logic-test)
+add_subdirectory(smath-test)

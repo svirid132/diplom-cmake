@@ -7,26 +7,27 @@
 #include "math-var.h"
 
 #include <QDebug>
+#include <QPointF>
 #include <cmath>
 #include "smath.h"
 
 class MathLogic {
 public:
-    static Point getCriticalPoint(QVector<CountOverAmps> Nimp, float h, float Lsh){
+    static QPointF getCriticalPoint(QVector<CountOverAmps> Nimp, float h, float Lsh){
         float Nmax_N0 = handleNmax_N0(Nimp);
         QVector<float> Glub = handleGlub(Lsh, Nimp.size());
-        QVector<Point> Nimp_Glub = handleNimp_Glub(Nimp, Glub);
+        QVector<QPointF> Nimp_Glub = handleNimp_Glub(Nimp, Glub);
         float X1 = handleX1(Nimp_Glub);
         float X1_h = handleX1_h(X1, h);
         float X1_h_toch = X1_h * 20 + 1;
-        Point point = {Nmax_N0, X1_h_toch};
+        QPointF point = {Nmax_N0, X1_h_toch};
         qDebug() << Nmax_N0 << X1 << X1_h << X1_h_toch;
         return point;
     };
     static float getKoefZap(QVector<CountOverAmps> Nimp, float h, float Lsh){
         float Nmax_N0 = handleNmax_N0(Nimp);
         QVector<float> Glub = handleGlub(Lsh, Nimp.size());
-        QVector<Point> Nimp_Glub = handleNimp_Glub(Nimp, Glub);
+        QVector<QPointF> Nimp_Glub = handleNimp_Glub(Nimp, Glub);
         float X1 = handleX1(Nimp_Glub);
         float X1_h = handleX1_h(X1, h);
         float koefZap =
@@ -36,9 +37,9 @@ public:
                  float(7.3129)) / Nmax_N0;
         return koefZap;
     };
-    static QVector<Point> getNimp_Glub(QVector<CountOverAmps> Nimp, float Lsh){
+    static QVector<QPointF> getNimp_Glub(QVector<CountOverAmps> Nimp, float Lsh){
         QVector<float> Glub = handleGlub(Lsh, Nimp.size());
-        QVector<Point> Nimp_Glub = handleNimp_Glub(Nimp, Glub);
+        QVector<QPointF> Nimp_Glub = handleNimp_Glub(Nimp, Glub);
         return Nimp_Glub;
     };
     static QVector<Point> getDefaultPoints(int count = 20) {
@@ -67,23 +68,23 @@ protected:
         }
         return glub;
     };
-    static QVector<Point> handleNimp_Glub(QVector<CountOverAmps> Nimp, QVector<float> Glub) {
-        QVector<Point> points;
+    static QVector<QPointF> handleNimp_Glub(QVector<CountOverAmps> Nimp, QVector<float> Glub) {
+        QVector<QPointF> points;
         for (int i = 0; i < Nimp.size(); ++i) {
-            Point point;
-            point.y = Nimp[i].countAmps;
-            point.x = Glub[i];
+            QPointF point;
+            point.setY( qreal(Nimp[i].countAmps) );
+            point.setX( qreal(Glub[i]) );
             points.append(point);
         }
         return points;
     };
-    static float handleX1(QVector<Point> Nimp_Glub) {
+    static float handleX1(QVector<QPointF> Nimp_Glub) {
         float maxNimp = 0;
         float X1 = 0;
         for (int i = 0; i < Nimp_Glub.size(); ++i) {
-            if (maxNimp < Nimp_Glub[i].y) {
-                maxNimp = Nimp_Glub[i].y;
-                X1 = Nimp_Glub[i].x;
+            if (maxNimp < Nimp_Glub[i].y()) {
+                maxNimp = Nimp_Glub[i].y();
+                X1 = Nimp_Glub[i].x();
             }
         }
         return X1;

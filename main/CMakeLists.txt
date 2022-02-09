@@ -14,11 +14,19 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Charts REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Charts REQUIRED)
+#find_package(Qt5Charts REQUIRED)
 
 set(PROJECT_SOURCES
+        preloader.cpp
+        preloader.h
+        global-var.h
         main.cpp
+        cmdchart.cpp
+        cmdchart.h
+        UI/widgetchart.cpp
+        UI/widgetchart.h
         UI/mainwindow.cpp
         UI/mainwindow.h
         UI/mainwindow.ui
@@ -47,13 +55,19 @@ else()
     endif()
 endif()
 
-target_link_libraries(main PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(main PRIVATE
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::Charts)
+
+#target_link_libraries(${targetName} Qt5::Charts)
 
 set_target_properties(main PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
 )
+
+install(TARGETS main)
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(main)

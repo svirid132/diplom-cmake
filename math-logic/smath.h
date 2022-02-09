@@ -24,11 +24,10 @@ namespace smath {
         return minVal;
     }
 
-    float roundFloat(float var)
-    {
-        float value = (int)(var * 100 + .5);
-        return (float)value / 100;
-    }
+//    float roundFloat(float var){
+//        float value = (int)(var * 100 + .5);
+//        return (float)value / 100;
+//    }
 }
 
 #endif // MATHLOGICFUNC_H

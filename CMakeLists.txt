@@ -11,4 +11,3 @@ add_subdirectory(math-logic)
 add_subdirectory(tests)
 add_subdirectory(API)
 add_subdirectory(smath)
-

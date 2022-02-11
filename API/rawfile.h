@@ -1,10 +1,11 @@
 #ifndef RAWFILE_H
 #define RAWFILE_H
 
-#include "smath.h"
+#include <QDebug>
 #include <QFile>
 #include <QVector>
 #include "API-var.h"
+#include "smath.h"
 
 class RawFile {
 public:
@@ -14,19 +15,21 @@ public:
         file.open(QIODevice::ReadOnly);
         QVector<CountOverAmps> results;
 
-        int hz = 44100;
-        int depth = 2;
-        int countBytePeriod = hz * depth;
-        int countAmpsOnPeriod = countBytePeriod / depth;
+        const int hz = 44100;//countByteSec
+        const int depth = 2;
+        const int countByteSec = hz * depth;
+        const int countBytePeriod = countByteSec * period;
+        const int countAmpsOnPeriod = countBytePeriod / depth;
         int numPeriod = 0;
 
         while(!file.atEnd()) {
             QByteArray arrByte = file.read(countBytePeriod);
             if (countBytePeriod == arrByte.size()) {
-                ++numPeriod;
+                numPeriod += period;
                 handlePeriod(results, arrByte, countAmpsOnPeriod, numPeriod);
             }
         }
+        file.close();
         return results;
     }
 protected:

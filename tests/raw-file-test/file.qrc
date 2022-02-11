@@ -1,0 +1,6 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource>
+        <file>audio/triangle_mono_44100_16bit.raw</file>
+    </qresource>
+</RCC>

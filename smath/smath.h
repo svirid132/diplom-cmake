@@ -1,5 +1,6 @@
-#ifndef MATHLOGICFUNC_H
-#define MATHLOGICFUNC_H
+#ifndef SMATH_H
+#define SMATH_H
+
 #include <algorithm>
 #include <limits>
 
@@ -24,11 +25,7 @@ namespace smath {
         return minVal;
     }
 
-    float roundFloat(float var)
-    {
-        float value = (int)(var * 100 + .5);
-        return (float)value / 100;
-    }
+    float roundFloat(float var);
 }
 
-#endif // MATHLOGICFUNC_H
+#endif // SMATH_H

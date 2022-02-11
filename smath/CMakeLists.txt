@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(smath  LANGUAGES CXX)
+project(smath LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)

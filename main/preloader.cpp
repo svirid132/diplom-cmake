@@ -43,6 +43,8 @@ WidgetChart* initWidgetChart() {
         cmdChart->update(Lsh, h, path);
     });
 
+    cmdChart->update(4.5, 2.5, "path");
+
     return widgetChart;
 }
 

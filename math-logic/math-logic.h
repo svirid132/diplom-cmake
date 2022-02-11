@@ -1,6 +1,7 @@
 #ifndef MATHLOGIC_H
 #define MATHLOGIC_H
 
+#include <smath.h>
 #include <QList>
 #include <QString>
 #include "API-var.h"
@@ -9,25 +10,24 @@
 #include <QDebug>
 #include <QPointF>
 #include <cmath>
-#include "smath.h"
 
 class MathLogic {
 public:
+    //x = X1_h_toch y = Nmax_N0
     static QPointF getCriticalPoint(QVector<CountOverAmps> Nimp, float h, float Lsh){
         float Nmax_N0 = handleNmax_N0(Nimp);
         QVector<float> Glub = handleGlub(Lsh, Nimp.size());
-        QVector<QPointF> Nimp_Glub = handleNimp_Glub(Nimp, Glub);
+        QVector<QPointF> Nimp_Glub = handleGlub_Nimp(Nimp, Glub);
         float X1 = handleX1(Nimp_Glub);
         float X1_h = handleX1_h(X1, h);
         float X1_h_toch = X1_h * 20 + 1;
-        QPointF point = {Nmax_N0, X1_h_toch};
-        qDebug() << Nmax_N0 << X1 << X1_h << X1_h_toch;
+        QPointF point = {X1_h_toch, Nmax_N0};
         return point;
     };
     static float getKoefZap(QVector<CountOverAmps> Nimp, float h, float Lsh){
         float Nmax_N0 = handleNmax_N0(Nimp);
         QVector<float> Glub = handleGlub(Lsh, Nimp.size());
-        QVector<QPointF> Nimp_Glub = handleNimp_Glub(Nimp, Glub);
+        QVector<QPointF> Nimp_Glub = handleGlub_Nimp(Nimp, Glub);
         float X1 = handleX1(Nimp_Glub);
         float X1_h = handleX1_h(X1, h);
         float koefZap =
@@ -37,9 +37,9 @@ public:
                  float(7.3129)) / Nmax_N0;
         return koefZap;
     };
-    static QVector<QPointF> getNimp_Glub(QVector<CountOverAmps> Nimp, float Lsh){
+    static QVector<QPointF> getGlub_Nimp(QVector<CountOverAmps> Nimp, float Lsh){
         QVector<float> Glub = handleGlub(Lsh, Nimp.size());
-        QVector<QPointF> Nimp_Glub = handleNimp_Glub(Nimp, Glub);
+        QVector<QPointF> Nimp_Glub = handleGlub_Nimp(Nimp, Glub);
         return Nimp_Glub;
     };
     static QVector<Point> getDefaultPoints(int count = 20) {
@@ -50,7 +50,7 @@ public:
                     4.8 * std::pow(X1_0h, 3) +
                     14.0229 * std::pow(X1_0h, 2) -
                     1.5029 * X1_0h + 7.3129;
-            points.append(Point({Nmax_N0, X1_0h}));
+            points.append(Point({X1_0h, Nmax_N0}));
         }
         return points;
     };
@@ -64,16 +64,15 @@ protected:
         for (int i = 0; i < Nint; ++i) {
             float newGlub = glub[i] + shag;
             glub.append(newGlub);
-            qDebug() << newGlub << shag << Nint;
         }
         return glub;
     };
-    static QVector<QPointF> handleNimp_Glub(QVector<CountOverAmps> Nimp, QVector<float> Glub) {
+    static QVector<QPointF> handleGlub_Nimp(QVector<CountOverAmps> Nimp, QVector<float> Glub) {
         QVector<QPointF> points;
         for (int i = 0; i < Nimp.size(); ++i) {
             QPointF point;
-            point.setY( qreal(Nimp[i].countAmps) );
             point.setX( qreal(Glub[i]) );
+            point.setY( qreal(Nimp[i].countAmps) );
             points.append(point);
         }
         return points;

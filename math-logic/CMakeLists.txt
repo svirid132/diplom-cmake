@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.14)
 
 project(math-logic LANGUAGES CXX)
 
-include_directories(../API)
 include_directories(../smath)
+include_directories(../API)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)

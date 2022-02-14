@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.14)
 project(API LANGUAGES CXX)
 
 include_directories(../smath)
+include_directories(../error)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
@@ -20,7 +21,7 @@ add_library(API SHARED
     rawfile.cpp
 )
 
-target_link_libraries(API PRIVATE Qt${QT_VERSION_MAJOR}::Core smath)
-target_include_directories(API PUBLIC ../smath)
+target_link_libraries(API PRIVATE Qt${QT_VERSION_MAJOR}::Core smath error)
+target_include_directories(API PUBLIC ../smath ../error)
 
 target_compile_definitions(API PRIVATE API_LIBRARY)

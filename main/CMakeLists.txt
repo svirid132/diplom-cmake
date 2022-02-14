@@ -5,6 +5,7 @@ project(main VERSION 0.1 LANGUAGES CXX)
 include_directories(../smath)
 include_directories(../API)
 include_directories(../math-logic)
+include_directories(../error)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 

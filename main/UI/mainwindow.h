@@ -16,6 +16,7 @@ public:
     ~MainWindow();
     void setCentralWidget(QWidget* widget);
 
+    void viewError(const QString &str);
 private:
     Ui::MainWindow *ui;
 };

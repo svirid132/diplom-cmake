@@ -10,6 +10,14 @@
 #include "smath.h"
 #include "math-logic.h"
 #include "preloader.h"
+#include <exception> // для std::exception
+#include <iostream>
+#include "error.h"
+
+QString str() {
+    throw ErrorFile::open();
+    return "my-str";
+}
 
 int main(int argc, char *argv[])
 {

@@ -11,7 +11,7 @@ public:
     CmdChart();
 
     void setReceiver(QChart* chartNimp_Glub);
-    void update(float Lsh, float h, QString filePath);
+    void update(const QVector<CountOverAmps>& Nimp, float Lsh, float h);
 
 private:
     QChart* chartGlub_Nimp;

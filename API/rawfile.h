@@ -6,21 +6,29 @@
 #include <QVector>
 #include "API-var.h"
 #include "smath.h"
+#include "error.h"
 
 class RawFile {
 public:
     //для mono, data - 2 байта(short), period - интервал(секунды)
     static QVector<CountOverAmps> handleFile(const QString& path, int period = 1) {
         QFile file(path);
-        file.open(QIODevice::ReadOnly);
+        if(!file.open(QIODevice::ReadOnly)) {
+           throw ErrorFile::open();
+        }
         QVector<CountOverAmps> results;
 
         const int hz = 44100;//countByteSec
         const int depth = 2;
         const int countByteSec = hz * depth;
+        const int minCountPeriod = 2;
         const int countBytePeriod = countByteSec * period;
         const int countAmpsOnPeriod = countBytePeriod / depth;
         int numPeriod = 0;
+
+        if (file.size() < countBytePeriod * minCountPeriod) {
+            throw ErrorPeriod::longInterval();
+        }
 
         while(!file.atEnd()) {
             QByteArray arrByte = file.read(countBytePeriod);

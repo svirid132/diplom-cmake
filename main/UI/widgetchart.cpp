@@ -5,6 +5,7 @@
 #include <QDialog>
 #include <QFileDialog>
 #include <QGridLayout>
+#include <QGroupBox>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
@@ -18,9 +19,12 @@ WidgetChart::WidgetChart(QWidget *parent)
     : QWidget{parent},
       Lsh(1),
       h(1),
-      chartView(new QChartView)
+      period(1),
+      chartView(new QChartView),
+      isError(false)
 {
     QGridLayout *layout = new QGridLayout;
+    layout->setVerticalSpacing(15);
 
     QLabel* labelsLsh = new QLabel(tr("Lsh:"));
     QLabel* labelsh = new QLabel(tr("h:"));
@@ -39,16 +43,71 @@ WidgetChart::WidgetChart(QWidget *parent)
         h = float(value);
     });
 
-    QPushButton* button = new QPushButton("Обзор");
-    connect(button, &QPushButton::clicked, this, &WidgetChart::openFile);
-    layout->addWidget(button, 2, 1);
+    QPushButton* selectButton = new QPushButton("Обзор");
+    connect(selectButton, &QPushButton::clicked, this, &WidgetChart::openFile);
+    labelFile = new QLabel();
+    labelFile->setSizePolicy(QSizePolicy(QSizePolicy::Ignored, QSizePolicy::Minimum));
+    QVBoxLayout* vertical = new QVBoxLayout();
+    vertical->addWidget(labelFile);
+    vertical->addWidget(selectButton);
+    QGroupBox* groupBox = new QGroupBox(this);
+    groupBox->setTitle("Выбор файла");
+    groupBox->setLayout(vertical);
+    layout->addWidget(groupBox, 2, 0, 1, 2);
 
-    layout->addWidget(chartView, 0, 2, 4, 1);
+    QLabel* labelPeriod = new QLabel(tr("Period(sec):"));
+    layout->addWidget(labelPeriod, 3, 0);
+    spinBoxPeriod = new QSpinBox;
+    spinBoxPeriod->setMinimum(1);
+    connect(spinBoxPeriod, QOverload<int>::of(&QSpinBox::valueChanged),[=](int num){
+        spinBoxPeriod->setStyleSheet("");
+        period = num;
+    });
+    layout->addWidget(spinBoxPeriod, 3, 1);
 
-    layout->setColumnStretch(1, 10);
-    layout->setColumnStretch(2, 60);
+    QPushButton* executeButton = new QPushButton("Выполнить");
+    layout->setRowMinimumHeight(4, 10);
+    layout->addWidget(executeButton, 5, 0, 1, 2);
+    connect(executeButton, &QPushButton::clicked, [=](){
+        emit executeAPI(Lsh, h, period, filenameAPI);
+    });
+
+    QHBoxLayout* hlayout = new QHBoxLayout();
+    QPushButton* btn = new QPushButton("Кнопки 1");
+    QPushButton* btn1 = new QPushButton("Кнопка 2");
+    hlayout->addSpacing(250);
+    hlayout->addWidget(btn);
+    hlayout->addWidget(btn1);
+    QVBoxLayout* chartLayout = new QVBoxLayout();
+    chartLayout->addWidget(chartView);
+    chartLayout->addLayout(hlayout);
+    layout->addLayout(chartLayout, 0, 2, 10, 1);
 
     this->setLayout(layout);
+}
+
+void WidgetChart::errorFile()
+{
+    labelFile->setStyleSheet("background-color: red; padding: 2px;");
+}
+
+void WidgetChart::errorPeriod()
+{
+    spinBoxPeriod->setStyleSheet("background-color: red");
+}
+
+
+void WidgetChart::setLabelFilename(const QString& path)
+{
+    int positionFilename = path.lastIndexOf("/") + 1;
+    QString filename = path.mid(positionFilename);
+    const int wordWidth = 15;
+    const int countPath = filename.size() / wordWidth;
+    for (int i = 0; i < countPath; ++i) {
+        filename.insert(wordWidth * (i + 1) + i, '\n');
+    }
+    labelFile->setStyleSheet("padding: 2px;");
+    labelFile->setText(filename);
 }
 
 void WidgetChart::openFile()
@@ -64,10 +123,9 @@ void WidgetChart::openFile()
                 width,
                 height);
     if (dialog.exec()) {
-        QString fileName = dialog.selectedFiles().at(0);
-        emit selectedFile(Lsh, h, fileName);
+        filenameAPI = dialog.selectedFiles().at(0);
+        setLabelFilename(filenameAPI);
     }
-    if(true) emit selectedFile(2.5, 4.5, "fileName");
 }
 
 void WidgetChart::setChart(QChart* chart) {

@@ -17,50 +17,40 @@ void CmdChart::setReceiver(QChart *chartGlub_Nimp)
     this->chartGlub_Nimp = chartGlub_Nimp;
 }
 
-void CmdChart::update(float Lsh, float h, QString filePath) {
-    QVector<CountOverAmps> Nimp;
-    if (true) {
-        Nimp <<
-                CountOverAmps({588, 1}) << CountOverAmps({1700, 1}) << CountOverAmps({2500, 1}) << CountOverAmps({2000, 1}) << CountOverAmps({500, 1}) <<
-                CountOverAmps({160, 1}) << CountOverAmps({12, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) <<
-                CountOverAmps({0, 1}) << CountOverAmps({230, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) <<
-                CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1});
-    } else {
-        Nimp = RawFile::handleFile(filePath, 1);
-    }
-
+void CmdChart::update(const QVector<CountOverAmps>& Nimp, float Lsh, float h) {
     handleChartGlub_Nimp(Nimp, Lsh);
 }
 
 void CmdChart::handleChartGlub_Nimp(const QVector<CountOverAmps> &Nimp, float Lsh)
 {
-    QVector<QPointF> Nimp_Glub = MathLogic::getGlub_Nimp(Nimp, Lsh);
+    QVector<QPointF> Glub_Nimp = MathLogic::getGlub_Nimp(Nimp, Lsh);
 
     chartGlub_Nimp->removeAllSeries();
     QLineSeries *series = new QLineSeries(chartGlub_Nimp);
-    for (int i = 0; i < Nimp_Glub.size(); ++i) {
-        series->append(Nimp_Glub[i]);
+    QPointF screenPoint = {0, 0};
+    qDebug() << "Glub_Nimp[i]";
+    for (int i = 0; i < Glub_Nimp.size(); ++i) {
+        series->append(Glub_Nimp[i]);
+        if (screenPoint.y() < Glub_Nimp[i].y()) screenPoint.setY(Glub_Nimp[i].y());
+        qDebug() << Glub_Nimp[i];
     }
+    screenPoint.setX(Glub_Nimp.last().x());
     //показ значений точек
 //    series->setName("График");
 //    series->setPointLabelsVisible(true);    // is false by default
 //    series->setPointLabelsColor(Qt::black);
 //    series->setPointLabelsFormat("@yPoint");
     chartGlub_Nimp->addSeries(series);
-    chartGlub_Nimp->createDefaultAxes();
+
     QValueAxis *axisY = qobject_cast<QValueAxis*>(chartGlub_Nimp->axes(Qt::Vertical).first());
     Q_ASSERT(axisY);
-    axisY->setLabelFormat("%i ");
-    axisY->setTitleText("Колличество импульсов");
+    axisY->setRange(0, screenPoint.y());
+    series->attachAxis(axisY);
     QValueAxis *axisX = qobject_cast<QValueAxis*>(chartGlub_Nimp->axes(Qt::Horizontal).first());
     Q_ASSERT(axisX);
-    axisX->setLabelsAngle(-90);
+    series->attachAxis(axisX);
+    axisX->setRange(0, screenPoint.x());
     axisX->setTickCount(Nimp.size() > 20 ? 20 : Nimp.size());
-    axisX->setLabelFormat("%.2f ");
-    axisX->setTitleText("Глубина, м");
-    QFont font;
-    font.setPixelSize(14);
-    axisX->setLabelsFont(font);
 
     chartGlub_Nimp->legend()->hide();
 }

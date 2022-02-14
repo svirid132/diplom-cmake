@@ -16,7 +16,7 @@ QT_CHARTS_USE_NAMESPACE
 
 QChart* initChartNimp_Glub();
 
-WidgetChart* initWidgetChart();
+void initWidgetChart();
 
 void preloader(MainWindow& window);
 

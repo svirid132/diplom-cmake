@@ -3,6 +3,9 @@
 #include "widgetchart.h"
 
 #include <QDebug>
+#include <QErrorMessage>
+#include <QMessageBox>
+#include "global-var.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,6 +17,21 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::viewError(const QString& str) {
+    QMessageBox messageBox;
+    int width = messageBox.size().width();
+    int height = messageBox.size().height();
+    messageBox.setText(str);
+    messageBox.setWindowTitle("Ошибка");
+    messageBox.setIcon(QMessageBox::Critical);
+    messageBox.setGeometry(
+                WIDTH_SCREEN / 2 - width / 2,
+                HEIGHT_SCREEN / 2 - height / 2,
+                width,
+                height);
+    messageBox.exec();
 }
 
 void MainWindow::setCentralWidget(QWidget *widget)

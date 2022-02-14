@@ -7,14 +7,17 @@
 #include <QValueAxis>
 #include <QLineSeries>
 #include <rawfile.h>
+#include <math-logic.h>
+#include "shared-func.h"
 
 #include <UI/mainwindow.h>
 #include <UI/widgetchart.h>
 
 QT_CHARTS_USE_NAMESPACE
 
-QChart* initChartNimp_Glub(){
-    QChart *chartNimp_Glub = new QChart();
+QChart* initChartGlub_Nimp(){
+    QChart *chartGlub_Nimp = new QChart();
+    chartGlub_Nimp->legend()->hide();
 
     QValueAxis *axisX = new QValueAxis();
     QValueAxis *axisY = new QValueAxis();
@@ -29,45 +32,61 @@ QChart* initChartNimp_Glub(){
     axisX->setRange(0, 30);
     axisY->setRange(0, 30);
 
-    chartNimp_Glub->addAxis(axisX, Qt::AlignBottom);
-    chartNimp_Glub->addAxis(axisY, Qt::AlignLeft);
-//    chartNimp_Glub->setTitle("N и глубина");
+    chartGlub_Nimp->addAxis(axisX, Qt::AlignBottom);
+    chartGlub_Nimp->addAxis(axisY, Qt::AlignLeft);
 
-//    chartNimp_Glub->addSeries(series);
+    return chartGlub_Nimp;
+}
 
-//    chartNimp_Glub->createDefaultAxes();
-//    chartNimp_Glub->axes(Qt::Horizontal).first()->setRange(0, m_valueMax);
-//    chartNimp_Glub->axes(Qt::Vertical).first()->setRange(0, m_valueCount);
+QChart* initX1dh_NmaxdN0(){
+    QChart *chartX1dh_NmaxdN0 = new QChart();
+    chartX1dh_NmaxdN0->legend()->hide();
 
-//    QValueAxis *axisY = qobject_cast<QValueAxis*>(chartNimp_Glub->axes(Qt::Vertical).first());
-//    Q_ASSERT(axisY);
-//    axisY->setLabelFormat("%.1f  ");
+    QLineSeries *series = new QLineSeries(chartX1dh_NmaxdN0);
+    auto points = MathLogic::getDefaultPoints(30);
+    for (int i = 0; i < points.size(); ++i ){
+        series->append(points[i]);
+    }
+    chartX1dh_NmaxdN0->addSeries(series);
 
-    return chartNimp_Glub;
+    QValueAxis *axisX = new QValueAxis();
+    QValueAxis *axisY = new QValueAxis();
+    axisY->setLabelFormat("%i ");
+    axisY->setTitleText("Nmax/N0");
+    axisX->setLabelFormat("%.2f ");
+    axisX->setTitleText("H1/h");
+    QFont font;
+    font.setPixelSize(14);
+    axisX->setLabelsFont(font);
+    axisX->setRange(0, points.last().x());
+    axisY->setRange(0, points.last().y());
+    chartX1dh_NmaxdN0->addAxis(axisX, Qt::AlignBottom);
+    chartX1dh_NmaxdN0->addAxis(axisY, Qt::AlignLeft);
+
+    series->attachAxis(axisX);
+    series->attachAxis(axisY);
+    return chartX1dh_NmaxdN0;
 }
 
 void initWidgetChart(MainWindow& window) {
 
     WidgetChart* widgetChart = new WidgetChart();
 
-    QChart *chartNimp_Glub = initChartNimp_Glub();
-    widgetChart->setChart(chartNimp_Glub);
+    QChart *chartGlub_Nimp = initChartGlub_Nimp();
+    QChart *chartX1dh_NmaxdN0 = initX1dh_NmaxdN0();
+    widgetChart->setChart(chartGlub_Nimp);
 
     CmdChart* cmdChart = new CmdChart();
-    cmdChart->setReceiver(chartNimp_Glub);
+    cmdChart->setReceiver(chartGlub_Nimp, chartX1dh_NmaxdN0);
     QObject::connect(widgetChart, &WidgetChart::executeAPI, [=, &window](float Lsh, float h, int period, QString path) {
         try {
-            QVector<CountOverAmps> Nimp;
-            if (false) {
-                Nimp <<
-                        CountOverAmps({588, 1}) << CountOverAmps({1700, 1}) << CountOverAmps({2500, 1}) << CountOverAmps({2000, 1}) << CountOverAmps({500, 1}) <<
-                        CountOverAmps({160, 1}) << CountOverAmps({12, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) <<
-                        CountOverAmps({0, 1}) << CountOverAmps({230, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) <<
-                        CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1});
-            } else {
-                Nimp = RawFile::handleFile(path, period);
-            }
-            cmdChart->update(Nimp, Lsh, h);
+            QVector<CountOverAmps> Nimp = RawFile::handleFile(path, period);
+            float koefZap = MathLogic::getKoefZap(Nimp, h, Lsh);
+            CATEGORY category = MathLogic::getCategory(Nimp, h, Lsh);
+            QString categoryString = getCategoryString(category);
+            widgetChart->setKoefZapCategory(koefZap, categoryString);
+            cmdChart->update(Nimp, Lsh, h, category);
+
         } catch (const ErrorFile& error) {
             widgetChart->errorFile();
             window.viewError(error.what());
@@ -76,19 +95,24 @@ void initWidgetChart(MainWindow& window) {
             window.viewError(error.what());
         }
     });
+    QObject::connect(widgetChart, &WidgetChart::clickedChartGlub_Nimp, [=]() {
+        widgetChart->setChart(chartGlub_Nimp);
+    });
+    QObject::connect(widgetChart, &WidgetChart::clickedChartX1dh_NmaxdN0, [=]() {
+        widgetChart->setChart(chartX1dh_NmaxdN0);
+    });
 
     //Test
     QVector<CountOverAmps> Nimp;
-    if (true) {
-        Nimp <<
-                CountOverAmps({588, 1}) << CountOverAmps({1700, 1}) << CountOverAmps({2500, 1}) << CountOverAmps({2000, 1}) << CountOverAmps({500, 1}) <<
-                CountOverAmps({160, 1}) << CountOverAmps({12, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) <<
-                CountOverAmps({0, 1}) << CountOverAmps({230, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) <<
-                CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1});
-    } else {
-        Nimp = RawFile::handleFile("path", 1);
-    }
-    cmdChart->update(Nimp, 2.5, 4.5);
+    Nimp <<
+            CountOverAmps({588, 1}) << CountOverAmps({1700, 1}) << CountOverAmps({2500, 1}) << CountOverAmps({2000, 1}) << CountOverAmps({500, 1}) <<
+            CountOverAmps({160, 1}) << CountOverAmps({12, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) <<
+            CountOverAmps({0, 1}) << CountOverAmps({230, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) <<
+            CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1});
+    CATEGORY category = MathLogic::getCategory(Nimp, 10, 5);
+    float koefZap = MathLogic::getKoefZap(Nimp, 10, 5);
+    cmdChart->update(Nimp, 2.5, 4.5, category);
+    widgetChart->setKoefZapCategory(koefZap, getCategoryString(category));
 
     window.setCentralWidget(widgetChart);
 }

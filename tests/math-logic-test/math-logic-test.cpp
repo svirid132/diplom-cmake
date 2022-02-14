@@ -38,8 +38,8 @@ void MathLogicTest::initTestCase()
 
 void MathLogicTest::handleCriticalPoint(){
 
-    QPointF point = MathLogic::getCriticalPoint(Nimp, h, Lsh);
-    QPointF pointResult(2.169590643, 4.25170068);
+    QPointF point = MathLogic::getCriticalPoint(Nimp, Lsh, h);
+    QPointF pointResult(0.05848, 4.25170068);
     QCOMPARE(
                 smath::roundFloat(point.x()),
                 smath::roundFloat(pointResult.x())
@@ -52,7 +52,7 @@ void MathLogicTest::handleCriticalPoint(){
 
 void MathLogicTest::handleKoefZap()
 {
-    float koefZap = MathLogic::getKoefZap(Nimp, h, Lsh);
+    float koefZap = MathLogic::getKoefZap(Nimp, Lsh, h);
     float result = 1.710827716;
     QCOMPARE(
                 smath::roundFloat(koefZap),

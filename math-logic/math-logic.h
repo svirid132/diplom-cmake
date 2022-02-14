@@ -13,18 +13,18 @@
 
 class MathLogic {
 public:
-    //x = X1_h_toch y = Nmax_N0
-    static QPointF getCriticalPoint(QVector<CountOverAmps> Nimp, float h, float Lsh){
+    //x = X1_h y = Nmax_N0
+    static QPointF getCriticalPoint(QVector<CountOverAmps> Nimp, float Lsh, float h){
         float Nmax_N0 = handleNmax_N0(Nimp);
         QVector<float> Glub = handleGlub(Lsh, Nimp.size());
         QVector<QPointF> Nimp_Glub = handleGlub_Nimp(Nimp, Glub);
         float X1 = handleX1(Nimp_Glub);
         float X1_h = handleX1_h(X1, h);
-        float X1_h_toch = X1_h * 20 + 1;
-        QPointF point = {X1_h_toch, Nmax_N0};
+//        float X1_h_toch = X1_h * 20 + 1;
+        QPointF point = {X1_h, Nmax_N0};
         return point;
     };
-    static float getKoefZap(QVector<CountOverAmps> Nimp, float h, float Lsh){
+    static float getKoefZap(QVector<CountOverAmps> Nimp, float Lsh, float h){
         float Nmax_N0 = handleNmax_N0(Nimp);
         QVector<float> Glub = handleGlub(Lsh, Nimp.size());
         QVector<QPointF> Nimp_Glub = handleGlub_Nimp(Nimp, Glub);
@@ -37,24 +37,36 @@ public:
                  float(7.3129)) / Nmax_N0;
         return koefZap;
     };
-    static QVector<QPointF> getGlub_Nimp(QVector<CountOverAmps> Nimp, float Lsh){
+    static QVector<QPointF> getGlub_Nimp(const QVector<CountOverAmps>& Nimp, float Lsh){
         QVector<float> Glub = handleGlub(Lsh, Nimp.size());
         QVector<QPointF> Nimp_Glub = handleGlub_Nimp(Nimp, Glub);
         return Nimp_Glub;
     };
-    static QVector<Point> getDefaultPoints(int count = 20) {
-        QVector<Point> points;
+    static QVector<QPointF> getDefaultPoints(int count = 20) {
+        QVector<QPointF> points;
         for (int i = 0; i < count; ++i) {
             float X1_0h = 0.05 * i;
             float Nmax_N0 =
                     4.8 * std::pow(X1_0h, 3) +
                     14.0229 * std::pow(X1_0h, 2) -
                     1.5029 * X1_0h + 7.3129;
-            points.append(Point({X1_0h, Nmax_N0}));
+            QPointF point = {X1_0h, Nmax_N0};
+            points.append(point);
         }
         return points;
     };
-
+    static CATEGORY getCategory(const QVector<CountOverAmps>& Nimp, float Lsh, float h) {
+        float Nmax_N0 = handleNmax_N0(Nimp);
+        QVector<float> Glub = handleGlub(Lsh, Nimp.size());
+        QVector<QPointF> Nimp_Glub = handleGlub_Nimp(Nimp, Glub);
+        float X1 = handleX1(Nimp_Glub);
+        float X1_h = handleX1_h(X1, h);
+        float indexCategory = float(4.8) * std::pow(X1_h, 3) +
+                float(14.0229) * std::pow(X1_h, 2) -
+                float(1.5029) * X1_h +
+                float(7.3129);
+        return Nmax_N0 > indexCategory ? CATEGORY::PERILOUSLY : CATEGORY::SAFELY;
+    };
 protected:
     static QVector<float> handleGlub(float Lsh, int Nizm) {
         int Nint = Nizm - 1;

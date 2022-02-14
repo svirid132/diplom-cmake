@@ -32,6 +32,8 @@ set(PROJECT_SOURCES
         UI/mainwindow.cpp
         UI/mainwindow.h
         UI/mainwindow.ui
+        shared-func.h
+        shared-func.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

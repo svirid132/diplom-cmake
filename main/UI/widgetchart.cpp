@@ -39,7 +39,7 @@ WidgetChart::WidgetChart(QWidget *parent)
     connect(spinBoxLsh, QOverload<double>::of(&QDoubleSpinBox::valueChanged), [=](double value) {
         Lsh = float(value);
     });
-    connect(spinBoxLsh, QOverload<double>::of(&QDoubleSpinBox::valueChanged), [=](double value) {
+    connect(spinBoxh, QOverload<double>::of(&QDoubleSpinBox::valueChanged), [=](double value) {
         h = float(value);
     });
 
@@ -65,16 +65,26 @@ WidgetChart::WidgetChart(QWidget *parent)
     });
     layout->addWidget(spinBoxPeriod, 3, 1);
 
+    QVBoxLayout* boxLayout = new QVBoxLayout();
+    labelKoefZap = new QLabel("Коэф.зап:");
+    boxLayout->addWidget(labelKoefZap);
+    boxLayout->addSpacing(5);
+    labelCategory = new QLabel("Категоря:");
+    boxLayout->addWidget(labelCategory);
+    layout->addLayout(boxLayout, 4, 0, 1, 1);
+
     QPushButton* executeButton = new QPushButton("Выполнить");
-    layout->setRowMinimumHeight(4, 10);
-    layout->addWidget(executeButton, 5, 0, 1, 2);
+    layout->setRowMinimumHeight(5, 10);
+    layout->addWidget(executeButton, 6, 0, 1, 2);
     connect(executeButton, &QPushButton::clicked, [=](){
         emit executeAPI(Lsh, h, period, filenameAPI);
     });
 
     QHBoxLayout* hlayout = new QHBoxLayout();
-    QPushButton* btn = new QPushButton("Кнопки 1");
-    QPushButton* btn1 = new QPushButton("Кнопка 2");
+    QPushButton* btn = new QPushButton("График 1");
+    QPushButton* btn1 = new QPushButton("График 2");
+    connect(btn, &QPushButton::clicked, this, &WidgetChart::clickedChartGlub_Nimp);
+    connect(btn1, &QPushButton::clicked, this, &WidgetChart::clickedChartX1dh_NmaxdN0);
     hlayout->addSpacing(250);
     hlayout->addWidget(btn);
     hlayout->addWidget(btn1);
@@ -94,6 +104,14 @@ void WidgetChart::errorFile()
 void WidgetChart::errorPeriod()
 {
     spinBoxPeriod->setStyleSheet("background-color: red");
+}
+
+void WidgetChart::setKoefZapCategory(float koefZap, QString category)
+{
+    QString num = tr("Коэф.зап: ") + QString::number(koefZap);
+    QString fullCategory = "Категоря: " + category;
+    labelKoefZap->setText(num);
+    labelCategory->setText(fullCategory);
 }
 
 

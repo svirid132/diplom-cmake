@@ -11,12 +11,7 @@
 
 #include <UI/mainwindow.h>
 #include <UI/widgetchart.h>
-
-QT_CHARTS_USE_NAMESPACE
-
-QChart* initChartNimp_Glub();
-
-void initWidgetChart();
+#include <UI/widgetmain.h>
 
 void preloader(MainWindow& window);
 

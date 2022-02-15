@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include "widgetchart.h"
+#include "widgetmain.h"
 
 #include <QDebug>
 #include <QErrorMessage>

@@ -27,11 +27,17 @@ set(PROJECT_SOURCES
         main.cpp
         cmdchart.cpp
         cmdchart.h
-        UI/widgetchart.cpp
+        preloader/init-widget-main.h
+        preloader/init-widget-main.cpp
+        preloader/init-widget-chart.h
+        preloader/init-widget-chart.cpp
         UI/widgetchart.h
+        UI/widgetchart.cpp
         UI/mainwindow.cpp
         UI/mainwindow.h
         UI/mainwindow.ui
+        UI/widgetmain.h
+        UI/widgetmain.cpp
         shared-func.h
         shared-func.cpp
 )

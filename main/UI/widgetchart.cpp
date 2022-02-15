@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QDialog>
 #include <QFileDialog>
+#include <QFormLayout>
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QLabel>
@@ -36,10 +37,10 @@ WidgetChart::WidgetChart(QWidget *parent)
     spinBoxh->setMinimum(1);
     layout->addWidget(spinBoxLsh, 0, 1);
     layout->addWidget(spinBoxh, 1, 1);
-    connect(spinBoxLsh, QOverload<double>::of(&QDoubleSpinBox::valueChanged), [=](double value) {
+    connect(spinBoxLsh, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [=](double value) {
         Lsh = float(value);
     });
-    connect(spinBoxh, QOverload<double>::of(&QDoubleSpinBox::valueChanged), [=](double value) {
+    connect(spinBoxh, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [=](double value) {
         h = float(value);
     });
 
@@ -59,7 +60,7 @@ WidgetChart::WidgetChart(QWidget *parent)
     layout->addWidget(labelPeriod, 3, 0);
     spinBoxPeriod = new QSpinBox;
     spinBoxPeriod->setMinimum(1);
-    connect(spinBoxPeriod, QOverload<int>::of(&QSpinBox::valueChanged),[=](int num){
+    connect(spinBoxPeriod, QOverload<int>::of(&QSpinBox::valueChanged), this, [=](int num){
         spinBoxPeriod->setStyleSheet("");
         period = num;
     });
@@ -76,7 +77,7 @@ WidgetChart::WidgetChart(QWidget *parent)
     QPushButton* executeButton = new QPushButton("Выполнить");
     layout->setRowMinimumHeight(5, 10);
     layout->addWidget(executeButton, 6, 0, 1, 2);
-    connect(executeButton, &QPushButton::clicked, [=](){
+    connect(executeButton, &QPushButton::clicked, this, [=](){
         emit executeAPI(Lsh, h, period, filenameAPI);
     });
 
@@ -94,6 +95,13 @@ WidgetChart::WidgetChart(QWidget *parent)
     layout->addLayout(chartLayout, 0, 2, 10, 1);
 
     this->setLayout(layout);
+
+    QFormLayout *form = new QFormLayout();
+    form->addRow(new QLabel("one"), new QLineEdit());
+    form->setSpacing(10);
+    form->addRow(new QLabel("ljsglkdjfgkldfj"), new QLineEdit());
+    form->addRow(new QPushButton);
+    layout->addLayout(form, 7, 0, 1, 2);
 }
 
 void WidgetChart::errorFile()

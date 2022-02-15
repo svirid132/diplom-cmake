@@ -4,6 +4,7 @@
 #include <API-var.h>
 #include <QChart>
 #include <QScatterSeries>
+#include <math-logic.h>
 #include "math-var.h"
 QT_CHARTS_USE_NAMESPACE
 
@@ -13,13 +14,13 @@ public:
     CmdChart();
 
     void setReceiver(QChart *chartGlub_Nimp, QChart *chartX1dh_NmaxdN0);
-    void update(const QVector<CountOverAmps>& Nimp, float Lsh, float h, CATEGORY category);
+    void update(MathLogic *const logic);
 
 private:
     QChart* chartGlub_Nimp;
     QChart* chartX1dh_NmaxdN0;
-    void handleChartGlub_Nimp(const QVector<CountOverAmps>& Nimp, float Lsh);
-    void handleX1dh_NmaxdN0(const QVector<CountOverAmps>& Nimp, float Lsh, float h, CATEGORY category);
+    void handleChartGlub_Nimp(MathLogic *const logic);
+    void handleX1dh_NmaxdN0(MathLogic *const logic);
     QScatterSeries* criticalSeriesPoint;
 };
 

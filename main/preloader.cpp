@@ -7,7 +7,7 @@
 #include <QValueAxis>
 #include <QLineSeries>
 #include <rawfile.h>
-#include <math-logic.h>
+#include "math-logic.h"
 #include "shared-func.h"
 
 #include <UI/mainwindow.h>
@@ -71,6 +71,7 @@ QChart* initX1dh_NmaxdN0(){
 void initWidgetChart(MainWindow& window) {
 
     WidgetChart* widgetChart = new WidgetChart();
+    MathLogic* logic = new MathLogic();
 
     QChart *chartGlub_Nimp = initChartGlub_Nimp();
     QChart *chartX1dh_NmaxdN0 = initX1dh_NmaxdN0();
@@ -78,14 +79,17 @@ void initWidgetChart(MainWindow& window) {
 
     CmdChart* cmdChart = new CmdChart();
     cmdChart->setReceiver(chartGlub_Nimp, chartX1dh_NmaxdN0);
-    QObject::connect(widgetChart, &WidgetChart::executeAPI, [=, &window](float Lsh, float h, int period, QString path) {
+    QObject::connect(widgetChart, &WidgetChart::executeAPI, widgetChart, [=, &window](float Lsh, float h, int period, QString path) {
         try {
             QVector<CountOverAmps> Nimp = RawFile::handleFile(path, period);
-            float koefZap = MathLogic::getKoefZap(Nimp, h, Lsh);
-            CATEGORY category = MathLogic::getCategory(Nimp, h, Lsh);
+            logic->calc(Nimp, Lsh, h);
+
+            float koefZap = logic->getKoefZap();
+            CATEGORY category = logic->getCategory();
             QString categoryString = getCategoryString(category);
             widgetChart->setKoefZapCategory(koefZap, categoryString);
-            cmdChart->update(Nimp, Lsh, h, category);
+
+            cmdChart->update(logic);
 
         } catch (const ErrorFile& error) {
             widgetChart->errorFile();
@@ -95,10 +99,10 @@ void initWidgetChart(MainWindow& window) {
             window.viewError(error.what());
         }
     });
-    QObject::connect(widgetChart, &WidgetChart::clickedChartGlub_Nimp, [=]() {
+    QObject::connect(widgetChart, &WidgetChart::clickedChartGlub_Nimp, widgetChart,  [=]() {
         widgetChart->setChart(chartGlub_Nimp);
     });
-    QObject::connect(widgetChart, &WidgetChart::clickedChartX1dh_NmaxdN0, [=]() {
+    QObject::connect(widgetChart, &WidgetChart::clickedChartX1dh_NmaxdN0, widgetChart, [=]() {
         widgetChart->setChart(chartX1dh_NmaxdN0);
     });
 
@@ -109,9 +113,10 @@ void initWidgetChart(MainWindow& window) {
             CountOverAmps({160, 1}) << CountOverAmps({12, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) <<
             CountOverAmps({0, 1}) << CountOverAmps({230, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) <<
             CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1});
-    CATEGORY category = MathLogic::getCategory(Nimp, 10, 5);
-    float koefZap = MathLogic::getKoefZap(Nimp, 10, 5);
-    cmdChart->update(Nimp, 2.5, 4.5, category);
+    logic->calc(Nimp, 2.5, 4.5);
+    CATEGORY category = logic->getCategory();
+    float koefZap = logic->getKoefZap();
+    cmdChart->update(logic);
     widgetChart->setKoefZapCategory(koefZap, getCategoryString(category));
 
     window.setCentralWidget(widgetChart);

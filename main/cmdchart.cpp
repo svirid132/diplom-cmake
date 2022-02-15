@@ -21,19 +21,19 @@ void CmdChart::setReceiver(QChart *chartGlub_Nimp, QChart * chartX1dh_NmaxdN0)
     this->chartX1dh_NmaxdN0 = chartX1dh_NmaxdN0;
 }
 
-void CmdChart::update(const QVector<CountOverAmps>& Nimp, float Lsh, float h, CATEGORY category) {
-    handleChartGlub_Nimp(Nimp, Lsh);
-    handleX1dh_NmaxdN0(Nimp, Lsh, h, category);
+void CmdChart::update(MathLogic *const logic) {
+    handleChartGlub_Nimp(logic);
+    handleX1dh_NmaxdN0(logic);
 }
 
-void CmdChart::handleX1dh_NmaxdN0(const QVector<CountOverAmps>& Nimp, float Lsh, float h, CATEGORY category){
-    QPointF criticalPoint = MathLogic::getCriticalPoint(Nimp, h, Lsh);
+void CmdChart::handleX1dh_NmaxdN0(MathLogic *const logic){
+    QPointF criticalPoint = logic->getCriticalPoint();
     if (criticalSeriesPoint) {
         this->chartX1dh_NmaxdN0->removeSeries(criticalSeriesPoint);
     }
-    QLineSeries* defaultLine = qobject_cast<QLineSeries*>(chartX1dh_NmaxdN0->series().first());
+    QLineSeries* defaultLine = qobject_cast<QLineSeries*>(chartX1dh_NmaxdN0->series().at(0));
     QColor color;
-    switch(category) {
+    switch(logic->getCategory()) {
     case CATEGORY::PERILOUSLY:
         color = QColor(Qt::red);
         break;
@@ -50,20 +50,21 @@ void CmdChart::handleX1dh_NmaxdN0(const QVector<CountOverAmps>& Nimp, float Lsh,
     criticalSeriesPoint->setColor(color);
     criticalSeriesPoint->setMarkerSize(10);
     criticalSeriesPoint->setPointLabelsVisible(true);
-    QString string = getCategoryString(category);
+    QString string = getCategoryString(logic->getCategory());
     criticalSeriesPoint->setPointLabelsFormat(string);
     this->chartX1dh_NmaxdN0->addSeries(criticalSeriesPoint);
-    QValueAxis *axisY = qobject_cast<QValueAxis*>(chartX1dh_NmaxdN0->axes(Qt::Vertical).first());
+    QValueAxis *axisY = qobject_cast<QValueAxis*>(chartX1dh_NmaxdN0->axes(Qt::Vertical).at(0));
     Q_ASSERT(axisY);
     criticalSeriesPoint->attachAxis(axisY);
-    QValueAxis *axisX = qobject_cast<QValueAxis*>(chartX1dh_NmaxdN0->axes(Qt::Horizontal).first());
+    QValueAxis *axisX = qobject_cast<QValueAxis*>(chartX1dh_NmaxdN0->axes(Qt::Horizontal).at(0));
     Q_ASSERT(axisX);
     criticalSeriesPoint->attachAxis(axisX);
 }
 
-void CmdChart::handleChartGlub_Nimp(const QVector<CountOverAmps> &Nimp, float Lsh)
+void CmdChart::handleChartGlub_Nimp(MathLogic *const logic)
 {
-    QVector<QPointF> Glub_Nimp = MathLogic::getGlub_Nimp(Nimp, Lsh);
+    QVector<CountOverAmps> Nimp = logic->getNimp();
+    QVector<QPointF> Glub_Nimp = logic->getGlub_Nimp();
 
     chartGlub_Nimp->removeAllSeries();
     QLineSeries *series = new QLineSeries(chartGlub_Nimp);
@@ -80,11 +81,11 @@ void CmdChart::handleChartGlub_Nimp(const QVector<CountOverAmps> &Nimp, float Ls
 //    series->setPointLabelsFormat("@yPoint");
     chartGlub_Nimp->addSeries(series);
 
-    QValueAxis *axisY = qobject_cast<QValueAxis*>(chartGlub_Nimp->axes(Qt::Vertical).first());
+    QValueAxis *axisY = qobject_cast<QValueAxis*>(chartGlub_Nimp->axes(Qt::Vertical).at(0));
     Q_ASSERT(axisY);
     axisY->setRange(0, screenPoint.y());
     series->attachAxis(axisY);
-    QValueAxis *axisX = qobject_cast<QValueAxis*>(chartGlub_Nimp->axes(Qt::Horizontal).first());
+    QValueAxis *axisX = qobject_cast<QValueAxis*>(chartGlub_Nimp->axes(Qt::Horizontal).at(0));
     Q_ASSERT(axisX);
     series->attachAxis(axisX);
     axisX->setRange(0, screenPoint.x());

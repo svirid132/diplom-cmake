@@ -14,11 +14,6 @@
 #include <iostream>
 #include "error.h"
 
-QString str() {
-    throw ErrorFile::open();
-    return "my-str";
-}
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

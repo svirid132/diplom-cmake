@@ -17,8 +17,9 @@ public:
 
 private:
     QVector<CountOverAmps> Nimp;
-    float h = 4.5;
     float Lsh = 2.5;
+    float h = 4.5;
+    MathLogic logic;
 
 private slots:
     void initTestCase();
@@ -34,11 +35,11 @@ void MathLogicTest::initTestCase()
             CountOverAmps({160, 1}) << CountOverAmps({12, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) <<
             CountOverAmps({0, 1}) << CountOverAmps({230, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) <<
             CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1}) << CountOverAmps({0, 1});
+    logic.calc(Nimp, Lsh, h);
 }
 
 void MathLogicTest::handleCriticalPoint(){
-
-    QPointF point = MathLogic::getCriticalPoint(Nimp, Lsh, h);
+    QPointF point = logic.getCriticalPoint();
     QPointF pointResult(0.05848, 4.25170068);
     QCOMPARE(
                 smath::roundFloat(point.x()),
@@ -52,7 +53,7 @@ void MathLogicTest::handleCriticalPoint(){
 
 void MathLogicTest::handleKoefZap()
 {
-    float koefZap = MathLogic::getKoefZap(Nimp, Lsh, h);
+    float koefZap = logic.getKoefZap();
     float result = 1.710827716;
     QCOMPARE(
                 smath::roundFloat(koefZap),
@@ -63,7 +64,7 @@ void MathLogicTest::handleKoefZap()
 
 void MathLogicTest::handleGlub_Nimp(){
 
-    QVector<QPointF> Nimp_Glub = MathLogic::getGlub_Nimp(Nimp, Lsh);
+    QVector<QPointF> Nimp_Glub = logic.getGlub_Nimp();
     float glubResult[20] = {0, 0.13, 0.26, 0.39, 0.53, 0.66, 0.79, 0.92, 1.05, 1.18, 1.32, 1.45, 1.58, 1.71, 1.84, 1.97, 2.11, 2.24, 2.37, 2.50};
     int i = 0;
     for (QPointF point: Nimp_Glub) {

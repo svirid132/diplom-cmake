@@ -61,7 +61,9 @@ endif()
 
 target_link_libraries(main PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
-    Qt${QT_VERSION_MAJOR}::Charts)
+    Qt${QT_VERSION_MAJOR}::Charts
+    math-logic
+)
 
 #target_link_libraries(${targetName} Qt5::Charts)
 

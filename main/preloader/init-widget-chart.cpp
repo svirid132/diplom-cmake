@@ -15,7 +15,7 @@ QChart* initChartGlub_Nimp(){
     axisX->setLabelFormat("%.2f ");
     axisX->setTitleText("Глубина, м");
     QFont font;
-    font.setPixelSize(14);
+    font.setPixelSize(12);
     axisX->setLabelsFont(font);
     axisX->setRange(0, 30);
     axisY->setRange(0, 30);

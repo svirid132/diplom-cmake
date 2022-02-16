@@ -24,7 +24,7 @@ void XMLFile::write(QString path, const QList<QPair<QString, QString>>& tag_text
     writer.writeAttribute("xml:lang", "ru");
 
     for (const QPair<QString, QString>& tag_text: tag_texts){
-        writer.writeStartElement(tag_text.first);
+        writer.writeStartElement(prefixTag + tag_text.first);
         writer.writeCharacters("");
         writer.device()->write(tag_text.second.toUtf8());
         writer.writeEndElement();

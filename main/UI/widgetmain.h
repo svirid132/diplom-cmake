@@ -5,6 +5,8 @@
 #include <QSpinBox>
 #include <QLabel>
 #include <QFormLayout>
+#include <QPushButton>
+#include <QGroupBox>
 
 class WidgetMain : public QWidget
 {
@@ -16,9 +18,12 @@ public:
     void setKoefZap(float koefZap);
 
     void setKoefZapCategory(float koefZap, QString category);
-    void setWidget(QWidget* widget, QWidget* two);
+    void setWidget(QWidget* widget);
+    void setEnabledXMLbtn(bool flag);
+    void setEnabledPanel(bool flag);
 signals:
     void executeAPI(float Lsh, float h, int period, QString path);
+    void clickedSaveXML(bool);
 
 private slots:
     void openFile();
@@ -34,6 +39,10 @@ private:
     QLabel* labelFile;
     QLabel* labelCategory;
     QLabel* labelKoefZap;
+    QPushButton* XMLbtn;
+    QWidget* secondWidget;
+    QWidget* leftPanel;
+    QList<QWidget*> blockingWdgs;
 
     QHBoxLayout* layout;
 

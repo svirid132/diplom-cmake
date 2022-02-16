@@ -41,6 +41,8 @@ set(PROJECT_SOURCES
         UI/mainwindow.ui
         UI/widgetmain.h
         UI/widgetmain.cpp
+        model/n-model.h
+        model/n-model.cpp
         shared-func.h
         shared-func.cpp
 )

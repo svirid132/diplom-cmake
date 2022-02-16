@@ -55,7 +55,7 @@ WidgetXML::WidgetXML(QWidget *parent) : QWidget(parent)
     });
 
     this->setLayout(formLayout);
-    this->setFixedWidth(250);
+    this->setFixedWidth(310);
 
     QPushButton* btn = new QPushButton("Сохранить в XML");
     connect(btn, &QPushButton::clicked, this, &WidgetXML::clickedSave);

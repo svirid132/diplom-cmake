@@ -22,17 +22,25 @@ WidgetMain::WidgetMain(QWidget *parent)
       h(1),
       period(1),
       isError(false),
-      layout(new QHBoxLayout())
+      layout(new QHBoxLayout()),
+      secondWidget(nullptr)
 {
     layout->setSpacing(5);
     layout->setMargin(10);
 
+    QVBoxLayout* vertical = new QVBoxLayout();
+//    vertical->setDirection(QBoxLayout::Down);
+//    vertical->setSpacing(0);
+//    vertical->setMargin(0);
+
     QFormLayout *layoutPanel = new QFormLayout;
-    layoutPanel->setSpacing(10);
+    layoutPanel->setVerticalSpacing(10);
+//    layoutPanel->setMargin(0);
     fillLayoutPanel(layoutPanel);
-    QWidget* leftPanel = new QWidget();
+    leftPanel = new QWidget();
     leftPanel->setLayout(layoutPanel);
-    leftPanel->setFixedWidth(150);
+    leftPanel->setFixedWidth(190);
+
 //    leftPanel->setStyleSheet("background-color: red");
 
     layout->addWidget(leftPanel);
@@ -56,7 +64,6 @@ void WidgetMain::setKoefZapCategory(float koefZap, QString category)
     labelKoefZap->setText(num);
     labelCategory->setText(fullCategory);
 }
-
 
 void WidgetMain::setLabelFilename(const QString& path)
 {
@@ -89,6 +96,7 @@ void WidgetMain::fillLayoutPanel(QFormLayout *const layout)
     });
 
     QPushButton* selectButton = new QPushButton("Обзор");
+    selectButton->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum));
     connect(selectButton, &QPushButton::clicked, this, &WidgetMain::openFile);
     labelFile = new QLabel();
     labelFile->setSizePolicy(QSizePolicy(QSizePolicy::Ignored, QSizePolicy::Minimum));
@@ -129,8 +137,12 @@ void WidgetMain::fillLayoutPanel(QFormLayout *const layout)
         emit executeAPI(Lsh, h, period, filenameAPI);
     });
 
-    QPushButton* XMLbtn = new QPushButton("Создать XML");
-    XMLbtn->setEnabled(false);
+    blockingWdgs << spinBoxLsh << spinBoxh << groupBox << spinBoxPeriod << executeButton;
+
+    XMLbtn = new QPushButton("Создать XML");
+    connect(XMLbtn, QOverload<bool>::of(&QPushButton::clicked), this, &WidgetMain::clickedSaveXML);
+//    XMLbtn->setEnabled(false);
+    XMLbtn->setCheckable(true);
     layout->addRow(XMLbtn);
 }
 
@@ -152,7 +164,22 @@ void WidgetMain::openFile()
     }
 }
 
-void WidgetMain::setWidget(QWidget* widget, QWidget* two) {
+void WidgetMain::setWidget(QWidget* widget) {
+    if (secondWidget) secondWidget->hide();
+    widget->show();
+    layout->removeWidget(secondWidget);
     layout->addWidget(widget);
-    layout->addWidget(two);
+    secondWidget = widget;;
+}
+
+void WidgetMain::setEnabledXMLbtn(bool flag)
+{
+    XMLbtn->setEnabled(flag);
+}
+
+void WidgetMain::setEnabledPanel(bool flag) {
+    XMLbtn->setText(flag ? "Создать XML" : "Отменить сохр. XML");
+    for (auto&& wdg: blockingWdgs) {
+        wdg->setEnabled(flag);
+    }
 }

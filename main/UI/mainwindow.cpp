@@ -34,6 +34,21 @@ void MainWindow::viewError(const QString& str) {
     messageBox.exec();
 }
 
+void MainWindow::viewSuccess(const QString& str) {
+    QMessageBox messageBox;
+    int width = messageBox.size().width();
+    int height = messageBox.size().height();
+    messageBox.setText(str);
+    messageBox.setWindowTitle("Успех");
+    messageBox.setIcon(QMessageBox::Information);
+    messageBox.setGeometry(
+                WIDTH_SCREEN / 2 - width / 2,
+                HEIGHT_SCREEN / 2 - height / 2,
+                width,
+                height);
+    messageBox.exec();
+}
+
 void MainWindow::setCentralWidget(QWidget *widget)
 {
     widget->setFixedSize(800, 450);

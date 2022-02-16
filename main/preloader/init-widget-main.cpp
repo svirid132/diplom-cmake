@@ -1,5 +1,6 @@
 #include "init-widget-main.h"
 #include "shared-func.h"
+#include <QList>
 #include <rawfile.h>
 
 void test(MathLogic *const logic, CmdChart *const cmdChart, WidgetMain *const widgetMain) {
@@ -16,11 +17,29 @@ void test(MathLogic *const logic, CmdChart *const cmdChart, WidgetMain *const wi
     widgetMain->setKoefZapCategory(koefZap, getCategoryString(category));
 }
 
-WidgetMain* initWidgetMain(MainWindow& window, WidgetChart* widgetChart, CmdChart* const cmdChart) {
+QList<QPair<QString, QString>> getTag_texts(MathLogic *const mathLogic, const DataWgtXML& dataWgtXML) {
+    QList<QPair<QString, QString>> tag_texts;
+    tag_texts << qMakePair("Date", dataWgtXML.date.toString("yyyy-MM-dd"))
+              << qMakePair("Rudnik", dataWgtXML.rudnik);
+    for (const CountOverAmps& value: mathLogic->getNimp()) {
+        tag_texts << qMakePair("N", QString::number(value.countAmps));
+    }
+    tag_texts << qMakePair("X1", QString::number(mathLogic->getX1()))
+              << qMakePair("Lsh", QString::number(mathLogic->getLsh()))
+              << qMakePair("Date", dataWgtXML.date.toString("yyyy-MM-dd"))
+              << qMakePair("Date", dataWgtXML.date.toString("yyyy-MM-dd"))
+              << qMakePair("Date", dataWgtXML.date.toString("yyyy-MM-dd"))
+              << qMakePair("Date", dataWgtXML.date.toString("yyyy-MM-dd"))
+              << qMakePair("Date", dataWgtXML.date.toString("yyyy-MM-dd"))
+
+}
+
+WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart* widgetChart, CmdChart* const cmdChart) {
     MathLogic* logic = new MathLogic();
     WidgetMain* widgetMain = new WidgetMain();
 
-    widgetMain->setWidget(widgetChart);
+//    widgetMain->setWidget(widgetChart);
+    widgetMain->setWidget(widgetXML, widgetChart);
 
     QObject::connect(widgetMain, &WidgetMain::executeAPI, widgetMain, [=, &window](float Lsh, float h, int period, QString path) {
         try {
@@ -39,6 +58,17 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetChart* widgetChart, CmdChar
             window.viewError(error.what());
         } catch (const ErrorPeriod& error) {
             widgetMain->errorPeriod();
+            window.viewError(error.what());
+        }
+    });
+
+    QObject::connect(widgetXML, &WidgetXML::clickedSave, widgetXML, [=, &window]() {
+        try {
+            widgetXML->getData();
+
+        } catch (const ErrorFile& error) {
+            window.viewError(error.what());
+        } catch (const ErrorPeriod& error) {
             window.viewError(error.what());
         }
     });

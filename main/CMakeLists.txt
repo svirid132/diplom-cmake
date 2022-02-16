@@ -31,6 +31,9 @@ set(PROJECT_SOURCES
         preloader/init-widget-main.cpp
         preloader/init-widget-chart.h
         preloader/init-widget-chart.cpp
+        UI/UI-var.h
+        UI/widget-xml.h
+        UI/widget-xml.cpp
         UI/widgetchart.h
         UI/widgetchart.cpp
         UI/mainwindow.cpp
@@ -69,6 +72,7 @@ target_link_libraries(main PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Charts
     math-logic
+    API
 )
 
 #target_link_libraries(${targetName} Qt5::Charts)

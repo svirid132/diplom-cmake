@@ -11,6 +11,7 @@
 #include "shared-func.h"
 
 #include <UI/mainwindow.h>
+#include <UI/widget-xml.h>
 #include <UI/widgetchart.h>
 #include <UI/widgetmain.h>
 
@@ -21,7 +22,8 @@ void preloader(MainWindow& window) {
     CmdChart* cmdChart = new CmdChart();
 
     WidgetChart* widgetChart = initWidgetChart(cmdChart);
-    WidgetMain* widgetMain = initWidgetMain(window, widgetChart, cmdChart);
+    WidgetXML* widgetXML = new WidgetXML();
+    WidgetMain* widgetMain = initWidgetMain(window, widgetXML, widgetChart, cmdChart);
 
     window.setCentralWidget(widgetMain);
 }

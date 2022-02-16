@@ -152,6 +152,7 @@ void WidgetMain::openFile()
     }
 }
 
-void WidgetMain::setWidget(QWidget* widget) {
+void WidgetMain::setWidget(QWidget* widget, QWidget* two) {
     layout->addWidget(widget);
+    layout->addWidget(two);
 }

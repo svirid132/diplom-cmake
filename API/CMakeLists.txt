@@ -16,6 +16,8 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 
 add_library(API SHARED
+    xmlfile.cpp
+    xmlfile.h
     API-var.h
     rawfile.h
     rawfile.cpp

@@ -16,7 +16,7 @@ public:
     void setKoefZap(float koefZap);
 
     void setKoefZapCategory(float koefZap, QString category);
-    void setWidget(QWidget* widget);
+    void setWidget(QWidget* widget, QWidget* two);
 signals:
     void executeAPI(float Lsh, float h, int period, QString path);
 

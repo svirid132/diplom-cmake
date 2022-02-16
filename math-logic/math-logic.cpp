@@ -24,12 +24,14 @@ QVector<CountOverAmps> MathLogic::getNimp()
 }
 
 void MathLogic::calc(const QVector<CountOverAmps> &Nimp, float Lsh, float h) {
+    this->Lsh = Lsh;
+    this->h = h;
     this->Nimp = Nimp;
-    float Nmax_N0 = caclNmax_N0(Nimp);
+    Nmax_N0 = caclNmax_N0(Nimp);
     QVector<float> glub = calcGlub(Lsh, Nimp.size());
     QVector<QPointF> Nimp_Glub = calcGlub_Nimp(glub, Nimp);
-    float X1 = calcX1(Nimp_Glub);
-    float X1_h = caclX1_h(X1, h);
+    X1 = calcX1(Nimp_Glub);
+    X1_h = caclX1_h(X1, h);
     criticalPoint = calcCriticalPoint(X1_h, Nmax_N0);
     koefZap = calcKoefZap(X1_h, Nmax_N0);
     glub_Nimp = calcGlub_Nimp(glub, Nimp);
@@ -72,13 +74,14 @@ float MathLogic::calcX1(QVector<QPointF> Nimp_Glub) {
 float MathLogic::caclX1_h(float X1, float h) { return X1 / h; }
 
 float MathLogic::caclNmax_N0(QVector<CountOverAmps> Nimp) {
-    int Nmax = 0;
+    Nmax = 0;
     for (int i = 0; i < Nimp.size(); ++i){
         if (Nimp[i].countAmps > Nmax) {
             Nmax = Nimp[i].countAmps;
         }
     }
-    float Nmax_N0 = float(Nmax) / float(Nimp[0].countAmps);
+    N0 = Nimp[0].countAmps;
+    float Nmax_N0 = float(Nmax) / float(N0);
     return Nmax_N0;
 }
 

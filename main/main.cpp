@@ -13,13 +13,21 @@
 #include <exception> // для std::exception
 #include <iostream>
 #include "error.h"
+#include "xmlfile.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    preloader(w);
-    w.show();
+//    MainWindow w;
+//    preloader(w);
+//    w.show();
 
-    return a.exec();
+    QPair<QString, QString> pair = {"sring", "123"};
+    qDebug() << pair.first << pair.second;
+
+    QList<QPair<QString, QString>> list;
+    list.append(pair);
+    XMLFile::write("123.xml", list);
+
+    return 0;
 }

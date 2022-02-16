@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 5.0.2, 2022-02-15T10:31:03. -->
+<!-- Written by QtCreator 5.0.2, 2022-02-15T16:59:28. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -67,7 +67,31 @@
     <value type="bool" key="AutoTest.Framework.QtQuickTest">true</value>
     <value type="bool" key="AutoTest.Framework.QtTest">true</value>
    </valuemap>
-   <valuemap type="QVariantMap" key="AutoTest.CheckStates"/>
+   <valuemap type="QVariantMap" key="AutoTest.CheckStates">
+    <value type="Qt::CheckState" key="1@D:/Project/Diplom/diplom-cmake/tests/math-logic-test/math-logic-test.cpp:MathLogicTest">Checked</value>
+    <value type="Qt::CheckState" key="1@D:/Project/Diplom/diplom-cmake/tests/math-logic-test/math-logic-test.cpp:handleCriticalPoint">Checked</value>
+    <value type="Qt::CheckState" key="1@D:/Project/Diplom/diplom-cmake/tests/math-logic-test/math-logic-test.cpp:handleGlub_Nimp">Checked</value>
+    <value type="Qt::CheckState" key="1@D:/Project/Diplom/diplom-cmake/tests/math-logic-test/math-logic-test.cpp:handleKoefZap">Checked</value>
+    <value type="Qt::CheckState" key="1@D:/Project/Diplom/diplom-cmake/tests/math-logic-test/math-logic-test.cpp:initTestCase">Unchecked</value>
+    <value type="Qt::CheckState" key="1@D:/Project/Diplom/diplom-cmake/tests/raw-file-test/raw-file-test.cpp:RawFileTest">Checked</value>
+    <value type="Qt::CheckState" key="1@D:/Project/Diplom/diplom-cmake/tests/raw-file-test/raw-file-test.cpp:handleRawFile">Checked</value>
+    <value type="Qt::CheckState" key="1@D:/Project/Diplom/diplom-cmake/tests/smath-test/smath-test.cpp:1, 2, 3, 4, 5">Checked</value>
+    <value type="Qt::CheckState" key="1@D:/Project/Diplom/diplom-cmake/tests/smath-test/smath-test.cpp:101.0101">Checked</value>
+    <value type="Qt::CheckState" key="1@D:/Project/Diplom/diplom-cmake/tests/smath-test/smath-test.cpp:2.3, 3.6, 4.8, 5.9, 1.2">Checked</value>
+    <value type="Qt::CheckState" key="1@D:/Project/Diplom/diplom-cmake/tests/smath-test/smath-test.cpp:2.34, 1.26, 3.61, 4.84, 5.93">Checked</value>
+    <value type="Qt::CheckState" key="1@D:/Project/Diplom/diplom-cmake/tests/smath-test/smath-test.cpp:23.2">Checked</value>
+    <value type="Qt::CheckState" key="1@D:/Project/Diplom/diplom-cmake/tests/smath-test/smath-test.cpp:23.2323">Checked</value>
+    <value type="Qt::CheckState" key="1@D:/Project/Diplom/diplom-cmake/tests/smath-test/smath-test.cpp:SmathTest">Checked</value>
+    <value type="Qt::CheckState" key="1@D:/Project/Diplom/diplom-cmake/tests/smath-test/smath-test.cpp:maxValue">Checked</value>
+    <value type="Qt::CheckState" key="1@D:/Project/Diplom/diplom-cmake/tests/smath-test/smath-test.cpp:maxValue_data">Unchecked</value>
+    <value type="Qt::CheckState" key="1@D:/Project/Diplom/diplom-cmake/tests/smath-test/smath-test.cpp:minValue">Checked</value>
+    <value type="Qt::CheckState" key="1@D:/Project/Diplom/diplom-cmake/tests/smath-test/smath-test.cpp:minValue_data">Unchecked</value>
+    <value type="Qt::CheckState" key="1@D:/Project/Diplom/diplom-cmake/tests/smath-test/smath-test.cpp:roundFloat">Checked</value>
+    <value type="Qt::CheckState" key="1@D:/Project/Diplom/diplom-cmake/tests/smath-test/smath-test.cpp:roundFloat_data">Unchecked</value>
+    <value type="Qt::CheckState" key="2@D:/Project/Diplom/diplom-cmake/tests/math-logic-test/CMakeLists.txt:math-logic-test">Checked</value>
+    <value type="Qt::CheckState" key="2@D:/Project/Diplom/diplom-cmake/tests/raw-file-test/CMakeLists.txt:raw-file-test">Checked</value>
+    <value type="Qt::CheckState" key="2@D:/Project/Diplom/diplom-cmake/tests/smath-test/CMakeLists.txt:smath-test">Checked</value>
+   </valuemap>
    <value type="int" key="AutoTest.RunAfterBuild">0</value>
    <value type="bool" key="AutoTest.UseGlobal">true</value>
    <valuelist type="QVariantList" key="ClangCodeModel.CustomCommandLineKey">
@@ -292,14 +316,68 @@
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.CustomExecutableRunConfiguration</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey"></value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">main</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.main</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">main</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">D:/Project/Diplom/build-diplom-cmake-Desktop_Qt_5_15_2_MinGW_64_bit-Debug/main</value>
    </valuemap>
-   <value type="int" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.1">
+    <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
+    <valuelist type="QVariantList" key="CustomOutputParsers"/>
+    <value type="int" key="PE.EnvironmentAspect.Base">2</value>
+    <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">math-logic-test</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.math-logic-test</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">math-logic-test</value>
+    <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">D:/Project/Diplom/build-diplom-cmake-Desktop_Qt_5_15_2_MinGW_64_bit-Debug/tests/math-logic-test</value>
+   </valuemap>
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.2">
+    <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
+    <valuelist type="QVariantList" key="CustomOutputParsers"/>
+    <value type="int" key="PE.EnvironmentAspect.Base">2</value>
+    <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">raw-file-test</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.raw-file-test</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">raw-file-test</value>
+    <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">D:/Project/Diplom/build-diplom-cmake-Desktop_Qt_5_15_2_MinGW_64_bit-Debug/tests/raw-file-test</value>
+   </valuemap>
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.3">
+    <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
+    <valuelist type="QVariantList" key="CustomOutputParsers"/>
+    <value type="int" key="PE.EnvironmentAspect.Base">2</value>
+    <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">smath-test</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.smath-test</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">smath-test</value>
+    <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">D:/Project/Diplom/build-diplom-cmake-Desktop_Qt_5_15_2_MinGW_64_bit-Debug/tests/smath-test</value>
+   </valuemap>
+   <value type="int" key="ProjectExplorer.Target.RunConfigurationCount">4</value>
   </valuemap>
  </data>
  <data>

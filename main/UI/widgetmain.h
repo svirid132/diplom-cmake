@@ -19,8 +19,8 @@ public:
 
     void setKoefZapCategory(float koefZap, QString category);
     void setWidget(QWidget* widget);
-    void setEnabledXMLbtn(bool flag);
     void setEnabledPanel(bool flag);
+    void successChange();
 signals:
     void executeAPI(float Lsh, float h, int period, QString path);
     void clickedSaveXML(bool);
@@ -29,11 +29,14 @@ private slots:
     void openFile();
 
 private:
-    float Lsh;
-    float h;
+    struct Result {
+        float Lsh;
+        float h;
+        int period;
+    } successResult, middleResult;
+
     bool isError;
     QString filenameAPI;
-    int period;
 
     QSpinBox* spinBoxPeriod;
     QLabel* labelFile;
@@ -46,8 +49,23 @@ private:
 
     QHBoxLayout* layout;
 
-    void setLabelFilename(const QString& filename);
+    const QString preChange = "(*) ";
+    const QString strLsh = "Lsh:";
+    const QString strh = "h:";
+    const QString strPeriod = "Period(sec):";
+    const QString skip = "      ";
+
+    //Label
+    QLabel* labelsLsh;
+    QLabel* labelsh;
+    QLabel* labelPeriod;
+    //labelFile
+
+    void setEnabledXMLbtn(bool flag);
+    void setLabelFilename(const QString &path, bool preChange = true);
     void fillLayoutPanel(QFormLayout *const layout);
+    bool isChange();
+    void updateEnabledXMLbtn();
 };
 
 #endif // WIDGETMAIN_H

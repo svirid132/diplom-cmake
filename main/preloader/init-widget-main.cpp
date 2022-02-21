@@ -95,7 +95,7 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
             widgetMain->setKoefZapCategory(koefZap, categoryString);
 
             cmdChart->update(logic);
-            widgetMain->setEnabledXMLbtn(true);
+            widgetMain->successChange();
 
             QStringList list;
             for (auto&& value : Nimp) {
@@ -104,11 +104,9 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
             listModel->setStringList(list);
 
         } catch (const ErrorFile& error) {
-            widgetMain->setEnabledXMLbtn(false);
             widgetMain->errorFile();
             window.viewError(error.what());
         } catch (const ErrorPeriod& error) {
-            widgetMain->setEnabledXMLbtn(false);
             widgetMain->errorPeriod();
             window.viewError(error.what());
         }
@@ -129,10 +127,10 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
 
     QObject::connect(widgetMain, &WidgetMain::clickedSaveXML, widgetMain, [=](bool flag) {
         if (flag) {
-            widgetMain->setEnabledPanel(!flag);
+            widgetMain->setEnabledPanel(false);
             widgetMain->setWidget(widgetnJoinXML);
         } else {
-            widgetMain->setEnabledPanel(!flag);
+            widgetMain->setEnabledPanel(true);
             widgetMain->setWidget(widgetChart);
         }
     });

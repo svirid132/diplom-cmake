@@ -18,30 +18,21 @@
 
 WidgetMain::WidgetMain(QWidget *parent)
     : QWidget{parent},
-      Lsh(1),
-      h(1),
-      period(1),
+      successResult({1, 1, 1}),
+      middleResult({1, 1, 1}),
       isError(false),
-      layout(new QHBoxLayout()),
-      secondWidget(nullptr)
+      secondWidget(nullptr),
+      layout(new QHBoxLayout())
 {
     layout->setSpacing(5);
     layout->setMargin(10);
 
-    QVBoxLayout* vertical = new QVBoxLayout();
-//    vertical->setDirection(QBoxLayout::Down);
-//    vertical->setSpacing(0);
-//    vertical->setMargin(0);
-
     QFormLayout *layoutPanel = new QFormLayout;
     layoutPanel->setVerticalSpacing(10);
-//    layoutPanel->setMargin(0);
     fillLayoutPanel(layoutPanel);
     leftPanel = new QWidget();
     leftPanel->setLayout(layoutPanel);
     leftPanel->setFixedWidth(190);
-
-//    leftPanel->setStyleSheet("background-color: red");
 
     layout->addWidget(leftPanel);
     this->setLayout(layout);
@@ -65,10 +56,12 @@ void WidgetMain::setKoefZapCategory(float koefZap, QString category)
     labelCategory->setText(fullCategory);
 }
 
-void WidgetMain::setLabelFilename(const QString& path)
+void WidgetMain::setLabelFilename(const QString& path, bool preChange)
 {
     int positionFilename = path.lastIndexOf("/") + 1;
-    QString filename = path.mid(positionFilename);
+    if (preChange) setEnabledXMLbtn(false);
+    QString strChange = preChange ? this->preChange : "";
+    QString filename = strChange + path.mid(positionFilename);
     const int wordWidth = 15;
     const int countPath = filename.size() / wordWidth;
     for (int i = 0; i < countPath; ++i) {
@@ -80,8 +73,8 @@ void WidgetMain::setLabelFilename(const QString& path)
 
 void WidgetMain::fillLayoutPanel(QFormLayout *const layout)
 {
-    QLabel* labelsLsh = new QLabel(tr("Lsh:"));
-    QLabel* labelsh = new QLabel(tr("h:"));
+    labelsLsh = new QLabel(strLsh);
+    labelsh = new QLabel(strh);
     QDoubleSpinBox* spinBoxLsh = new QDoubleSpinBox;
     QDoubleSpinBox* spinBoxh = new QDoubleSpinBox;
     spinBoxLsh->setMinimum(1);
@@ -89,10 +82,22 @@ void WidgetMain::fillLayoutPanel(QFormLayout *const layout)
     layout->addRow(labelsLsh, spinBoxLsh);
     layout->addRow(labelsh, spinBoxh);
     connect(spinBoxLsh, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [=](double value) {
-        Lsh = float(value);
+        middleResult.Lsh = float(value);
+        if (middleResult.Lsh == successResult.Lsh) {
+            labelsLsh->setText(strLsh);
+        } else {
+            labelsLsh->setText(preChange + strLsh);
+        }
+        updateEnabledXMLbtn();
     });
     connect(spinBoxh, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [=](double value) {
-        h = float(value);
+        middleResult.h = float(value);
+        if (middleResult.h == successResult.h) {
+            labelsh->setText(strh);
+        } else {
+            labelsh->setText(preChange + strh);
+        }
+        updateEnabledXMLbtn();
     });
 
     QPushButton* selectButton = new QPushButton("Обзор");
@@ -108,12 +113,18 @@ void WidgetMain::fillLayoutPanel(QFormLayout *const layout)
     groupBox->setLayout(vertical);
     layout->addRow(groupBox);
 
-    QLabel* labelPeriod = new QLabel(tr("Period(sec):"));
+    labelPeriod = new QLabel(strPeriod + skip);
     spinBoxPeriod = new QSpinBox;
     spinBoxPeriod->setMinimum(1);
     connect(spinBoxPeriod, QOverload<int>::of(&QSpinBox::valueChanged), this, [=](int num){
         spinBoxPeriod->setStyleSheet("");
-        period = num;
+        middleResult.period = num;
+        if (middleResult.period == successResult.period) {
+            labelPeriod->setText(strPeriod + skip);
+        } else {
+            labelPeriod->setText(preChange + strPeriod);
+        }
+        updateEnabledXMLbtn();
     });
     layout->addRow(labelPeriod, spinBoxPeriod);
 
@@ -134,16 +145,30 @@ void WidgetMain::fillLayoutPanel(QFormLayout *const layout)
     QPushButton* executeButton = new QPushButton("Выполнить");
     layout->addRow(executeButton);
     connect(executeButton, &QPushButton::clicked, this, [=](){
-        emit executeAPI(Lsh, h, period, filenameAPI);
+        emit executeAPI(middleResult.Lsh, middleResult.h, middleResult.period, filenameAPI);
     });
 
     blockingWdgs << spinBoxLsh << spinBoxh << groupBox << spinBoxPeriod << executeButton;
 
     XMLbtn = new QPushButton("Создать XML");
     connect(XMLbtn, QOverload<bool>::of(&QPushButton::clicked), this, &WidgetMain::clickedSaveXML);
-//    XMLbtn->setEnabled(false);
     XMLbtn->setCheckable(true);
     layout->addRow(XMLbtn);
+}
+
+bool WidgetMain::isChange()
+{
+    return !(middleResult.Lsh == successResult.Lsh && middleResult.h == successResult.h
+             && middleResult.period == successResult.period);
+}
+
+void WidgetMain::updateEnabledXMLbtn()
+{
+    if (isChange()){
+        setEnabledXMLbtn(false);
+    } else {
+        setEnabledXMLbtn(true);
+    }
 }
 
 void WidgetMain::openFile()
@@ -170,6 +195,15 @@ void WidgetMain::setWidget(QWidget* widget) {
     layout->removeWidget(secondWidget);
     layout->addWidget(widget);
     secondWidget = widget;;
+}
+
+void WidgetMain::successChange() {
+    labelsLsh->setText(strLsh);
+    labelsh->setText(strh);
+    setLabelFilename(filenameAPI, false);
+    labelPeriod->setText(strPeriod + skip);
+
+    setEnabledXMLbtn(true);
 }
 
 void WidgetMain::setEnabledXMLbtn(bool flag)

@@ -1,26 +1,33 @@
 #include "widget-xml.h"
 
+#include <QComboBox>
 #include <QDate>
 #include <QDateEdit>
+#include <QDebug>
 #include <QFormLayout>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
 #include <QSpinBox>
+#include <QStringListModel>
 
 WidgetXML::WidgetXML(QWidget *parent) : QWidget(parent)
 {
     QFormLayout* formLayout = new QFormLayout();
 
+    this->date = QDate::currentDate();
     QDateEdit* dateEdit = new QDateEdit(QDate::currentDate());
     connect(dateEdit, &QDateEdit::userDateChanged, dateEdit, [=](const QDate &date) {
         this->date = date;
     });
     formLayout->addRow(new QLabel("Дата:"), dateEdit);
 
-    QLineEdit* rudnikEdit = new QLineEdit();
+    const QStringList list = QStringList({"Скалистый", "123"});
+    this->rudnik = list.at(0);
+    QComboBox* rudnikEdit = new QComboBox();
+    rudnikEdit->setModel(new QStringListModel(list));
     formLayout->addRow(new QLabel("Рудник:"), rudnikEdit);
-    connect(rudnikEdit, &QLineEdit::textChanged, rudnikEdit, [=](const QString &text) {
+    connect(rudnikEdit, &QComboBox::currentTextChanged, rudnikEdit, [=](const QString &text) {
         this->rudnik = text;
     });
 
@@ -36,20 +43,23 @@ WidgetXML::WidgetXML(QWidget *parent) : QWidget(parent)
         this->izmVip = text;
     });
 
+    this->XX = 0;
     QSpinBox* XXEdit = new QSpinBox();
     formLayout->addRow(new QLabel("XX:"), XXEdit);
     connect(XXEdit, QOverload<int>::of(&QSpinBox::valueChanged), XXEdit, [=](int num) {
         this->XX = num;
     });
 
+    this->YY = 0;
     QSpinBox* YYEdit = new QSpinBox();
     formLayout->addRow(new QLabel("YY:"), YYEdit);
     connect(YYEdit, QOverload<int>::of(&QSpinBox::valueChanged), YYEdit, [=](int num) {
         this->YY = num;
     });
 
+    this->ZZ = 0;
     QSpinBox* ZZEdit = new QSpinBox();
-    formLayout->addRow(new QLabel("YY:"), ZZEdit);
+    formLayout->addRow(new QLabel("ZZ:"), ZZEdit);
     connect(ZZEdit, QOverload<int>::of(&QSpinBox::valueChanged), ZZEdit, [=](int num) {
         this->ZZ = num;
     });

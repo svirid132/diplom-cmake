@@ -4,8 +4,12 @@ project(main VERSION 0.1 LANGUAGES CXX)
 
 include_directories(../smath)
 include_directories(../API)
+include_directories(../API/docx)
+include_directories(../API/docx/libary/zip)
 include_directories(../math-logic)
 include_directories(../error)
+
+#include_directories("D:/Programming/libary/QuaZip/include/QuaZip-Qt5-1.2/quazip")
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -19,6 +23,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Charts REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Charts REQUIRED)
 #find_package(Qt5Charts REQUIRED)
+#find_package(QuaZip-Qt5)
 
 set(PROJECT_SOURCES
         preloader.cpp
@@ -45,6 +50,8 @@ set(PROJECT_SOURCES
         model/n-model.cpp
         shared-func.h
         shared-func.cpp
+        ../API/docx/file.qrc
+
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -70,11 +77,21 @@ else()
     endif()
 endif()
 
+#LINK_DIRECTORIES("D:/Programming/libary/QuaZip/bin")
+#add_library(SDL "D:/Programming/libary/QuaZip/bin/libquazip1-qt5.dll")
+
+#set(SDL "D:/Programming/libary/QuaZip/bin/libquazip1-qt5.dll")
+
+#add_library(libquazip1-qt5 SHARED IMPORTED)
+#set_property(TARGET libquazip1-qt5 PROPERTY
+#             IMPORTED_LOCATION "D:/Programming/libary/QuaZip/bin/libquazip1-qt5.dll")
+
 target_link_libraries(main PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Charts
     math-logic
     API
+    docx
 )
 
 #target_link_libraries(${targetName} Qt5::Charts)

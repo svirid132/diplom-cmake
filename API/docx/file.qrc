@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>assets/docx-1.docx</file>
+        <file>assets/123.txt</file>
+    </qresource>
+</RCC>

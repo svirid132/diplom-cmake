@@ -5,6 +5,7 @@
 #include <QStringListModel>
 #include <QTreeView>
 #include <cmdchart.h>
+#include <docx.h>
 #include <math-logic.h>
 #include <rawfile.h>
 #include <xmlfile.h>
@@ -133,6 +134,25 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
             widgetMain->setEnabledPanel(true);
             widgetMain->setWidget(widgetChart);
         }
+    });
+
+    QObject::connect(widgetXML, &WidgetXML::createDocx, widgetXML, [=]() {
+        Docx docx;
+        DocData docData;
+        docData.N0 = logic->getN0();
+        docData.Nmax = logic->getNmax();
+        docData.Nmax_N0 = logic->getNmax_N0();
+        DataWgtXML dataWgtXML = widgetXML->getData();
+        docData.X = dataWgtXML.XX;
+        docData.Xm = logic->getX1();
+        docData.Xm_h= logic->getX1_h();
+        docData.Y = dataWgtXML.YY;
+        docData.Z = dataWgtXML.ZZ;
+        docData.category = getCategoryString(logic->getCategory());
+        docData.h = logic->geth();
+
+        docx.setData(docData, logic->getGlub_Nimp().toList(), logic->getCriticalPoint());
+        docx.create();
     });
 
     test(logic, cmdChart, widgetMain, listModel);

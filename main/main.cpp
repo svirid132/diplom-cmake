@@ -10,6 +10,7 @@
 #include "smath.h"
 #include "math-logic.h"
 #include "preloader.h"
+#include <docx.h>
 #include <exception> // для std::exception
 #include <iostream>
 #include "error.h"
@@ -21,13 +22,6 @@ int main(int argc, char *argv[])
     MainWindow w;
     preloader(w);
     w.show();
-
-//    QPair<QString, QString> pair = {"sring", "123"};
-//    qDebug() << pair.first << pair.second;
-
-//    QList<QPair<QString, QString>> list;
-//    list.append(pair);
-//    XMLFile::write("123.xml", list);
 
     return a.exec();
 }

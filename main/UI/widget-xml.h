@@ -23,6 +23,7 @@ private:
 
 signals:
     void clickedSave();
+    void createDocx();
 };
 
 #endif // WIDGETXML_H

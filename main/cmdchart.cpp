@@ -28,6 +28,7 @@ void CmdChart::update(MathLogic *const logic) {
 
 void CmdChart::handleX1dh_NmaxdN0(MathLogic *const logic){
     QPointF criticalPoint = logic->getCriticalPoint();
+    qDebug() << criticalPoint;
     if (criticalSeriesPoint) {
         this->chartX1dh_NmaxdN0->removeSeries(criticalSeriesPoint);
     }

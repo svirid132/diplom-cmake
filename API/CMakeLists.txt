@@ -4,6 +4,9 @@ project(API LANGUAGES CXX)
 
 include_directories(../smath)
 include_directories(../error)
+include_directories(docx)
+
+add_subdirectory(docx)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
@@ -23,7 +26,7 @@ add_library(API SHARED
     rawfile.cpp
 )
 
-target_link_libraries(API PRIVATE Qt${QT_VERSION_MAJOR}::Core smath error)
-target_include_directories(API PUBLIC ../smath ../error)
+target_link_libraries(API PRIVATE Qt${QT_VERSION_MAJOR}::Core smath error docx)
+target_include_directories(API PUBLIC ../smath ../error docx)
 
 target_compile_definitions(API PRIVATE API_LIBRARY)

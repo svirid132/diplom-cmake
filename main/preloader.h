@@ -9,9 +9,9 @@
 #include <QValueAxis>
 #include <QLineSeries>
 
-#include <UI/mainwindow.h>
-#include <UI/widgetchart.h>
-#include <UI/widgetmain.h>
+#include "UI/mainwindow.h"
+#include "UI/widgetchart.h"
+#include "UI/widgetmain.h"
 
 void preloader(MainWindow& window);
 

@@ -2,9 +2,6 @@ cmake_minimum_required(VERSION 3.5)
 
 project(raw-file-test LANGUAGES CXX)
 
-include_directories(../../smath)#Необходим для API
-include_directories(../../API)
-
 find_package(QT NAMES Qt5 Qt6 COMPONENTS Test REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Test REQUIRED)
 
@@ -23,5 +20,5 @@ qt5_add_resources(SOURCES file.qrc)
 add_executable(raw-file-test ${SOURCES})
 add_test(NAME raw-file-test COMMAND raw-file-test)
 
-target_link_libraries(raw-file-test PRIVATE Qt${QT_VERSION_MAJOR}::Test API smath)
+target_link_libraries(raw-file-test PRIVATE Qt5::Test API smath)
 

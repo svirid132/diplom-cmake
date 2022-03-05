@@ -5,7 +5,7 @@
 #include <QDebug>
 #include <QErrorMessage>
 #include <QMessageBox>
-#include "global-var.h"
+#include "../global-var.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)

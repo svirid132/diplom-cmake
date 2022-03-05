@@ -2,11 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 
 project(docx-test LANGUAGES CXX)
 
-include_directories(../../API/docx)
-include_directories(../../smath)
-
-find_package(QT NAMES Qt5 Qt6 COMPONENTS Test REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Test REQUIRED)
+find_package(Qt5 COMPONENTS Test REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 

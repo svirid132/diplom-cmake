@@ -5,7 +5,7 @@
 #include <QStringListModel>
 #include <QTreeView>
 #include <cmdchart.h>
-#include <docx.h>
+#include <docx/docx.h>
 #include <math-logic.h>
 #include <rawfile.h>
 #include <xmlfile.h>

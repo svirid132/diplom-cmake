@@ -3,7 +3,7 @@
 
 #include <QDateEdit>
 #include <QWidget>
-#include "UI/UI-var.h"
+#include "UI-var.h"
 
 class WidgetXML : public QWidget
 {

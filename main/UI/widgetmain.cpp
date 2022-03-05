@@ -14,7 +14,7 @@
 #include <QTextEdit>
 #include <qchartview.h>
 #include <qchartview.h>
-#include "global-var.h"
+#include "../global-var.h"
 
 WidgetMain::WidgetMain(QWidget *parent)
     : QWidget{parent},

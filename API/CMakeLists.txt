@@ -1,32 +1,25 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(API LANGUAGES CXX)
-
-include_directories(../smath)
-include_directories(../error)
-include_directories(docx)
-
-add_subdirectory(docx)
-
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
+find_package(Qt5 COMPONENTS Core REQUIRED)
+add_subdirectory(docx)
 
-add_library(API SHARED
+add_library(API
     xmlfile.cpp
-    xmlfile.h
-    API-var.h
-    rawfile.h
     rawfile.cpp
 )
 
-target_link_libraries(API PRIVATE Qt${QT_VERSION_MAJOR}::Core smath error docx)
-target_include_directories(API PUBLIC ../smath ../error docx)
+target_include_directories(API
+          INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}
+          )
 
-target_compile_definitions(API PRIVATE API_LIBRARY)
+target_link_libraries(API PRIVATE Qt5::Core smath error docx)
+
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    install(TARGETS API)
+endif()

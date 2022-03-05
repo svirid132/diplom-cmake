@@ -2,10 +2,6 @@ cmake_minimum_required(VERSION 3.5)
 
 project(math-logic-test LANGUAGES CXX)
 
-include_directories(../../API)
-include_directories(../../math-logic)
-include_directories(../../smath)
-
 find_package(QT NAMES Qt5 Qt6 COMPONENTS Test REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Test REQUIRED)
 

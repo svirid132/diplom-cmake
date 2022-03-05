@@ -10,10 +10,10 @@
 #include "math-logic.h"
 #include "shared-func.h"
 
-#include <UI/mainwindow.h>
-#include <UI/widget-xml.h>
-#include <UI/widgetchart.h>
-#include <UI/widgetmain.h>
+#include "UI/mainwindow.h"
+#include "UI/widget-xml.h"
+#include "UI/widgetchart.h"
+#include "UI/widgetmain.h"
 
 #include "preloader/init-widget-chart.h"
 #include "preloader/init-widget-main.h"

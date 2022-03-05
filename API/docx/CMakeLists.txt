@@ -2,43 +2,51 @@ cmake_minimum_required(VERSION 3.14)
 
 project(docx LANGUAGES CXX)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
+find_package(Qt5 COMPONENTS Core REQUIRED)
 find_package(QuaZip-Qt5)
 
-set(SOURCE
+set(sources
     handler-document.cpp
     handler-chart.cpp
     docx.cpp
     )
 
-set(HEADER
-    handler-document.h
-    docx-data.h
-    handler-chart.h
-    docx.h
-    libary/zip/zip.h
-    libary/zip/miniz.h
-    )
-
-include_directories(libary/zip)
-add_subdirectory(libary/zip)
-
-qt5_add_resources(SOURCE file.qrc)
-
+qt5_add_resources(sources file.qrc)
 add_library(docx STATIC
-    ${HEADER}
-    ${SOURCE}
-    ${SOURCE_LIB}    
+    ${sources}
 )
 
-target_link_libraries(docx PRIVATE Qt${QT_VERSION_MAJOR}::Core zip QuaZip::QuaZip)
+target_include_directories(docx
+          INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}
+          )
 
-install(TARGETS docx)
+target_link_libraries(docx PRIVATE Qt5::Core QuaZip::QuaZip)
+
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    install(TARGETS docx)
+
+    if(WIN32)
+        #dlls
+        include(HandleFunctions.txt)
+        find_package(ZLIB)
+        get_target_property(raw_path_zlib ZLIB::ZLIB LOCATION)
+        handleZlib(${raw_path_zlib} path_zlib)
+        if(NOT EXISTS ${path_zlib})
+            message("ZLIB: not find")
+        endif()
+        get_target_property(QuaZip_location QuaZip::QuaZip LOCATION)
+        list(APPEND list_dlls ${path_zlib} ${QuaZip_location})
+        install(
+            FILES
+            ${list_dlls}
+            DESTINATION bin
+            )
+    endif()
+
+endif()

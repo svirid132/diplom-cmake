@@ -1,0 +1,26 @@
+function(handleZlib fullpath output_path)
+    set(path_res "")
+
+    #path
+    set(path ${fullpath})
+    #back
+    string(FIND ${path} / finded_num REVERSE)#find path
+    string(SUBSTRING ${path} 0 ${finded_num} path)# remove path
+    #back
+    string(FIND ${path} / finded_num REVERSE)#find path
+    string(SUBSTRING ${path} 0 ${finded_num} path)# remove path
+    string(APPEND path_res ${path} /bin)
+
+    #filename libzlib.dll
+    set(path ${fullpath})
+    #back directory
+    string(FIND ${path} / finded_num REVERSE)#find /libzlib.dll.a
+    string(SUBSTRING ${path} ${finded_num} -1 path)# str = /libzlib.dll.a
+    string(SUBSTRING ${path} 1 -1 path)# remove /
+    #dll
+    string(REGEX MATCH "^.+\.dll"
+    path ${path})
+    string(APPEND path_res /${path})
+
+    set(${output_path} ${path_res} PARENT_SCOPE)
+endfunction()

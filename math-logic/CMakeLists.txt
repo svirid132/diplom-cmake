@@ -1,10 +1,3 @@
-cmake_minimum_required(VERSION 3.14)
-
-project(math-logic LANGUAGES CXX)
-
-include_directories(../smath)
-include_directories(../API)
-
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -12,15 +5,28 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
+find_package(Qt5 COMPONENTS Core REQUIRED)
 
-add_library(math-logic SHARED
+set(header
     math-var.h
     math-logic.h
+    )
+
+set(source
     math-logic.cpp
+    )
+
+add_library(math-logic STATIC
+    ${header}
+    ${source}
 )
 
-target_link_libraries(math-logic PRIVATE Qt${QT_VERSION_MAJOR}::Core)
+target_include_directories(math-logic
+          INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}
+          )
 
-target_compile_definitions(math-logic PRIVATE MATH_LOGIC_LIBRARY)
+target_link_libraries(math-logic PRIVATE Qt5::Core smath API)
+
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    install(TARGETS math-logic)
+endif()

@@ -4,7 +4,7 @@ Number:
 text:
 <w:r w:rsidR="00CD17DF" w:rsidRPr="00CD17DF"><w:rPr><w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma"/></w:rPr><w:t>words</w:t></w:r>
 
-text + space:
+(space) + text + (space):
 <w:r w:rsidR="00CD17DF" w:rsidRPr="00CD17DF"><w:rPr><w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma"/></w:rPr><w:t xml:space="preserve">words_space </w:t></w:r>
 
 text + bold:

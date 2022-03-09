@@ -19,6 +19,7 @@ N_0 = 20
 X_m/h = 27.4
 N_{max}/N_0 = 99.95
 h = 4.5
+category = НЕОПАСНО
 koefZap = 1.84
 product = РВ-2
 dataProduct = 19.01.2022

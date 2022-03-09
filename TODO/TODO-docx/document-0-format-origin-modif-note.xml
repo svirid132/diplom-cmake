@@ -1,0 +1,395 @@
+<!-- утверждаю ... -->
+<w:p w14:paraId="47C5FFD4" w14:textId="77777777" w:rsidR="00EA3CBB" w:rsidRPr="003135AB" w:rsidRDefault="00924E3F" w:rsidP="00A423B1">
+    <w:pPr>
+        <w:ind w:right="-97" />
+        <w:rPr>
+            <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+            <w:lang w:eastAsia="en-US" />
+        </w:rPr>
+    </w:pPr>
+    <w:r>
+        <w:rPr>
+            <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        </w:rPr>
+        <w:t>Главный</w:t>
+    </w:r>
+    <w:r w:rsidR="00FF406A" w:rsidRPr="00512446">
+        <w:rPr>
+            <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        </w:rPr>
+        <w:t xml:space="preserve"> геотехник </w:t>
+    </w:r>
+    <w:r w:rsidR="00FF406A" w:rsidRPr="003135AB">
+        <w:rPr>
+            <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        </w:rPr>
+        <w:t>ЗФ ПАО «ГМК «Норильский никель»</w:t>
+    </w:r>
+    <w:r w:rsidR="00FF406A" w:rsidRPr="00512446">
+        <w:rPr>
+            <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        </w:rPr>
+        <w:t xml:space="preserve"> – директор Центра геодинамической безопасности </w:t>
+    </w:r>
+    <w:r w:rsidR="00EA3CBB" w:rsidRPr="003135AB">
+        <w:rPr>
+            <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+            <w:lang w:eastAsia="en-US" />
+        </w:rPr>
+        <w:t xml:space="preserve"></w:t>
+    </w:r>
+</w:p> <!-- Имя утверждаю прололжение выше-->
+<w:p w14:paraId="11F449CD" w14:textId="77777777" w:rsidR="00EA3CBB" w:rsidRPr="003135AB" w:rsidRDefault="00EA3CBB" w:rsidP="00A423B1">
+    <w:pPr>
+        <w:ind w:right="-142" />
+        <w:rPr>
+            <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+            <w:lang w:eastAsia="en-US" />
+        </w:rPr>
+    </w:pPr>
+</w:p><w:p w14:paraId="63BFF285" w14:textId="77777777" w:rsidR="00EA3CBB" w:rsidRPr="003135AB" w:rsidRDefault="00EA3CBB" w:rsidP="00A423B1">
+    <w:pPr>
+        <w:ind w:right="-142" />
+        <w:jc w:val="right" />
+        <w:rPr>
+            <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        </w:rPr>
+    </w:pPr>
+</w:p><w:p w14:paraId="55C7C93B" w14:textId="77777777" w:rsidR="00EA3CBB" w:rsidRPr="003135AB" w:rsidRDefault="00924E3F" w:rsidP="00A423B1">
+    <w:pPr>
+        <w:ind w:right="-97" />
+        <w:jc w:val="right" />
+        <w:rPr>
+            <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        </w:rPr>
+    </w:pPr>
+    <w:r>
+        <w:rPr>
+            <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        </w:rPr>
+        <w:t>В.П. Марысюк</w:t>
+    </w:r>
+</w:p> <!-- РВ-2 от ...-->
+<w:r>
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        <w:b />
+        <w:color w:val="000000" />
+    </w:rPr>
+    <w:t>РВ-2</w:t>
+</w:r><w:r w:rsidR="000F3850">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        <w:b />
+        <w:color w:val="000000" />
+    </w:rPr>
+    <w:t xml:space="preserve"></w:t>
+</w:r><w:r w:rsidR="000F3850" w:rsidRPr="000F3850">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        <w:b />
+        <w:color w:val="000000" />
+    </w:rPr>
+    <w:t xml:space="preserve">от </w:t>
+</w:r><w:r>
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        <w:b />
+    </w:rPr>
+    <w:t>19.01.2022</w:t>
+</w:r> <!-- Председатель комиссии: -->
+<w:r>
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        <w:color w:val="000000" />
+        <w:lang w:eastAsia="en-US" />
+    </w:rPr>
+    <w:t>И.о. главного</w:t>
+</w:r><w:r w:rsidR="002720E7">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        <w:color w:val="000000" />
+        <w:lang w:eastAsia="en-US" />
+    </w:rPr>
+    <w:t xml:space="preserve"> инженер</w:t>
+</w:r><w:r>
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        <w:color w:val="000000" />
+        <w:lang w:eastAsia="en-US" />
+    </w:rPr>
+    <w:t>а</w:t>
+</w:r><w:r w:rsidR="002720E7">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        <w:color w:val="000000" />
+        <w:lang w:eastAsia="en-US" />
+    </w:rPr>
+    <w:t xml:space="preserve"></w:t>
+</w:r><w:r w:rsidR="0065760A">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        <w:color w:val="000000" />
+        <w:lang w:eastAsia="en-US" />
+    </w:rPr>
+    <w:t>Ц</w:t>
+</w:r><w:r w:rsidR="002720E7">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        <w:color w:val="000000" />
+        <w:lang w:eastAsia="en-US" />
+    </w:rPr>
+    <w:t xml:space="preserve">ентра геодинамической безопасности </w:t>
+</w:r><w:r w:rsidR="00D82696" w:rsidRPr="00512446">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+    </w:rPr>
+    <w:t xml:space="preserve">ЗФ ПАО «ГМК </w:t>
+</w:r><w:r w:rsidR="002720E7">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+    </w:rPr>
+    <w:t>«Норильский никель» (далее – Ц</w:t>
+</w:r><w:r>
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+    </w:rPr>
+    <w:t>ГБ, ЗФ соответственно) Сергунин М.П</w:t>
+</w:r><w:r w:rsidR="00D82696" w:rsidRPr="00512446">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+    </w:rPr>
+    <w:t>.</w:t>
+</w:r> <!-- Члены комиссии (1):-->
+<w:r w:rsidRPr="00512446">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+    </w:rPr>
+    <w:t xml:space="preserve">1. Начальник </w:t>
+</w:r><w:r w:rsidR="002720E7">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+    </w:rPr>
+    <w:t>подземного участка прогноза и предотвращения горных ударов рудника «</w:t>
+</w:r><w:r w:rsidR="00B32969">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+    </w:rPr>
+    <w:t>Скалистый</w:t>
+</w:r><w:r w:rsidR="002720E7">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+    </w:rPr>
+    <w:t>» ЦГБ ЗФ Шаховцев В.Е</w:t>
+</w:r> <!-- Члены комиссии: (2)-->
+<w:r w:rsidRPr="00512446">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+    </w:rPr>
+    <w:t>2. </w:t>
+</w:r><w:r w:rsidR="001F21A2">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+    </w:rPr>
+    <w:t>И.о. н</w:t>
+</w:r><w:r w:rsidR="002720E7">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+    </w:rPr>
+    <w:t>ачальник</w:t>
+</w:r><w:r w:rsidR="001F21A2">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+    </w:rPr>
+    <w:t>а</w:t>
+</w:r><w:r w:rsidR="002720E7">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+    </w:rPr>
+    <w:t xml:space="preserve"> отдела геотехнического сопровождения горных работ (далее </w:t>
+</w:r><w:r w:rsidR="00A423B1">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+    </w:rPr>
+    <w:t xml:space="preserve">– </w:t>
+</w:r><w:r w:rsidR="00924E3F">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+    </w:rPr>
+    <w:t>ОГТСГР) ЦГБ ЗФ Сазнов В.В</w:t>
+</w:r> <!-- Дата -->
+<w:r w:rsidR="00B32969">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+    </w:rPr>
+    <w:t>19.01.2022</w:t>
+</w:r> <!-- Коэффицент запаса -->
+<w:r w:rsidR="00B32969">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        <w:lang w:eastAsia="en-US" />
+    </w:rPr>
+    <w:t>1.84</w:t>
+</w:r> <!-- Выработка-->
+<w:r w:rsidR="00B32969">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+    </w:rPr>
+    <w:t>РВ-2</w:t>
+</w:r> <!-- Дата выработки-->
+<w:r w:rsidR="00B32969">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+    </w:rPr>
+    <w:t>19.01.2022</w:t>
+</w:r> <!-- Председатель коммисии имя-->
+<w:r w:rsidRPr="006531FA">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        <w:b />
+        <w:lang w:eastAsia="en-US" />
+    </w:rPr>
+    <w:tab />
+</w:r><w:r w:rsidRPr="006531FA">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        <w:b />
+        <w:lang w:eastAsia="en-US" />
+    </w:rPr>
+    <w:tab />
+    <w:t xml:space="preserve"></w:t>
+</w:r><w:r w:rsidR="001F21A2">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        <w:b />
+        <w:lang w:eastAsia="en-US" />
+    </w:rPr>
+    <w:t xml:space="preserve">                            М.П. Сергунин</w:t>
+</w:r> <!-- Председатель коммисии имя modif-->
+<w:tcPr>
+    <w:tcW w:w="4531" w:type="dxa" />
+</w:tcPr><w:p w14:paraId="21402027" w14:textId="11C7417B" w:rsidR="002879B7" w:rsidRDefault="002879B7" w:rsidP="002879B7">
+    <w:pPr>
+        <w:jc w:val="right" />
+        <w:rPr>
+            <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        </w:rPr>
+    </w:pPr>
+    <w:r>
+        <w:rPr>
+            <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+            <w:b />
+        </w:rPr>
+        <w:t>М.П. Сергунин</w:t>
+    </w:r>
+</w:p> <!-- Члены коммисии 1 имя-->
+<w:r w:rsidRPr="006531FA">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        <w:b />
+        <w:lang w:eastAsia="en-US" />
+    </w:rPr>
+    <w:tab />
+</w:r><w:r w:rsidRPr="006531FA">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        <w:b />
+        <w:lang w:eastAsia="en-US" />
+    </w:rPr>
+    <w:tab />
+    <w:t xml:space="preserve"></w:t>
+</w:r><w:r w:rsidR="003A458E">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        <w:b />
+        <w:lang w:eastAsia="en-US" />
+    </w:rPr>
+    <w:t xml:space="preserve"></w:t>
+</w:r><w:r w:rsidR="002E250D">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        <w:b />
+        <w:lang w:eastAsia="en-US" />
+    </w:rPr>
+    <w:t xml:space="preserve"></w:t>
+</w:r><w:r w:rsidR="003A458E">
+    <w:rPr>
+        <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        <w:b />
+        <w:lang w:eastAsia="en-US" />
+    </w:rPr>
+    <w:t>В.Е. Шаховцев</w:t>
+</w:r> <!-- Члены коммисии 1 имя modif-->
+<w:tcPr>
+    <w:tcW w:w="4531" w:type="dxa" />
+</w:tcPr><w:p w14:paraId="0F2A81C1" w14:textId="08E4F8EF" w:rsidR="002879B7" w:rsidRDefault="002879B7" w:rsidP="00A57BE3">
+    <w:pPr>
+        <w:spacing w:line="360" w:lineRule="auto" />
+        <w:jc w:val="right" />
+        <w:rPr>
+            <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        </w:rPr>
+    </w:pPr>
+    <w:r>
+        <w:rPr>
+            <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+            <w:b />
+        </w:rPr>
+        <w:t xml:space="preserve">В.Е. </w:t>
+    </w:r>
+    <w:proofErr w:type="spellStart" />
+    <w:r>
+        <w:rPr>
+            <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+            <w:b />
+        </w:rPr>
+        <w:t>Шаховцев</w:t>
+    </w:r>
+    <w:proofErr w:type="spellEnd" />
+</w:p> <!-- Члены коммисии 2 имя -->
+<w:p w14:paraId="40C8A339" w14:textId="77777777" w:rsidR="00FE37FD" w:rsidRPr="006531FA" w:rsidRDefault="00924E3F" w:rsidP="00D84344">
+    <w:pPr>
+        <w:spacing w:after="160" />
+        <w:jc w:val="right" />
+        <w:rPr>
+            <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+            <w:b />
+            <w:lang w:eastAsia="en-US" />
+        </w:rPr>
+    </w:pPr>
+    <w:r>
+        <w:rPr>
+            <w:rFonts w:ascii="Tahoma" w:eastAsia="Calibri" w:hAnsi="Tahoma" w:cs="Tahoma" />
+            <w:b />
+            <w:lang w:eastAsia="en-US" />
+        </w:rPr>
+        <w:t>В.В. Сазнов</w:t>
+    </w:r>
+</w:p> <!-- Члены коммисии 2 имя modif-->
+<w:tcPr>
+    <w:tcW w:w="4531" w:type="dxa" />
+</w:tcPr><w:p w14:paraId="0F2A81C1" w14:textId="08E4F8EF" w:rsidR="002879B7" w:rsidRDefault="002879B7" w:rsidP="00A57BE3">
+    <w:pPr>
+        <w:spacing w:line="360" w:lineRule="auto" />
+        <w:jc w:val="right" />
+        <w:rPr>
+            <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+        </w:rPr>
+    </w:pPr>
+    <w:r>
+        <w:rPr>
+            <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+            <w:b />
+        </w:rPr>
+        <w:t xml:space="preserve">В.Е. </w:t>
+    </w:r>
+    <w:proofErr w:type="spellStart" />
+    <w:r>
+        <w:rPr>
+            <w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+            <w:b />
+        </w:rPr>
+        <w:t>Шаховцев</w:t>
+    </w:r>
+    <w:proofErr w:type="spellEnd" />
+</w:p>

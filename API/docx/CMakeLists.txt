@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt5 COMPONENTS Core REQUIRED)
-find_package(QuaZip-Qt5)
+find_package(QuaZip-Qt5 REQUIRED)
 
 set(sources
     handler-document.cpp

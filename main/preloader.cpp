@@ -25,6 +25,7 @@ void preloader(MainWindow& window) {
     WidgetXML* widgetXML = new WidgetXML();
     WidgetMain* widgetMain = initWidgetMain(window, widgetXML, widgetChart, cmdChart);
 
+    //release
     window.setCentralWidget(widgetMain);
 }
 

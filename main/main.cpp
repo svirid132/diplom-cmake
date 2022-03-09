@@ -16,11 +16,14 @@
 #include "error.h"
 #include "xmlfile.h"
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     MainWindow w;
+    //release
     preloader(w);
+    //debug
+//    w.setCentralWidget();
+    //
     w.show();
 
     return a.exec();

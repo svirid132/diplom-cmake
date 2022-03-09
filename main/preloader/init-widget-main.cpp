@@ -157,6 +157,9 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
 
     test(logic, cmdChart, widgetMain, listModel);
 
+    //debug
+    widgetMain->setEnabledPanel(false);
+    widgetMain->setWidget(widgetnJoinXML);
 
     return widgetMain;
 }

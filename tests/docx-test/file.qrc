@@ -2,7 +2,6 @@
     <qresource prefix="/">
         <file>assets/document-0.xml</file>
         <file>assets/document-right-2.xml</file>
-        <file>assets/document-right-1,5.xml</file>
 	<file>assets/chart1-0.xml</file>
 	<file>assets/chart1-1.xml</file>
 	<file>assets/chart2-0.xml</file>

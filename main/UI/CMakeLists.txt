@@ -2,9 +2,14 @@ find_package(Qt5 COMPONENTS Widgets Charts REQUIRED)
 
 add_library(UI
 	mainwindow.cpp
+        mainwindow.h
 	widget-xml.cpp
+        widget-xml.h
 	widgetchart.cpp
+        mainwindow.h
 	widgetmain.cpp
+        widgetmain.h
+        UI-var.h
 )
 
 target_include_directories(UI

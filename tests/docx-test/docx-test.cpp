@@ -38,6 +38,18 @@ void DocxTest::initTestCase()
     docData.X = 21;
     docData.Y = 22;
     docData.Z = -23.23;
+
+    //test document handler
+    HandlerDocument handDoc;
+    QFile rawFile(":/assets/document-0.xml");
+    rawFile.open(QIODevice::ReadOnly);
+    QString rawData = QString::fromUtf8(rawFile.readAll());
+    handDoc.setInfo(rawData, docData);
+    QString handleDoc = handDoc.handleDocument();
+    QFile fileWrite("D:\\Project\\diplom\\diplom-cmake\\tests\\docx-test\\assets\\document-0-handler.xml");
+    qDebug() << "fileWrite: " << fileWrite.open(QIODevice::WriteOnly);
+    fileWrite.write(handleDoc.toUtf8());
+    fileWrite.close();
 }
 
 void DocxTest::handleDocument(){

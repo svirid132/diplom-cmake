@@ -75,6 +75,8 @@ WidgetXML::WidgetXML(QWidget *parent) : QWidget(parent)
     QPushButton* btnDocx = new QPushButton("Сохранить в docx");
     connect(btnDocx, &QPushButton::clicked, this, &WidgetXML::createDocx);
     formLayout->addWidget(btnDocx);
+
+
 }
 
 DataWgtXML WidgetXML::getData()

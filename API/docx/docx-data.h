@@ -9,6 +9,11 @@ struct StartEnd {
 };
 
 struct DocData {
+    QString posDescWritter;
+    QString nameWritter;
+    QString product;
+    QString dataProduct;
+    QString posDescMain;
     int Nmax;
     int N0;
     float Nmax_N0;

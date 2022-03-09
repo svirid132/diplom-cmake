@@ -1,6 +1,7 @@
 find_package(Qt5 COMPONENTS Core REQUIRED)
 
 add_library(model
+        n-model.h
 	n-model.cpp
 )
 

@@ -15,5 +15,4 @@
 
 void preloader(MainWindow& window);
 
-
 #endif // PRELOADER_H

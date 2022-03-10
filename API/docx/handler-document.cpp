@@ -27,7 +27,19 @@ QString HandlerDocument::handleMathRaplace(const QString &specSymb, DocxFlags::T
             .replace(specSymbol.Nmax_N0, QString::number(docData.Nmax_N0))
             .replace(specSymbol.h, QString::number(docData.h))
             .replace(specSymbol.Xm_h, QString::number(docData.Xm_h))
-            .replace(specSymbol.category, docData.category);
+            .replace(specSymbol.category, docData.category)
+            .replace(specSymbol.posDescWritter, docData.posDescWritter)
+            .replace(specSymbol.nameWritter, docData.nameWritter)
+            .replace(specSymbol.product, docData.product)
+            .replace(specSymbol.dateProduct, docData.dateProduct)
+            .replace(specSymbol.posDescMain, docData.posDescMain)
+            .replace(specSymbol.posDescMembOne, docData.posDescMembOne)
+            .replace(specSymbol.posDescMembTwo, docData.posDescMembTwo)
+            .replace(specSymbol.rudnik, docData.rudnik)
+            .replace(specSymbol.koefZap, QString::number(docData.koefZap))
+            .replace(specSymbol.nameMain, docData.nameMain)
+            .replace(specSymbol.nameMembOne, docData.nameMembOne)
+            .replace(specSymbol.nameMembTwo, docData.nameMembTwo);
     } else {
         if (specSymb[0] == ' ') text = " ";
         if (specText & DocxFlags::num) {

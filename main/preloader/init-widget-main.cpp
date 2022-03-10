@@ -1,5 +1,5 @@
 #include "init-widget-main.h"
-#include "shared-func.h"
+#include "shared-func/shared-func.h"
 #include <QList>
 #include <QListWidget>
 #include <QStringListModel>
@@ -151,7 +151,7 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
         docData.h = logic->geth();
 
         docx.setData(docData, logic->getGlub_Nimp().toList(), logic->getCriticalPoint());
-        docx.create();
+        docx.create("create.docx");
     });
 
     test(logic, cmdChart, widgetMain, listModel);

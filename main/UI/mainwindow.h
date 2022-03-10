@@ -18,6 +18,8 @@ public:
 
     void viewError(const QString &str);
     void viewSuccess(const QString& str);
+    void commissionDialog();
+
 private:
     Ui::MainWindow *ui;
 };

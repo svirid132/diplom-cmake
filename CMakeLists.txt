@@ -3,10 +3,9 @@ cmake_minimum_required(VERSION 3.15)
 enable_testing()
 project(diplom-cmake LANGUAGES CXX)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_PREFIX_PATH "D:/Programming/Qt/5.15.2/mingw81_64/lib/cmake")
-set(Qt5_DIR "D:/Programming/Qt/5.15.2/mingw81_64/lib/cmake/Qt5")
-set(QT_QMAKE_EXECUTABLE "D:/Programming/Qt/5.15.2/mingw81_64/bin/qmake.exe")
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
 
 find_package(Qt5 COMPONENTS Core REQUIRED)
 

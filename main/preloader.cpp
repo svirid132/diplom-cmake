@@ -8,7 +8,7 @@
 #include <QLineSeries>
 #include <rawfile.h>
 #include "math-logic.h"
-#include "shared-func.h"
+#include "shared-func/shared-func.h"
 
 #include "UI/mainwindow.h"
 #include "UI/widget-xml.h"
@@ -19,13 +19,19 @@
 #include "preloader/init-widget-main.h"
 
 void preloader(MainWindow& window) {
+    //share logic
     CmdChart* cmdChart = new CmdChart();
 
+    //init widget
     WidgetChart* widgetChart = initWidgetChart(cmdChart);
     WidgetXML* widgetXML = new WidgetXML();
     WidgetMain* widgetMain = initWidgetMain(window, widgetXML, widgetChart, cmdChart);
 
-    //release
+    //init dialog
+
+
+    //set widget and diloa
     window.setCentralWidget(widgetMain);
+//    window.setCommisisionDiolog(std::function<DataComission()>);
 }
 

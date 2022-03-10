@@ -15,9 +15,9 @@ struct DocData {
     QString dateProduct;
     QString nameMain;
     QString posDescMain;
-    QString nameMemb1;
+    QString nameMembOne;
     QString posDescMembOne;
-    QString nameMemb2;
+    QString nameMembTwo;
     QString posDescMembTwo;
     QString rudnik;
     int Nmax;
@@ -30,6 +30,7 @@ struct DocData {
     float X;
     float Y;
     float Z;
+    float koefZap;
 };
 
 namespace DocxFlags {

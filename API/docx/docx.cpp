@@ -26,51 +26,8 @@ void Docx::setData(const DocData &docData, const QList<QPointF> &chartGlub_Nimp,
     this->criticalPoint = handleCriticalPoint(criticalPoint);
 }
 
-void Docx::create()
-{
-    QString zipName = ":/assets/docx-1.docx";
-    QuaZip zip(zipName);
-    if (!zip.open(QuaZip::mdUnzip)) {
-        qWarning("Couldn't open %s", zipName.toUtf8().constData());
-    }
-    QuaZipFile inFile(&zip);
-    QList<QPair<QString, QByteArray>> files;
-    for(bool more=zip.goToFirstFile(); more; more=zip.goToNextFile()) {
-        QuaZipFileInfo info;
-        zip.getCurrentFileInfo(&info);
-        QString filename = zip.getCurrentFileName();
-        if(!inFile.open(QIODevice::ReadOnly)) {
-            qDebug() << "not open inFile:" << filename;
-        }
-        QByteArray data = inFile.readAll();
-        if (filename == "word/document.xml") {
-            HandlerDocument handDoc;
-            QString rawStr = QString::fromUtf8(data);
-            handDoc.setInfo(rawStr, docData);
-            QString str = handDoc.handleDocument();
-            data = str.toUtf8();
-        } else if (filename == "word/charts/chart1.xml") {
-            HandlerChart handChart;
-            QString rawStr = QString::fromUtf8(data);
-            handChart.setRawData(rawStr);
-            handChart.appendChart(chartGlub_Nimp, CHART_NUMBER::first);
-            QString str = handChart.handleCharts();
-            data = str.toUtf8();
-        } else if (filename == "word/charts/chart2.xml") {
-            HandlerChart handChart;
-            QString rawStr = QString::fromUtf8(data);
-            handChart.setRawData(rawStr);
-            handChart.appendChart({criticalPoint}, CHART_NUMBER::second, docData.category);
-            QString str = handChart.handleCharts();
-            data = str.toUtf8();
-        }
-        files.append({filename, data});
-        inFile.close();
-    }
-    zip.close();
-
-    QuaZip zipDocx("create-docx.docx");
-    qDebug() << "create-docx";
+void Docx::saveDocx(QString filePath, const QList<QPair<QString, QByteArray>>& files) {
+    QuaZip zipDocx(filePath);
     if (!zipDocx.open(QuaZip::mdCreate)) qDebug() << "zipDocx:" << "false";
     QuaZipFile outFile(&zipDocx);
     for(auto& file: files){
@@ -83,8 +40,65 @@ void Docx::create()
         }
     }
     zipDocx.close();
+}
+
+void Docx::handleFiles(QList<QPair<QString, QByteArray>>& files) {
+    for(auto& file: files){
+        if (file.first == "word/document.xml") {
+            HandlerDocument handDoc;
+            QString rawStr = QString::fromUtf8(file.second);
+            handDoc.setInfo(rawStr, docData);
+            QString handStr = handDoc.handleDocument();
+            file.second = handStr.toUtf8();
+        } else if (file.first == "word/charts/chart1.xml") {
+            HandlerChart handChart;
+            QString rawStr = QString::fromUtf8(file.second);
+            handChart.setRawData(rawStr);
+            handChart.appendChart(chartGlub_Nimp, CHART_NUMBER::first);
+            QString handStr = handChart.handleCharts();
+            file.second = handStr.toUtf8();
+        } else if (file.first == "word/charts/chart2.xml") {
+            HandlerChart handChart;
+            QString rawStr = QString::fromUtf8(file.second);
+            handChart.setRawData(rawStr);
+            handChart.appendChart({criticalPoint}, CHART_NUMBER::second, docData.category);
+            QString str = handChart.handleCharts();
+            file.second = str.toUtf8();
+        }
+    }
+}
+
+QList<QPair<QString, QByteArray>> Docx::externTemplate() {
+    QString zipName = ":/template.docx";
+    QuaZip zip(zipName);
+    QList<QPair<QString, QByteArray>> files;
+    if (!zip.open(QuaZip::mdUnzip)) {
+        qWarning("Couldn't open %s", zipName.toUtf8().constData());
+    }
+    QuaZipFile inFile(&zip);
+    for(bool more=zip.goToFirstFile(); more; more=zip.goToNextFile()) {
+        QuaZipFileInfo info;
+        zip.getCurrentFileInfo(&info);
+        QString filename = zip.getCurrentFileName();
+        if(!inFile.open(QIODevice::ReadOnly)) {
+            qDebug() << "not open inFile:" << filename;
+        }
+        QByteArray data = inFile.readAll();
+        files.append({filename, data});
+        inFile.close();
+    }
+    zip.close();
 
     if(zip.getZipError() == UNZ_OK) {
-      qDebug() << "error not!";
+        qDebug() << "error not!";
     }
+
+    return files;
+}
+
+void Docx::create(QString pathFile)
+{
+    QList<QPair<QString, QByteArray>> files = externTemplate();
+    handleFiles(files);
+    saveDocx(pathFile, files);
 }

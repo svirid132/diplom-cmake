@@ -26,6 +26,18 @@ private:
         QString h = "`{h}`";
         QString Xm_h = "`{Xm/h}`";
         QString category = "`{category}`";
+        QString posDescWritter = "`{posDescWritter}`";
+        QString nameWritter = "`{nameWritter}`";
+        QString product = "`{product}`";
+        QString dateProduct = "`{dateProduct}`";
+        QString posDescMain = "`{posDescMain}`";
+        QString posDescMembOne = "`{posDescMembOne}`";
+        QString posDescMembTwo = "`{posDescMembTwo}`";
+        QString rudnik = "`{rudnik}`";
+        QString koefZap = "`{koefZap}`";
+        QString nameMain = "`{nameMain}`";
+        QString nameMembOne = "`{nameMembOne}`";
+        QString nameMembTwo = "`{nameMembTwo}`";
     } specSymbol;
 
     QString handler(QXmlStreamReader& xml);

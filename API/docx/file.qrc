@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>assets/docx-1.docx</file>
-        <file>assets/123.txt</file>
+        <file alias="template.docx">../../assets/template-0.1.docx</file>
     </qresource>
 </RCC>

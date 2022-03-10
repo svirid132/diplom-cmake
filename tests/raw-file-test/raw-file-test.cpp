@@ -1,7 +1,7 @@
 #include <QtTest>
 #include <QCoreApplication>
 #include <QDebug>
-#include "rawfile.h"
+#include <rawfile.h>
 
 //int *const ptr - константные указатели
 //const int *ptr - константные значения

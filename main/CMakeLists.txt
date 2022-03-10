@@ -20,8 +20,8 @@ set(PROJECT_SOURCES
         main.cpp
         cmdchart.cpp
         cmdchart.h
-        shared-func.h
-        shared-func.cpp
+        shared-func/shared-func.h
+        shared-func/shared-func.cpp
         ../API/docx/file.qrc
 )
 

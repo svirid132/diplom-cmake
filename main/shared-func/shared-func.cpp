@@ -4,10 +4,10 @@ QString getCategoryString(const CATEGORY& category) {
     QString string;
     switch(category) {
         case CATEGORY::PERILOUSLY:
-            string = "Опасно";
+            string = "ОПАСНО";
             break;
         case CATEGORY::SAFELY:
-            string = "Неопасно";
+            string = "НЕОПАСНО";
     }
     return string;
 }

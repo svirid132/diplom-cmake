@@ -20,5 +20,5 @@ qt5_add_resources(SOURCES file.qrc)
 add_executable(raw-file-test ${SOURCES})
 add_test(NAME raw-file-test COMMAND raw-file-test)
 
-target_link_libraries(raw-file-test PRIVATE Qt5::Test API smath)
+target_link_libraries(raw-file-test PRIVATE Qt5::Test API error smath)
 

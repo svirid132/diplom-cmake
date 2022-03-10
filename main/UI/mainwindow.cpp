@@ -6,6 +6,7 @@
 #include <QErrorMessage>
 #include <QMessageBox>
 #include "../global-var.h"
+#include "DialogCommission.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -47,6 +48,20 @@ void MainWindow::viewSuccess(const QString& str) {
                 width,
                 height);
     messageBox.exec();
+}
+
+void MainWindow::commissionDialog() {
+    DialogCommission dialog(this);
+    dialog.show();
+
+    dialog.exec();
+
+    int result = dialog.result();//1 - ок; 0 - cancel
+    if (result == 1) {
+
+    } else {
+
+    }
 }
 
 void MainWindow::setCentralWidget(QWidget *widget)

@@ -1,0 +1,7 @@
+//
+// Created by Пользователь on 10.03.2022.
+//
+
+#cmakedefine PATH_SOURCE_ASSETS "@PATH_SOURCE_ASSETS@"
+#cmakedefine01 SAVE_REALES_ASSETS
+#cmakedefine01 RUN_REALES_DOCX

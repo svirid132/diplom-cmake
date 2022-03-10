@@ -14,7 +14,10 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 enable_testing()
 
-set(sources-debug-test debug-test.cpp docx-data-test.cpp)
+option(SAVE_REALES_ASSETS "" ON)
+option(RUN_REALES_DOCX "" ON)
+
+set(sources-debug-test debug-test.cpp data-docx-test.cpp)
 qt5_add_resources(sources-debug-test file-debug.qrc)
 add_executable(docx-debug-test ${sources-debug-test})
 target_link_libraries(docx-debug-test PRIVATE Qt${QT_VERSION_MAJOR}::Core docx smath)
@@ -23,7 +26,10 @@ target_include_directories(docx-debug-test
         INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}
         )
 
-set(sources-test docx-test.cpp docx-data-test.cpp)
+set(PATH_SOURCE_ASSETS ${CMAKE_CURRENT_SOURCE_DIR}/assets)
+configure_file(debug-config.h.in debug-config.h @ONLY)
+
+set(sources-test docx-test.cpp data-docx-test.cpp)
 qt5_add_resources(sources-test file-debug.qrc)
 add_executable(docx-test ${sources-test})
 add_test(NAME docx-test COMMAND docx-test)

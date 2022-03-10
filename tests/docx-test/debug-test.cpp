@@ -8,24 +8,37 @@
 #include <windows.h>
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
-
-#include "docx-data-test.h"
+#include <docx.h>
+#include "debug-config.h"
+#include "data-docx-test.h"
 
 int main(int argc, char *argv[]) {
 
 
     DocData docData = getDocData();
+    QList<QPointF> glub_nimp = getGlub_Nimp();
+    QPointF criticalPoint = getCriticalPoint();
 
-    QFile file(":/template.docx");
-    QFileInfo info(file);
-    qDebug() << file.open(QIODevice::ReadOnly);
-    QProcess process;
-    process.start("cmd" ,
-            QStringList() << "/C" << info.filePath());
-    //"D:\\Project\\diplom\\diplom-cmake\\TODO\\modif\\template-0.4-modif-replace.docx"
-    qDebug() << info.filePath();
+    Docx docx;
+    docx.setData(docData, glub_nimp, criticalPoint);
+    docx.create("created.docx");
 
-    process.waitForFinished();
+    QFile file("created.docx");
+    qDebug() << "open file:" << file.open(QIODevice::ReadOnly);
+
+    //Bad idea
+    if (SAVE_REALES_ASSETS) {
+        qDebug() << PATH_SOURCE_ASSETS;
+    }
+
+    //open created docx
+    if (RUN_REALES_DOCX) {
+        QProcess process;
+        QFileInfo info(file);
+        process.start("cmd",
+                      QStringList() << "/C" << info.filePath());
+        process.waitForFinished();
+    }
 
     return 0;
 }

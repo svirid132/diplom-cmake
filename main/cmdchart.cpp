@@ -7,7 +7,7 @@
 #include <QLineSeries>
 #include <QScatterSeries>
 #include <QValueAxis>
-#include "shared-func.h"
+#include "shared-func/shared-func.h"
 
 CmdChart::CmdChart() :
     criticalSeriesPoint(nullptr)

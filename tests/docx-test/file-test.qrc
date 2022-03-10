@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>assets/document-res.xml</file>
+        <file>assets/document-def.xml</file>
+        <file>assets/chart1-0.xml</file>
+        <file>assets/chart1-1.xml</file>
+        <file>assets/chart2-0.xml</file>
+        <file>assets/chart2-1.xml</file>
+    </qresource>
+</RCC>

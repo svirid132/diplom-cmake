@@ -45,7 +45,7 @@ target_link_libraries(main PRIVATE
 )
 
 #disable console on windows
-set_property(TARGET main PROPERTY WIN32_EXECUTABLE true)
+#set_property(TARGET main PROPERTY WIN32_EXECUTABLE true)
 
 if(${CMAKE_BUILD_TYPE} STREQUAL "Release")
     install(TARGETS main)

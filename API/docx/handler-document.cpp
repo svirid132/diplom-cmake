@@ -3,66 +3,60 @@
 #include <QList>
 #include <QXmlStreamReader>
 
-HandlerDocument::HandlerDocument(){
+HandlerDocument::HandlerDocument() {
 
 }
 
-void HandlerDocument::setInfo(const QString& rawData, DocData docData = DocData()){
+void HandlerDocument::setInfo(const QString &rawData, DocData docData) {
     this->rawData = rawData;
     this->docData = docData;
 }
 
-QString HandlerDocument::handleMathRaplace(const QString& specSymb, Docx::Text specText) {
+QString HandlerDocument::handleMathRaplace(const QString &specSymb, DocxFlags::Texts specText) {
 
     QString text = "";
     if (docData.N0 != -1) {//Не тествовый режим!
-        if (specSymbol.X == specSymb) {
-            text = QString::number(docData.X);
-        } else if(specSymbol.Y == specSymb) {
-            text = QString::number(docData.Y);
-        } else if (specSymbol.Z == specSymb) {
-            text = QString::number(docData.Z);
-        } else if (specSymbol.Xm == specSymb) {
-            text = QString::number(docData.Xm);
-        } else if (specSymbol.N0 == specSymb) {
-            text = QString::number(docData.N0);
-        } else if (specSymbol.Nmax == specSymb) {
-            text = QString::number(docData.Nmax);
-        } else if (specSymbol.Nmax_N0 == specSymb) {
-            text = QString::number(docData.Nmax_N0);
-        } else if (specSymbol.h == specSymb) {
-            text = QString::number(docData.h);
-        } else if (specSymbol.Xm_h == specSymb) {
-            text = QString::number(docData.Xm_h);
-        } else if(specSymbol.category == specSymb) {
-            text = docData.category;
-        }
+        text = specSymb;
+        text
+            .replace(specSymbol.X, QString::number(docData.X))
+            .replace(specSymbol.Y, QString::number(docData.Y))
+            .replace(specSymbol.Z, QString::number(docData.Z))
+            .replace(specSymbol.Xm, QString::number(docData.Xm))
+            .replace(specSymbol.N0, QString::number(docData.N0))
+            .replace(specSymbol.Nmax, QString::number(docData.Nmax))
+            .replace(specSymbol.Nmax_N0, QString::number(docData.Nmax_N0))
+            .replace(specSymbol.h, QString::number(docData.h))
+            .replace(specSymbol.Xm_h, QString::number(docData.Xm_h))
+            .replace(specSymbol.category, docData.category);
     } else {
-        if (specText & Docx::Text::num) {
-            text = "1999";
+        if (specSymb[0] == ' ') text = " ";
+        if (specText & DocxFlags::num) {
+            text += "1999";
         } else {
-            text = "words";
+            text += "words";
         }
+        int lastPos = specSymb.length() - 1;
+        if (specSymb[lastPos] == ' ') text += " ";
     }
 
     //Вставка спец текста
     QString xmlText = "";
-    if (specText & Docx::Text::text) {
+    if (specText & DocxFlags::text) {
         xmlText = "<w:r w:rsidR=\"00CD17DF\" w:rsidRPr=\"00CD17DF\"><w:rPr><w:rFonts w:ascii=\"Tahoma\" w:hAnsi=\"Tahoma\" w:cs=\"Tahoma\"/>%2</w:rPr><w:t%1>%3</w:t></w:r>";
 
-        if (specText & Docx::Text::textSpace) {
+        if (specText & DocxFlags::textSpace) {
             xmlText = xmlText.arg(" xml:space=\"preserve\"");
         } else {
             xmlText = xmlText.arg("");
         }
-        
-        if (specText & Docx::Text::textBold) {
+
+        if (specText & DocxFlags::textBold) {
             xmlText = xmlText.arg("<w:b/>");
         } else {
             xmlText = xmlText.arg("");
         }
-    } else if (Docx::Text::num) {
-        xmlText = "<m:r><w:rPr><w:rFonts w:ascii="Cambria Math" w:eastAsia="Calibri" w:hAnsi="Cambria Math" w:cs="Tahoma" /><w:lang w:eastAsia="en-US" /></w:rPr><m:t>%1</m:t></m:r>";
+    } else if (DocxFlags::num) {
+        xmlText = "<m:r><w:rPr><w:rFonts w:ascii=\"Cambria Math\" w:eastAsia=\"Calibri\" w:hAnsi=\"Cambria Math\" w:cs=\"Tahoma\" /><w:lang w:eastAsia=\"en-US\" /></w:rPr><m:t>%1</m:t></m:r>";
     }
 
     xmlText = xmlText.arg(text);
@@ -70,24 +64,23 @@ QString HandlerDocument::handleMathRaplace(const QString& specSymb, Docx::Text s
     return xmlText;
 }
 
-QString HandlerDocument::handler(QXmlStreamReader& xml, bool& isSpace = false, bool& isBold = false) {
+QString HandlerDocument::handler(QXmlStreamReader &xml, bool &isSpace, bool &isBold) {
     bool isEnd = false;
     QString text = "";
-    while(!(isEnd)) {
+    while (!(isEnd)) {
         QXmlStreamReader::TokenType tokenType = xml.readNext();
+        auto attributes = xml.attributes();
         QString nameTag = xml.name().toString();
-        QXmlStreamAttributes attributes;
 
-        if(tokenType == QXmlStreamReader::StartElement && nameTag == "t") {
+        if (tokenType == QXmlStreamReader::StartElement && nameTag == "t") {
             text += xml.readElementText();
-            attributes = xml.attributes();
         }
 
-        if ( attributes.hasAttribute("xml:space") ) {
+        if (!isSpace && attributes.hasAttribute("xml:space")) {
             isSpace = true;
         }
 
-        if(nameTag == "b") {
+        if (!isBold && nameTag == "b") {
             isBold = true;
         }
 
@@ -98,7 +91,7 @@ QString HandlerDocument::handler(QXmlStreamReader& xml, bool& isSpace = false, b
     return text;
 }
 
-QList<QPair<StartEnd, QString>> HandlerDocument::handleText(QXmlStreamReader& xml) {
+QList<QPair<StartEnd, QString>> HandlerDocument::handleText(QXmlStreamReader &xml) {
     QList<QPair<StartEnd, QString>> replaceTexts;
     bool isEnd = false;
     bool isTextReplace = false;// Для `{Nmax
@@ -107,30 +100,30 @@ QList<QPair<StartEnd, QString>> HandlerDocument::handleText(QXmlStreamReader& xm
     int endElementDelete = -1;
     bool isBold = false;
     bool isSpace = false;
-    while(!(isEnd)) {
+    while (!(isEnd)) {
         int startElem = xml.characterOffset();
         QXmlStreamReader::TokenType tokenType = xml.readNext();
+        QString prefix = xml.prefix().toString();
         QString nameTag = xml.name().toString();
 
         if (tokenType == QXmlStreamReader::StartElement && nameTag == "r") {
             QString pathText = handler(xml, isSpace, isBold);
-            QString prefix = xml.prefix().toString();
 
             //начало и конец
-            switch(pathText.count('`')) {
-            case 2:
-                textReplace = pathText;
-                isTextReplace = false;
-                startElementDelete = startElem;
-                break;
-            case 1:
-                isTextReplace = !isTextReplace;
-                if (!isTextReplace){
-                    textReplace += pathText;
-                } else {
+            switch (pathText.count('`')) {
+                case 2:
+                    textReplace = pathText;
+                    isTextReplace = false;
                     startElementDelete = startElem;
-                }
-                break;
+                    break;
+                case 1:
+                    isTextReplace = !isTextReplace;
+                    if (!isTextReplace) {
+                        textReplace += pathText;
+                    } else {
+                        startElementDelete = startElem;
+                    }
+                    break;
             };
 
             //середина
@@ -138,20 +131,19 @@ QList<QPair<StartEnd, QString>> HandlerDocument::handleText(QXmlStreamReader& xm
                 textReplace += pathText;
             }
 
-            //TODO: заменить текст
             if (textReplace != "" && !isTextReplace) {
-                QString trimmedText = textReplace.trimmed();
-                Docx::Text specText;
-                if (prefix == "m") {
-                    specText = Docx::Text::text;
-                } else {
-                    specText = Docx::Text::num;
-                } 
-                if (isBold) specText = specText | Docx::Text::textBold;
-                if (isSpace) specText = specText | Docx::Text::textSpace;
-                QString handleText = handleMathRaplace(trimmedText, specText);
+                DocxFlags::Texts specText;
+
+                if (prefix == "w") {
+                    specText = DocxFlags::Text::text;
+                } else if (prefix == "m") {
+                    specText = DocxFlags::Text::num;
+                }
+                if (isBold) specText = specText | DocxFlags::textBold;
+                if (isSpace) specText = specText | DocxFlags::textSpace;
+                QString handleText = handleMathRaplace(textReplace, specText);
                 endElementDelete = xml.characterOffset();
-                replaceTexts.append(QPair<StartEnd, QString> {{startElementDelete, endElementDelete}, handleText});
+                replaceTexts.append(QPair<StartEnd, QString>{{startElementDelete, endElementDelete}, handleText});
                 textReplace = "";
                 isBold = false;
                 isSpace = false;
@@ -166,7 +158,7 @@ QList<QPair<StartEnd, QString>> HandlerDocument::handleText(QXmlStreamReader& xm
     return replaceTexts;
 }
 
-QList<QPair<StartEnd, QString>> HandlerDocument::handleElements(QXmlStreamReader& xml) {
+QList<QPair<StartEnd, QString>> HandlerDocument::handleElements(QXmlStreamReader &xml) {
     QList<QPair<StartEnd, QString>> replaceTexts;
     QString name = xml.name().toString();
     if (name == "p") {
@@ -177,16 +169,15 @@ QList<QPair<StartEnd, QString>> HandlerDocument::handleElements(QXmlStreamReader
     return replaceTexts;
 }
 
-QString HandlerDocument::handleDocument()
-{
+QString HandlerDocument::handleDocument() {
     QXmlStreamReader xml(rawData);
     QList<QPair<StartEnd, QString>> replaceTexts;
 
-    while(!xml.atEnd()) {
+    while (!xml.atEnd()) {
         xml.readNext();
         if (xml.isStartElement()) {
-             QList<QPair<StartEnd, QString>> replaceTexts_l = handleElements(xml);
-             replaceTexts.append(replaceTexts_l);
+            QList<QPair<StartEnd, QString>> replaceTexts_l = handleElements(xml);
+            replaceTexts.append(replaceTexts_l);
         }
     }
 
@@ -195,13 +186,11 @@ QString HandlerDocument::handleDocument()
     }
 
     QString data = rawData;
-    for(int i = replaceTexts.count() - 1; i > -1; --i) {
+    for (int i = replaceTexts.count() - 1; i > -1; --i) {
         auto el = replaceTexts.at(i);
         QString textReplace = data.mid(el.first.start, el.first.end - el.first.start);
         data.remove(el.first.start, el.first.end - el.first.start);
         data.insert(el.first.start, el.second);
-//        qDebug() << textReplace << Qt::endl << data.indexOf(textReplace) << Qt::endl
-//                 << el.second << Qt::endl << el.first.start << el.first.end << Qt::endl;
     }
 
     return data;

@@ -24,13 +24,12 @@ void test(MathLogic *const logic, CmdChart *const cmdChart, WidgetMain *const wi
     float koefZap = logic->getKoefZap();
     cmdChart->update(logic);
     widgetMain->setKoefZapCategory(koefZap, getCategoryString(category));
-
+    qDebug() << "point:" <<logic->getCriticalPoint();
     QStringList list;
     for (auto&& value : Nimp) {
         list << QString::number(value.countAmps);
     }
     model->setStringList(list);
-
 }
 
 QList<QPair<QString, QString>> getTag_texts(MathLogic *const mathLogic, const DataWgtXML& dataWgtXML) {
@@ -156,6 +155,7 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
     });
 
     test(logic, cmdChart, widgetMain, listModel);
+    qDebug() << "points:" << logic->getGlub_Nimp().toList();
 
     //debug
     widgetMain->setEnabledPanel(false);

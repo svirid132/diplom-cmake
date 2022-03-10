@@ -26,8 +26,31 @@ private slots:
     void handleChart2();
 };
 
+void testSaveFile(QString pathFileRead) {
+    QFile readFile(pathFileRead);
+    readFile.open(QIODevice::ReadOnly);
+    QString rawData = QString::fromUtf8(readFile.readAll());
+    readFile.close();
+
+    HandlerDocument handDoc;
+    handDoc.setInfo(rawData);
+    QString handledData = handDoc.handleDocument();
+
+    QFileInfo fileInfo(readFile);
+    QString absolutPath = fileInfo.absolutePath();
+    QString readFileName = fileInfo.fileName();
+    int pointPos = readFileName.lastIndexOf('.');
+    QString writeFileName = readFileName.insert(pointPos, "-test");
+    QFile writeFile(absolutPath + '/' + writeFileName);
+    writeFile.open(QIODevice::WriteOnly);
+    writeFile.write(handledData.toUtf8());
+    writeFile.close();
+}
+
 void DocxTest::initTestCase()
 {
+    testSaveFile("D:\\Project\\diplom\\diplom-cmake\\TODO\\modif\\document-0.4-modif-replace.xml");
+
     docData.N0 = 20;
     docData.Nmax = 1999;
     docData.Nmax_N0 = smath::roundFloat(float(docData.Nmax) / float(docData.N0));//99.95
@@ -38,18 +61,6 @@ void DocxTest::initTestCase()
     docData.X = 21;
     docData.Y = 22;
     docData.Z = -23.23;
-
-    //test document handler
-    HandlerDocument handDoc;
-    QFile rawFile(":/assets/document-0.xml");
-    rawFile.open(QIODevice::ReadOnly);
-    QString rawData = QString::fromUtf8(rawFile.readAll());
-    handDoc.setInfo(rawData, docData);
-    QString handleDoc = handDoc.handleDocument();
-    QFile fileWrite("D:\\Project\\diplom\\diplom-cmake\\tests\\docx-test\\assets\\document-0-handler.xml");
-    qDebug() << "fileWrite: " << fileWrite.open(QIODevice::WriteOnly);
-    fileWrite.write(handleDoc.toUtf8());
-    fileWrite.close();
 }
 
 void DocxTest::handleDocument(){
@@ -64,11 +75,6 @@ void DocxTest::handleDocument(){
     HandlerDocument handlerDoc;
     handlerDoc.setInfo(rawData, docData);
     QString handleData = handlerDoc.handleDocument();
-
-    //Для теста теста
-//    QFile fileWrite("document.xml");
-//    fileWrite.open(QIODevice::WriteOnly);
-//    fileWrite.write(handleData.toUtf8());
 
     //Сравнение двух файлов строк, вывод несовпадений
     const int len = 10;

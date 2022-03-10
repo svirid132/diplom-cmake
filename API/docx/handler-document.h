@@ -9,7 +9,7 @@
 class HandlerDocument {
 public:
     HandlerDocument();
-    void setInfo(const QString& rawData, DocData docData);
+    void setInfo(const QString& rawData, DocData docData = DocData());
     QString handleDocument();
 
 private:
@@ -28,10 +28,12 @@ private:
         QString category = "`{category}`";
     } specSymbol;
 
-    QString handleMathRaplace(const QString& specSymbol);
     QString handler(QXmlStreamReader& xml);
     QList<QPair<StartEnd, QString>> handleElements(QXmlStreamReader& xml);
     QList<QPair<StartEnd, QString> > handleText(QXmlStreamReader &xml);
+    QString handleMathRaplace(const QString &specSymb, DocxFlags::Texts specText);
+
+    QString handler(QXmlStreamReader &xml, bool &isSpace, bool &isBold);
 };
 
 #endif // HANDLERDOCUMENT_H

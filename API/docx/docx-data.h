@@ -12,8 +12,14 @@ struct DocData {
     QString posDescWritter;
     QString nameWritter;
     QString product;
-    QString dataProduct;
+    QString dateProduct;
+    QString nameMain;
     QString posDescMain;
+    QString nameMemb1;
+    QString posDescMembOne;
+    QString nameMemb2;
+    QString posDescMembTwo;
+    QString rudnik;
     int Nmax;
     int N0 = -1;
     float Nmax_N0;
@@ -26,13 +32,14 @@ struct DocData {
     float Z;
 };
 
-namespace Docx {
+namespace DocxFlags {
     enum Text {
         textBold = 0x1,
         textSpace = 0x10,
         text = 0x100,
         num = 0x1000,
-    }
-}
+    };
+    Q_DECLARE_FLAGS(Texts, Text)
+};
 
 #endif // DOCXDATA_H

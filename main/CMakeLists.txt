@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(main VERSION 0.4.3 LANGUAGES CXX)
+project(main VERSION 0.5.0 LANGUAGES CXX)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -46,6 +46,10 @@ target_link_libraries(main PRIVATE
 
 #disable console on windows
 #set_property(TARGET main PROPERTY WIN32_EXECUTABLE true)
+
+target_include_directories(main
+        INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}
+)
 
 if(${CMAKE_BUILD_TYPE} STREQUAL "Release")
     install(TARGETS main)

@@ -50,23 +50,37 @@ void MainWindow::viewSuccess(const QString& str) {
     messageBox.exec();
 }
 
-void MainWindow::commissionDialog() {
-    DialogCommission dialog(this);
-    dialog.show();
-
-    dialog.exec();
-
-    int result = dialog.result();//1 - ок; 0 - cancel
-    if (result == 1) {
-
-    } else {
-
-    }
-}
-
 void MainWindow::setCentralWidget(QWidget *widget)
 {
     widget->setFixedSize(800, 450);
     QMainWindow::setCentralWidget(widget);
+}
+
+void MainWindow::setDataCommission(const DataCommission &data) {
+    dataCommission = data;
+}
+
+bool MainWindow::isDataCommission() {
+    bool isData = (dataCommission.nameWritter != "-1");
+    return isData;
+}
+
+DataCommission MainWindow::getDataCommission() {
+    return dataCommission;
+}
+
+void MainWindow::dialogCommission() {
+    DialogParam param;
+    param.mainWidget = this;
+    bool ok;
+    DataCommission newData = openCommissionDialog(param, dataCommission, ok);
+    if (ok) {
+        dataCommission = newData;
+    }
+}
+
+void
+MainWindow::setDialogCommission(std::function<DataCommission(const DialogParam &, const DataCommission &, bool &)> dialog) {
+    openCommissionDialog = dialog;
 }
 

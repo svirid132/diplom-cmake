@@ -7,6 +7,8 @@
 #include <QValueAxis>
 #include <QLineSeries>
 #include <rawfile.h>
+#include <QtCore/QSettings>
+#include <preloader/InitDialogCommission.h>
 #include "math-logic.h"
 #include "shared-func/shared-func.h"
 
@@ -28,10 +30,10 @@ void preloader(MainWindow& window) {
     WidgetMain* widgetMain = initWidgetMain(window, widgetXML, widgetChart, cmdChart);
 
     //init dialog
+    auto openDialogCommission = initDialogCommission(window);
 
-
-    //set widget and diloa
+    //set widget and diloag
     window.setCentralWidget(widgetMain);
-//    window.setCommisisionDiolog(std::function<DataComission()>);
+    window.setDialogCommission(openDialogCommission);
 }
 

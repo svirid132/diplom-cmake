@@ -1,16 +1,17 @@
 #include "init-widget-main.h"
-#include "shared-func/shared-func.h"
+#include "../shared-func/shared-func.h"
 #include <QList>
 #include <QListWidget>
 #include <QStringListModel>
 #include <QTreeView>
-#include <cmdchart.h>
+#include <../cmdchart.h>
 #include <docx/docx.h>
 #include <math-logic.h>
 #include <rawfile.h>
 #include <xmlfile.h>
-#include <UI/widgetmain.h>
-#include <model/n-model.h>
+#include <QtCore/QDir>
+#include "../UI/widgetmain.h"
+#include "../model/n-model.h"
 
 void test(MathLogic *const logic, CmdChart *const cmdChart, WidgetMain *const widgetMain, NModel* const model) {
     QVector<CountOverAmps> Nimp;
@@ -32,6 +33,7 @@ void test(MathLogic *const logic, CmdChart *const cmdChart, WidgetMain *const wi
     model->setStringList(list);
 }
 
+//For xml
 QList<QPair<QString, QString>> getTag_texts(MathLogic *const mathLogic, const DataWgtXML& dataWgtXML) {
     QList<QPair<QString, QString>> tag_texts;
     tag_texts << qMakePair(QString("Date"), dataWgtXML.date.toString("yyyy-MM-dd"))
@@ -64,8 +66,6 @@ QWidget* initWidgetJoinXml(WidgetXML* const widgetXML, NModel* const model) {
 
     QWidget* widget = new QWidget();
     QTreeView* listView = new QTreeView();
-    QStringList list = QStringList({"fosdjfposd", "fsopdfkdspokf"});
-    model->setStringList(list);
     listView->setModel(model);
     listView->setRootIsDecorated(false);
     QHBoxLayout* hLayout = new QHBoxLayout;
@@ -135,7 +135,7 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
         }
     });
 
-    QObject::connect(widgetXML, &WidgetXML::createDocx, widgetXML, [=]() {
+    QObject::connect(widgetXML, &WidgetXML::createDocx, widgetXML, [=, &window]() {
         Docx docx;
         DocData docData;
         docData.N0 = logic->getN0();
@@ -147,19 +147,49 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
         docData.Xm_h= logic->getX1_h();
         docData.Y = dataWgtXML.YY;
         docData.Z = dataWgtXML.ZZ;
+        docData.rudnik = dataWgtXML.rudnik;
+        docData.product = dataWgtXML.nameVirab;
+        docData.dateProduct = dataWgtXML.date.toString("dd.MM.yyyy");
         docData.category = getCategoryString(logic->getCategory());
         docData.h = logic->geth();
+        if (window.isDataCommission()) {
+            DataCommission data = window.getDataCommission();
+            docData.nameWritter = data.nameWritter;
+            docData.posDescWritter = data.posDescWritter;
+            docData.nameMain = data.nameMain;
+            docData.posDescMain = data.posDescMain;
+            docData.nameMembOne = data.nameMembOne;
+            docData.posDescMembOne = data.posDescMembOne;
+            docData.nameMembTwo = data.nameMembTwo;
+            docData.posDescMembTwo = data.posDescMembTwo;
+        } else {
+            widgetXML->errorCommission();
+            return;
+        }
 
         docx.setData(docData, logic->getGlub_Nimp().toList(), logic->getCriticalPoint());
-        docx.create("create.docx");
+
+        QDir dir = QDir(QDir::currentPath());
+        if(!dir.exists("files")) {
+            if (!dir.mkdir("files")) return;
+            dir.cd("files");
+        }
+        dir.cd("files");
+
+        QString filename = QString("АКТ %1 от %2.docx").arg(docData.product).arg(docData.dateProduct);
+        docx.create(dir.path() + "/" + filename);
+    });
+
+    QObject::connect(widgetXML, &WidgetXML::clickedCommission, [=, &window](){
+        window.dialogCommission();
     });
 
     test(logic, cmdChart, widgetMain, listModel);
     qDebug() << "points:" << logic->getGlub_Nimp().toList();
 
     //debug
-    widgetMain->setEnabledPanel(false);
-    widgetMain->setWidget(widgetnJoinXML);
+//    widgetMain->setEnabledPanel(false);
+//    widgetMain->setWidget(widgetnJoinXML);
 
     return widgetMain;
 }

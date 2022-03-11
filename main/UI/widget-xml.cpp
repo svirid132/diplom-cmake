@@ -38,7 +38,9 @@ WidgetXML::WidgetXML(QWidget *parent) : QWidget(parent)
     });
 
     QLineEdit* IzmVipEdit = new QLineEdit();
-    formLayout->addRow(new QLabel("Измерение выполнил:"), IzmVipEdit);
+    QLabel* lengthLabel = new QLabel("Измерение выполнил:");
+    formLayout->addRow(lengthLabel, IzmVipEdit);
+    int lengthLabelWidth = lengthLabel->minimumSizeHint().width();
     connect(IzmVipEdit, &QLineEdit::textChanged, IzmVipEdit, [=](const QString &text) {
         this->izmVip = text;
     });
@@ -64,9 +66,6 @@ WidgetXML::WidgetXML(QWidget *parent) : QWidget(parent)
         this->ZZ = num;
     });
 
-    this->setLayout(formLayout);
-    this->setFixedWidth(310);
-
     QPushButton* btn = new QPushButton("Сохранить в XML");
     connect(btn, &QPushButton::clicked, this, &WidgetXML::clickedSave);
     formLayout->addItem(new QSpacerItem(0, 10));
@@ -74,9 +73,17 @@ WidgetXML::WidgetXML(QWidget *parent) : QWidget(parent)
 
     QPushButton* btnDocx = new QPushButton("Сохранить в docx");
     connect(btnDocx, &QPushButton::clicked, this, &WidgetXML::createDocx);
-    formLayout->addWidget(btnDocx);
+    btnCommission = new QPushButton("Состав Коммисии");
+    connect(btnCommission, &QPushButton::clicked, [=]() {
+        btnCommission->setStyleSheet("");
+        emit this->clickedCommission();
+    });
+    btnCommission->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum);
+    btnCommission->setFixedWidth(lengthLabelWidth);
+    formLayout->addRow(btnCommission, btnDocx);
 
-
+    this->setLayout(formLayout);
+    this->setFixedWidth(310);
 }
 
 DataWgtXML WidgetXML::getData()
@@ -91,4 +98,9 @@ DataWgtXML WidgetXML::getData()
     dataWgtXml.ZZ = ZZ;
 
     return dataWgtXml;
+}
+
+void WidgetXML::errorCommission() {
+    QString style = "background-color: red;";
+    btnCommission->setStyleSheet(style);
 }

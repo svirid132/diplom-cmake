@@ -30,6 +30,7 @@ void Docx::saveDocx(QString filePath, const QList<QPair<QString, QByteArray>>& f
     QuaZip zipDocx(filePath);
     if (!zipDocx.open(QuaZip::mdCreate)) qDebug() << "zipDocx:" << "false";
     QuaZipFile outFile(&zipDocx);
+    qDebug() << zipDocx.getZipName();
     for(auto& file: files){
         if (outFile.open(QIODevice::WriteOnly, QuaZipNewInfo(file.first))) {
             qDebug() << "file write:" << file.first;

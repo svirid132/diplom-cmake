@@ -2,7 +2,7 @@
 #define INITWIDGETCHART_H
 
 #include <widgetchart.h>
-#include "cmdchart.h"
+#include "../cmdchart.h"
 
 WidgetChart* initWidgetChart(CmdChart* const cmdChart);
 

@@ -21,12 +21,7 @@ int main(int argc, char *argv[]) {
     MainWindow w;
     //release
     preloader(w);
-    //debug
-//    w.setCentralWidget();
-    //
     w.show();
-
-    w.commissionDialog();
 
     return a.exec();
 }

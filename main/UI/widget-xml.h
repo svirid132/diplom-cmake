@@ -3,6 +3,7 @@
 
 #include <QDateEdit>
 #include <QWidget>
+#include <QtWidgets/QPushButton>
 #include "UI-var.h"
 
 class WidgetXML : public QWidget
@@ -11,6 +12,7 @@ class WidgetXML : public QWidget
 public:
     explicit WidgetXML(QWidget *parent = nullptr);
     DataWgtXML getData();
+    void errorCommission();
 
 private:
     QDate date;
@@ -21,9 +23,12 @@ private:
     int YY;
     int ZZ;
 
+    QPushButton* btnCommission;
+
 signals:
     void clickedSave();
     void createDocx();
+    void clickedCommission();
 };
 
 #endif // WIDGETXML_H

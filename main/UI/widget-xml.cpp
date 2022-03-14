@@ -22,18 +22,20 @@ WidgetXML::WidgetXML(QWidget *parent) : QWidget(parent)
     });
     formLayout->addRow(new QLabel("Дата:"), dateEdit);
 
-    const QStringList list = QStringList({"Скалистый", "123"});
+    const QStringList list = QStringList({"Скалистый", "Комсомольский", "Октябрьский", "Таймырский"});
     this->rudnik = list.at(0);
     QComboBox* rudnikEdit = new QComboBox();
     rudnikEdit->setModel(new QStringListModel(list));
     formLayout->addRow(new QLabel("Рудник:"), rudnikEdit);
     connect(rudnikEdit, &QComboBox::currentTextChanged, rudnikEdit, [=](const QString &text) {
+        rudnikEdit->setStyleSheet("");
         this->rudnik = text;
     });
 
     QLineEdit* nameVirabEdit = new QLineEdit();
     formLayout->addRow(new QLabel("Название выроботки:"), nameVirabEdit);
     connect(nameVirabEdit, &QLineEdit::textChanged, nameVirabEdit, [=](const QString &text) {
+        nameVirabEdit->setStyleSheet("");
         this->nameVirab = text;
     });
 
@@ -42,37 +44,71 @@ WidgetXML::WidgetXML(QWidget *parent) : QWidget(parent)
     formLayout->addRow(lengthLabel, IzmVipEdit);
     int lengthLabelWidth = lengthLabel->minimumSizeHint().width();
     connect(IzmVipEdit, &QLineEdit::textChanged, IzmVipEdit, [=](const QString &text) {
+        IzmVipEdit->setStyleSheet("");
         this->izmVip = text;
     });
 
+    const double max = 55000.9;
+    const double min = -55000.9;
+    const int decimals = 1;
     this->XX = 0;
-    QSpinBox* XXEdit = new QSpinBox();
+    QDoubleSpinBox* XXEdit = new QDoubleSpinBox();
+    XXEdit->setMaximum(max);
+    XXEdit->setMinimum(min);
+    XXEdit->setDecimals(decimals);
     formLayout->addRow(new QLabel("XX:"), XXEdit);
-    connect(XXEdit, QOverload<int>::of(&QSpinBox::valueChanged), XXEdit, [=](int num) {
+    connect(XXEdit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), XXEdit, [=](double num) {
         this->XX = num;
     });
 
     this->YY = 0;
-    QSpinBox* YYEdit = new QSpinBox();
+    QDoubleSpinBox* YYEdit = new QDoubleSpinBox();
+    YYEdit->setMaximum(max);
+    YYEdit->setMinimum(min);
+    YYEdit->setDecimals(decimals);
     formLayout->addRow(new QLabel("YY:"), YYEdit);
-    connect(YYEdit, QOverload<int>::of(&QSpinBox::valueChanged), YYEdit, [=](int num) {
+    connect(YYEdit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), YYEdit, [=](double num) {
         this->YY = num;
     });
 
     this->ZZ = 0;
-    QSpinBox* ZZEdit = new QSpinBox();
+    QDoubleSpinBox* ZZEdit = new QDoubleSpinBox();
+    ZZEdit->setDecimals(decimals);
+    ZZEdit->setMaximum(min);
+    ZZEdit->setMinimum(decimals);
     formLayout->addRow(new QLabel("ZZ:"), ZZEdit);
-    connect(ZZEdit, QOverload<int>::of(&QSpinBox::valueChanged), ZZEdit, [=](int num) {
+    connect(ZZEdit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), ZZEdit, [=](double num) {
         this->ZZ = num;
     });
 
-    QPushButton* btn = new QPushButton("Сохранить в XML");
-    connect(btn, &QPushButton::clicked, this, &WidgetXML::clickedSave);
+    QPushButton* btnXML = new QPushButton("Сохранить в XML");
+    connect(btnXML, &QPushButton::clicked, [=]() {
+        QString styleSheet = "background-color: red;";
+        bool ok = true;
+        if (nameVirab == "") {
+            nameVirabEdit->setStyleSheet(styleSheet);
+            ok = false;
+        } else if (izmVip == "") {
+            IzmVipEdit->setStyleSheet(styleSheet);
+            ok = false;
+        }
+
+        if (ok) emit this->clickedSave();
+    });
     formLayout->addItem(new QSpacerItem(0, 10));
-    formLayout->addWidget(btn);
+    formLayout->addWidget(btnXML);
 
     QPushButton* btnDocx = new QPushButton("Сохранить в docx");
-    connect(btnDocx, &QPushButton::clicked, this, &WidgetXML::createDocx);
+    connect(btnDocx, &QPushButton::clicked, btnDocx, [=]() {
+        QString styleSheet = "background-color: red;";
+        bool ok = true;
+        if (nameVirab == "") {
+            nameVirabEdit->setStyleSheet(styleSheet);
+            ok = false;
+        }
+
+        if(ok) emit this->createDocx();
+    });
     btnCommission = new QPushButton("Состав Коммисии");
     connect(btnCommission, &QPushButton::clicked, [=]() {
         btnCommission->setStyleSheet("");

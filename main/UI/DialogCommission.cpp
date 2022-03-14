@@ -160,13 +160,13 @@ void DialogCommission::adjustInputWidget() {
                 QString text = textEdit->toPlainText();
                 QString objectName = widget->objectName();
                 if (objectName == posDescWritter) {
-                    dataCommission.posDescWritter = text;
+                    dataCommission.posDescWritter = handlePos(dataCommission.nameWritter, text);
                 } else if (objectName == posDescMain) {
-                    dataCommission.posDescMain = text;
+                    dataCommission.posDescMain = handlePos(dataCommission.nameMain, text);
                 } else if(objectName == posDescMembOne) {
-                    dataCommission.posDescMembOne = text;
+                    dataCommission.posDescMembOne = handlePos(dataCommission.nameMembOne, text);
                 } else if(objectName == posDescMembTwo){
-                    dataCommission.posDescMembTwo = text;
+                    dataCommission.posDescMembTwo = handlePos(dataCommission.nameMembTwo, text);
                 }
             });
         }
@@ -189,4 +189,25 @@ void DialogCommission::adjustInputWidget() {
             });
         }
     }
+}
+
+QString DialogCommission::handlePos(const QString &name, const QString &pos) {
+
+    QRegExp rx("( (.[.])+)");
+
+    int position = rx.indexIn(name, 0);
+    if (position == -1) return pos;// нету совпадений
+
+    int lenFirstName = rx.matchedLength();
+    QString rxFirstName = name.mid(position, lenFirstName);
+    QString firstName = rxFirstName.mid(1, lenFirstName - 1);//убираем пробел
+
+    QString newName = name;
+    newName.replace(rxFirstName, "");//убираем f.f.
+    newName.prepend(firstName + " ");//добавляем в начало f.f. + пробел
+
+    QString newPos = pos;
+    newPos.replace("`{name}`", newName);
+
+    return newPos;
 }

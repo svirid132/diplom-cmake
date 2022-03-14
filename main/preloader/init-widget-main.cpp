@@ -83,6 +83,8 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
 
     NModel* listModel = new NModel();
     QWidget* widgetnJoinXML = initWidgetJoinXml(widgetXML, listModel);
+//    widgetnJoinXML->setParent(widgetMain);
+//    widgetnJoinXML->hide();
 
     QObject::connect(widgetMain, &WidgetMain::executeAPI, widgetMain, [=, &window](float Lsh, float h, int period, QString path) {
         try {
@@ -150,8 +152,10 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
         docData.rudnik = dataWgtXML.rudnik;
         docData.product = dataWgtXML.nameVirab;
         docData.dateProduct = dataWgtXML.date.toString("dd.MM.yyyy");
+        docData.year = QString::number(dataWgtXML.date.year());
         docData.category = getCategoryString(logic->getCategory());
         docData.h = logic->geth();
+        docData.koefZap = smath::roundFloat(logic->getKoefZap());
         if (window.isDataCommission()) {
             DataCommission data = window.getDataCommission();
             docData.nameWritter = data.nameWritter;
@@ -177,7 +181,11 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
         dir.cd("files");
 
         QString filename = QString("АКТ %1 от %2.docx").arg(docData.product).arg(docData.dateProduct);
-        docx.create(dir.path() + "/" + filename);
+        try {
+            docx.create(dir.path() + "/" + filename);
+        } catch (const ErrorFile& error) {
+            window.viewError(error.what());
+        }
     });
 
     QObject::connect(widgetXML, &WidgetXML::clickedCommission, [=, &window](){

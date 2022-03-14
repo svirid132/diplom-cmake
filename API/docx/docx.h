@@ -19,7 +19,7 @@ private:
     DocData docData;
     QList<QPointF> chartGlub_Nimp;
     QPointF criticalPoint;
-    void saveDocx(QString filePath, const QList<QPair<QString, QByteArray>>& files);
+    bool saveDocx(QString filePath, const QList<QPair<QString, QByteArray>>& files);
 
     void handleFiles(QList<QPair<QString, QByteArray>> &files);
 

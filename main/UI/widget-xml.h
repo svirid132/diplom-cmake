@@ -19,9 +19,9 @@ private:
     QString rudnik;
     QString nameVirab;
     QString izmVip;
-    int XX;
-    int YY;
-    int ZZ;
+    double XX;
+    double YY;
+    double ZZ;
 
     QPushButton* btnCommission;
 

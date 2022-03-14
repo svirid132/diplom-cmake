@@ -10,16 +10,17 @@ find_package(Qt5 COMPONENTS Core REQUIRED)
 add_subdirectory(docx)
 
 add_library(API
-    xmlfile.cpp
-    rawfile.cpp
-)
+        xmlfile.cpp
+        rawfile.cpp
+        XMLtoDOCX.cpp
+        )
 
 target_include_directories(API
-          INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}
-          )
+        INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}
+        )
 
 target_link_libraries(API PRIVATE Qt5::Core smath error docx)
 
-if(CMAKE_BUILD_TYPE STREQUAL "Release")
+if (CMAKE_BUILD_TYPE STREQUAL "Release")
     install(TARGETS API)
-endif()
+endif ()

@@ -31,6 +31,7 @@ struct DocData {
     float Y;
     float Z;
     float koefZap;
+    QString year;
 };
 
 namespace DocxFlags {

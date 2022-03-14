@@ -26,7 +26,7 @@ target_include_directories(docx
           INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}
           )
 
-target_link_libraries(docx PRIVATE Qt5::Core QuaZip::QuaZip)
+target_link_libraries(docx PRIVATE Qt5::Core QuaZip::QuaZip error)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     install(TARGETS docx)

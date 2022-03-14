@@ -7,44 +7,45 @@
 #include "libary/zip/zip.h"
 #include <quazip/quazip.h>
 #include <quazip/quazipfile.h>
+#include "error.h"
 
-Docx::Docx()
-{
+Docx::Docx() {
 
 }
 
-QPointF handleCriticalPoint(const QPointF& point) {
-    float handX = point.x() * 20 + 1;//из Exel
+QPointF handleCriticalPoint(const QPointF &point) {
+    float handX = point.x() * 20 + 1;//из Excel
     QPointF handP = {handX, point.y()};
     return handP;
 }
 
-void Docx::setData(const DocData &docData, const QList<QPointF> &chartGlub_Nimp, QPointF criticalPoint)
-{
+void Docx::setData(const DocData &docData, const QList<QPointF> &chartGlub_Nimp, QPointF criticalPoint) {
     this->docData = docData;
     this->chartGlub_Nimp = chartGlub_Nimp;
     this->criticalPoint = handleCriticalPoint(criticalPoint);
 }
 
-void Docx::saveDocx(QString filePath, const QList<QPair<QString, QByteArray>>& files) {
+bool Docx::saveDocx(QString filePath, const QList<QPair<QString, QByteArray>> &files) {
     QuaZip zipDocx(filePath);
-    if (!zipDocx.open(QuaZip::mdCreate)) qDebug() << "zipDocx:" << "false";
+    if (!zipDocx.open(QuaZip::mdCreate)) {
+        return false;
+    };
     QuaZipFile outFile(&zipDocx);
-    qDebug() << zipDocx.getZipName();
-    for(auto& file: files){
+//    qDebug() << zipDocx.getZipName(); path
+    for (auto &file: files) {
         if (outFile.open(QIODevice::WriteOnly, QuaZipNewInfo(file.first))) {
-            qDebug() << "file write:" << file.first;
             outFile.write(file.second);
             outFile.close();
         } else {
-            qDebug() << "not file:" << file.first;
+            return false;
         }
     }
     zipDocx.close();
+    return true;
 }
 
-void Docx::handleFiles(QList<QPair<QString, QByteArray>>& files) {
-    for(auto& file: files){
+void Docx::handleFiles(QList<QPair<QString, QByteArray>> &files) {
+    for (auto &file: files) {
         if (file.first == "word/document.xml") {
             HandlerDocument handDoc;
             QString rawStr = QString::fromUtf8(file.second);
@@ -74,15 +75,17 @@ QList<QPair<QString, QByteArray>> Docx::externTemplate() {
     QuaZip zip(zipName);
     QList<QPair<QString, QByteArray>> files;
     if (!zip.open(QuaZip::mdUnzip)) {
-        qWarning("Couldn't open %s", zipName.toUtf8().constData());
+        throw ErrorFile::template_();
+        //qWarning("Couldn't open %s", zipName.toUtf8().constData());
     }
     QuaZipFile inFile(&zip);
-    for(bool more=zip.goToFirstFile(); more; more=zip.goToNextFile()) {
+    for (bool more = zip.goToFirstFile(); more; more = zip.goToNextFile()) {
         QuaZipFileInfo info;
         zip.getCurrentFileInfo(&info);
         QString filename = zip.getCurrentFileName();
-        if(!inFile.open(QIODevice::ReadOnly)) {
-            qDebug() << "not open inFile:" << filename;
+        if (!inFile.open(QIODevice::ReadOnly)) {
+            throw ErrorFile::template_();
+//            qDebug() << "not open inFile:" << filename;
         }
         QByteArray data = inFile.readAll();
         files.append({filename, data});
@@ -90,16 +93,19 @@ QList<QPair<QString, QByteArray>> Docx::externTemplate() {
     }
     zip.close();
 
-    if(zip.getZipError() == UNZ_OK) {
-        qDebug() << "error not!";
+    if (zip.getZipError() != UNZ_OK) {
+        throw ErrorFile::template_();
     }
 
     return files;
 }
 
-void Docx::create(QString pathFile)
-{
+void Docx::create(QString pathFile) {
+
     QList<QPair<QString, QByteArray>> files = externTemplate();
     handleFiles(files);
-    saveDocx(pathFile, files);
+    if (!saveDocx(pathFile, files)) {
+        throw ErrorFile::save();
+    }
+
 }

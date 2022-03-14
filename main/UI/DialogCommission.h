@@ -36,6 +36,8 @@ private:
     const QString posDescMembOne = "posDescMembOne";
     const QString nameMembTwo = "nameMembTwo";
     const QString posDescMembTwo = "posDescMembTwo";
+
+    QString handlePos(const QString& name, const QString& pos);
 };
 
 

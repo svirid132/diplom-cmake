@@ -190,11 +190,13 @@ void WidgetMain::openFile()
 }
 
 void WidgetMain::setWidget(QWidget* widget) {
-    if (secondWidget) secondWidget->hide();
+    if (!secondWidget) {
+        layout->addWidget(widget);
+    }
+    layout->replaceWidget(secondWidget, widget);
     widget->show();
-    layout->removeWidget(secondWidget);
-    layout->addWidget(widget);
-    secondWidget = widget;;
+    if(secondWidget) secondWidget->hide();
+    secondWidget = widget;
 }
 
 void WidgetMain::successChange() {

@@ -38,6 +38,7 @@ private:
         QString nameMain = "`{nameMain}`";
         QString nameMembOne = "`{nameMembOne}`";
         QString nameMembTwo = "`{nameMembTwo}`";
+        QString year = "`{year}`";
     } specSymbol;
 
     QString handler(QXmlStreamReader& xml);

@@ -31,6 +31,7 @@ DocData getDocData() {
     docData.nameMain = "М.П. Сергунин";
     docData.nameMembOne = "В.Е. Шаховцев";
     docData.nameMembTwo = "В.В. Сазнов";
+    docData.year = QString("2025");
 
     return docData;
 }

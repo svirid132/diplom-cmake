@@ -39,7 +39,8 @@ QString HandlerDocument::handleMathRaplace(const QString &specSymb, DocxFlags::T
             .replace(specSymbol.koefZap, QString::number(docData.koefZap))
             .replace(specSymbol.nameMain, docData.nameMain)
             .replace(specSymbol.nameMembOne, docData.nameMembOne)
-            .replace(specSymbol.nameMembTwo, docData.nameMembTwo);
+            .replace(specSymbol.nameMembTwo, docData.nameMembTwo)
+            .replace(specSymbol.year, docData.year);
     } else {
         if (specSymb[0] == ' ') text = " ";
         if (specText & DocxFlags::num) {

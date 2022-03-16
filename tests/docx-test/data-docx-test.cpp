@@ -19,18 +19,18 @@ DocData getDocData() {
     docData.X = 21;
     docData.Y = 22;
     docData.Z = -23.23;
-    docData.posDescWritter = "Главный геотехник ЗФ ПАО «ГМК «Норильский никель» – директор Центра геодинамической безопасности";
-    docData.nameWritter = "В.П. Марысюк";
+    docData.docCommission.posDescWritter = "Главный геотехник ЗФ ПАО «ГМК «Норильский никель» – директор Центра геодинамической безопасности";
+    docData.docCommission.nameWritter = "В.П. Марысюк";
     docData.product = "РВ-2";
     docData.dateProduct = "19.01.2022";
-    docData.posDescMain = "И.о. главного инженера Центра геодинамической безопасности ЗФ ПАО «ГМК «Норильский никель» (далее – ЦГБ, ЗФ соответственно) Сергунин М.П.";
-    docData.posDescMembOne = "1. Начальник подземного участка прогноза и предотвращения горных ударов рудника «Скалистый» ЦГБ ЗФ Шаховцев В.Е.";
-    docData.posDescMembTwo = "2. И.о. начальника отдела геотехнического сопровождения горных работ (далее – ОГТСГР) ЦГБ ЗФ Сазнов В.В.";
+    docData.docCommission.posDescMain = "И.о. главного инженера Центра геодинамической безопасности ЗФ ПАО «ГМК «Норильский никель» (далее – ЦГБ, ЗФ соответственно) Сергунин М.П.";
+    docData.docCommission.posDescMembOne = "1. Начальник подземного участка прогноза и предотвращения горных ударов рудника «Скалистый» ЦГБ ЗФ Шаховцев В.Е.";
+    docData.docCommission.posDescMembTwo = "2. И.о. начальника отдела геотехнического сопровождения горных работ (далее – ОГТСГР) ЦГБ ЗФ Сазнов В.В.";
     docData.rudnik = "Скалистый";
     docData.koefZap = 1.84;
-    docData.nameMain = "М.П. Сергунин";
-    docData.nameMembOne = "В.Е. Шаховцев";
-    docData.nameMembTwo = "В.В. Сазнов";
+    docData.docCommission.nameMain = "М.П. Сергунин";
+    docData.docCommission.nameMembOne = "В.Е. Шаховцев";
+    docData.docCommission.nameMembTwo = "В.В. Сазнов";
     docData.year = QString("2025");
 
     return docData;

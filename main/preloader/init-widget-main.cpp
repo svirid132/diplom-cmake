@@ -118,7 +118,13 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
         try {
             DataWgtXML dataWgtXML = widgetXML->getData();
             auto tag_texts = getTag_texts(logic, dataWgtXML);
-            XMLFile::write("123.xml", tag_texts);
+
+//            Скалистый_2021-10-08_РВ-1_2021-11-06T13_06_13;
+            QString date = dataWgtXML.date.toString("yyyy-MM-dd");
+            QString currentDate = QDateTime::currentDateTime().toString("yyyy-MM-ddThh_mm_ss");
+            QString filename = QString("%1_%2_%3_%4.xml").arg(dataWgtXML.rudnik).arg(date).arg(dataWgtXML.nameVirab).arg(currentDate);
+
+            XMLFile::write("files/" + filename, tag_texts);
             window.viewSuccess("Файл успешно сохранен");
         } catch (const ErrorFile& error) {
             window.viewError(error.what());
@@ -138,6 +144,7 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
     });
 
     QObject::connect(widgetXML, &WidgetXML::createDocx, widgetXML, [=, &window]() {
+
         Docx docx;
         DocData docData;
         docData.N0 = logic->getN0();
@@ -158,14 +165,14 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
         docData.koefZap = smath::roundFloat(logic->getKoefZap());
         if (window.isDataCommission()) {
             DataCommission data = window.getDataCommission();
-            docData.nameWritter = data.nameWritter;
-            docData.posDescWritter = data.posDescWritter;
-            docData.nameMain = data.nameMain;
-            docData.posDescMain = data.posDescMain;
-            docData.nameMembOne = data.nameMembOne;
-            docData.posDescMembOne = data.posDescMembOne;
-            docData.nameMembTwo = data.nameMembTwo;
-            docData.posDescMembTwo = data.posDescMembTwo;
+            docData.docCommission.nameWritter = data.nameWritter;
+            docData.docCommission.posDescWritter = data.posDescWritter;
+            docData.docCommission.nameMain = data.nameMain;
+            docData.docCommission.posDescMain = data.posDescMain;
+            docData.docCommission.nameMembOne = data.nameMembOne;
+            docData.docCommission.posDescMembOne = data.posDescMembOne;
+            docData.docCommission.nameMembTwo = data.nameMembTwo;
+            docData.docCommission.posDescMembTwo = data.posDescMembTwo;
         } else {
             widgetXML->errorCommission();
             return;
@@ -173,16 +180,18 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
 
         docx.setData(docData, logic->getGlub_Nimp().toList(), logic->getCriticalPoint());
 
-        QDir dir = QDir(QDir::currentPath());
-        if(!dir.exists("files")) {
-            if (!dir.mkdir("files")) return;
-            dir.cd("files");
+        QString filename = Docx::createFileName(docData.product, docData.dateProduct);
+        QString filepath = "files/" + filename;
+        if ( isFileExists(filepath) ) {
+            QString problem = QString("Фйла с именем \"%1\" уже создан.").arg(filename);
+            QString question = "Перезаписать файл?";
+            bool isAccept = window.dialogQuestion(problem, question);
+            if (!isAccept) return;
         }
-        dir.cd("files");
 
-        QString filename = QString("АКТ %1 от %2.docx").arg(docData.product).arg(docData.dateProduct);
         try {
-            docx.create(dir.path() + "/" + filename);
+            docx.create(filepath);
+            window.viewSuccess("Файл успешно сохранен");
         } catch (const ErrorFile& error) {
             window.viewError(error.what());
         }
@@ -192,8 +201,15 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
         window.dialogCommission();
     });
 
+    QObject::connect(widgetXML, &WidgetXML::clickedXmlToDocx, [=, &window](){
+        if (window.isDataCommission()) {
+            window.dialogConveter();
+        } else {
+            widgetXML->errorCommission();
+        }
+    });
+
     test(logic, cmdChart, widgetMain, listModel);
-    qDebug() << "points:" << logic->getGlub_Nimp().toList();
 
     //debug
 //    widgetMain->setEnabledPanel(false);

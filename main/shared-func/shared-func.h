@@ -6,4 +6,6 @@
 
 QString getCategoryString(const CATEGORY& category);
 
+bool isFileExists(const QString& path);
+
 #endif // SHAREDFUNC_H

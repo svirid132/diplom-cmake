@@ -8,25 +8,25 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt5 COMPONENTS Core REQUIRED)
 
 set(header
-    math-var.h
-    math-logic.h
-    )
+        math-var.h
+        math-logic.h
+        )
 
 set(source
-    math-logic.cpp
-    )
+        math-logic.cpp
+        )
 
 add_library(math-logic STATIC
-    ${header}
-    ${source}
-)
+        ${header}
+        ${source}
+        )
 
 target_include_directories(math-logic
-          INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}
-          )
+        INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}
+        )
 
-target_link_libraries(math-logic PRIVATE Qt5::Core smath API)
+target_link_libraries(math-logic PRIVATE Qt5::Core smath)
 
-if(CMAKE_BUILD_TYPE STREQUAL "Release")
+if (CMAKE_BUILD_TYPE STREQUAL "Release")
     install(TARGETS math-logic)
-endif()
+endif ()

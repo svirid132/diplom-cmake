@@ -7,18 +7,31 @@
 
 
 #include <QtCore/QString>
+#include <functional>
+#include "docx/docx-data.h"
+#include <QPointF>
+#include <QList>
+
 //TODO
 class XMLtoDOCX {
 public:
     XMLtoDOCX();
 
-    void setPathXML(const QString& path);
+    void setFilePathXML(const QString& path);
     void setPathDocx(const QString& path);
-    tttttttttttttttttttttttttttttttttt
+    bool convert(const DocCommission& docCommission);
+    void saveDocx();
+    QString getDocxFilePath();
 
 private:
-    QString xmlPath;
+    QString xmlFilePath;
     QString docxPath;
+
+    struct ParamDocx {
+        DocData docData;
+        QList<QPointF> Glub_Nimp;
+        QPointF criticalPoint;
+    } paramDocx;
 };
 
 

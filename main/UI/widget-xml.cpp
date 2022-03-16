@@ -109,6 +109,7 @@ WidgetXML::WidgetXML(QWidget *parent) : QWidget(parent)
 
         if(ok) emit this->createDocx();
     });
+
     btnCommission = new QPushButton("Состав Коммисии");
     connect(btnCommission, &QPushButton::clicked, [=]() {
         btnCommission->setStyleSheet("");
@@ -117,6 +118,11 @@ WidgetXML::WidgetXML(QWidget *parent) : QWidget(parent)
     btnCommission->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum);
     btnCommission->setFixedWidth(lengthLabelWidth);
     formLayout->addRow(btnCommission, btnDocx);
+
+    QPushButton* btnConverter = new QPushButton("Конвер. XML в DOCX");
+    connect(btnConverter, &QPushButton::clicked, this, &WidgetXML::clickedXmlToDocx);
+    formLayout->addWidget(btnConverter);
+
 
     this->setLayout(formLayout);
     this->setFixedWidth(310);

@@ -1,3 +1,4 @@
+#include <QtCore/QFileInfo>
 #include "shared-func.h"
 
 QString getCategoryString(const CATEGORY& category) {
@@ -10,4 +11,10 @@ QString getCategoryString(const CATEGORY& category) {
             string = "НЕОПАСНО";
     }
     return string;
+}
+
+bool isFileExists(const QString& path) {
+    QFileInfo fileInfo;
+    fileInfo.setFile(path);
+    return fileInfo.exists();
 }

@@ -10,7 +10,7 @@ add_library(UI
 		widgetmain.cpp
 		widgetmain.h
 		UI-var.h
-		DialogCommission.cpp DialogCommission.h)
+		DialogCommission.cpp DialogCommission.h DialogConverter.cpp DialogConverter.h)
 
 target_include_directories(UI
 		INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}

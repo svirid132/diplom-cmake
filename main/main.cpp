@@ -13,6 +13,8 @@
 #include <docx.h>
 #include <exception> // для std::exception
 #include <iostream>
+#include <XMLtoDOCX.h>
+#include <UI/DialogConverter.h>
 #include "error.h"
 #include "xmlfile.h"
 

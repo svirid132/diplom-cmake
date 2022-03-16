@@ -29,6 +29,7 @@ signals:
     void clickedSave();
     void createDocx();
     void clickedCommission();
+    void clickedXmlToDocx();
 };
 
 #endif // WIDGETXML_H

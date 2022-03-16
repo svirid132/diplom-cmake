@@ -109,3 +109,8 @@ void Docx::create(QString pathFile) {
     }
 
 }
+
+QString Docx::createFileName(const QString& product, const QString& dateProduct ) {
+    QString filename = QString("АКТ %1 от %2.docx").arg(product).arg(dateProduct);
+    return filename;
+}

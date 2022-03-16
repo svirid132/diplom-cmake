@@ -8,17 +8,21 @@ struct StartEnd {
     int end;
 };
 
-struct DocData {
+struct DocCommission {
     QString posDescWritter;
     QString nameWritter;
-    QString product;
-    QString dateProduct;
     QString nameMain;
     QString posDescMain;
     QString nameMembOne;
     QString posDescMembOne;
     QString nameMembTwo;
     QString posDescMembTwo;
+};
+
+struct DocData {
+    DocCommission docCommission;
+    QString product;
+    QString dateProduct;
     QString rudnik;
     int Nmax;
     int N0 = -1;

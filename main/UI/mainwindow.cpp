@@ -9,18 +9,15 @@
 #include "DialogCommission.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-{
+        : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::viewError(const QString& str) {
+void MainWindow::viewError(const QString &str) {
     QMessageBox messageBox;
     int width = messageBox.size().width();
     int height = messageBox.size().height();
@@ -28,14 +25,14 @@ void MainWindow::viewError(const QString& str) {
     messageBox.setWindowTitle("Ошибка");
     messageBox.setIcon(QMessageBox::Critical);
     messageBox.setGeometry(
-                WIDTH_SCREEN / 2 - width / 2,
-                HEIGHT_SCREEN / 2 - height / 2,
-                width,
-                height);
+            WIDTH_SCREEN / 2 - width / 2,
+            HEIGHT_SCREEN / 2 - height / 2,
+            width,
+            height);
     messageBox.exec();
 }
 
-void MainWindow::viewSuccess(const QString& str) {
+void MainWindow::viewSuccess(const QString &str) {
     QMessageBox messageBox;
     int width = messageBox.size().width();
     int height = messageBox.size().height();
@@ -43,15 +40,14 @@ void MainWindow::viewSuccess(const QString& str) {
     messageBox.setWindowTitle("Успех");
     messageBox.setIcon(QMessageBox::Information);
     messageBox.setGeometry(
-                WIDTH_SCREEN / 2 - width / 2,
-                HEIGHT_SCREEN / 2 - height / 2,
-                width,
-                height);
+            WIDTH_SCREEN / 2 - width / 2,
+            HEIGHT_SCREEN / 2 - height / 2,
+            width,
+            height);
     messageBox.exec();
 }
 
-void MainWindow::setCentralWidget(QWidget *widget)
-{
+void MainWindow::setCentralWidget(QWidget *widget) {
     widget->setFixedSize(800, 450);
     QMainWindow::setCentralWidget(widget);
 }
@@ -79,8 +75,49 @@ void MainWindow::dialogCommission() {
     }
 }
 
+void MainWindow::dialogConveter() {
+    DialogParam param;
+    param.mainWidget = this;
+    bool ok;
+    QString docxPath = openConverterDialog(param, this->docxPath, ok);
+    if (ok) {
+        this->docxPath = docxPath;
+    }
+}
+
 void
-MainWindow::setDialogCommission(std::function<DataCommission(const DialogParam &, const DataCommission &, bool &)> dialog) {
+MainWindow::setDialogCommission(
+        std::function<DataCommission(const DialogParam &, const DataCommission &, bool &)> dialog) {
     openCommissionDialog = dialog;
+}
+
+bool MainWindow::dialogQuestion(const QString &propblem, const QString &question) {
+    QMessageBox messageBox;
+    messageBox.setInformativeText(question);
+    messageBox.setText(propblem);
+    int width = messageBox.size().width();
+    int height = messageBox.size().height();
+    messageBox.setWindowTitle("Вопрос");
+    messageBox.addButton("Да", QMessageBox::AcceptRole);
+    messageBox.addButton("Нет", QMessageBox::RejectRole);
+    messageBox.setIcon(QMessageBox::Information);
+    messageBox.setGeometry(
+            WIDTH_SCREEN / 2 - width / 2,
+            HEIGHT_SCREEN / 2 - height / 2,
+            width,
+            height);
+    messageBox.exec();
+    int result = messageBox.result();
+    bool isAccept = (result == QMessageBox::AcceptRole);
+    return isAccept;
+}
+
+void MainWindow::setDocxPath(const QString &path) {
+    this->docxPath = path;
+}
+
+void MainWindow::setDialogConverter(
+        std::function<QString(const DialogParam &param, const QString &docxPath, bool &ok)> dialog) {
+    this->openConverterDialog = dialog;
 }
 

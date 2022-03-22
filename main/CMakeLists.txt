@@ -23,7 +23,7 @@ set(PROJECT_SOURCES
         shared-func/shared-func.h
         shared-func/shared-func.cpp
         ../API/docx/file.qrc
-)
+        )
 
 qt5_add_resources(PROJECT_SOURCES file.qrc)
 

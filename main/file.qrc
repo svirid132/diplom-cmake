@@ -1,9 +1,11 @@
 <RCC>
-    <qresource prefix="/">
-        <file alias="plus.svg">../assets/UI/plus.svg</file>
-        <file alias="minus.svg">../assets/UI/minus.svg</file>
-        <file alias="plus-blue.svg">../assets/UI/plus-blue.svg</file>
-        <file alias="minus-blue.svg">../assets/UI/minus-blue.svg</file>
-        <file alias="error.svg">../assets/UI/error.svg</file>
-    </qresource>
+  <qresource prefix="/">
+    <file>../assets/UI/arrow-down.svg</file>
+    <file alias="plus.svg">../assets/UI/plus.svg</file>
+    <file alias="minus.svg">../assets/UI/minus.svg</file>
+    <file alias="plus-blue.svg">../assets/UI/plus-blue.svg</file>
+    <file alias="minus-blue.svg">../assets/UI/minus-blue.svg</file>
+    <file alias="error.svg">../assets/UI/error.svg</file>
+    <file alias="arrow-down.svg">../assets/UI/arrow-down.svg</file>
+  </qresource>
 </RCC>

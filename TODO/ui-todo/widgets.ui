@@ -22,8 +22,8 @@
   <widget class="QSpinBox" name="spinBox">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>200</y>
+     <x>90</x>
+     <y>180</y>
      <width>186</width>
      <height>40</height>
     </rect>
@@ -87,6 +87,8 @@ QSpinBox::down-button {
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../main/file.qrc"/>
+ </resources>
  <connections/>
 </ui>

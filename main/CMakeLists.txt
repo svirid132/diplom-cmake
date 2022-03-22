@@ -25,6 +25,8 @@ set(PROJECT_SOURCES
         ../API/docx/file.qrc
 )
 
+qt5_add_resources(PROJECT_SOURCES file.qrc)
+
 add_executable(main
     ${PROJECT_SOURCES}
 )

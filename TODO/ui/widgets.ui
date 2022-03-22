@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">* {
+	font-size: 16px;
+}
+</string>
+  </property>
+  <widget class="QSpinBox" name="spinBox">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>200</y>
+     <width>186</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <strikeout>false</strikeout>
+     <kerning>true</kerning>
+    </font>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::DefaultContextMenu</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QSpinBox { 
+	padding: 3px 0px;
+	background-color: white;
+	max-height: 30px;
+	min-height: 30px;
+	border: 2px solid #C4C4C4;
+	border-radius: 15px;
+	text-align: center;
+}
+
+QSpinBox::up-button {
+	subcontrol-origin: border;
+    subcontrol-position: right; /* position at the top right corner */
+
+	width: 30px;
+	max-height: 40px;
+	min-height: 40px;
+	border: 2px solid #C4C4C4;
+	border-top-right-radius: 15px;
+	border-bottom-right-radius: 15px;
+}
+
+QSpinBox::down-button {
+ 	subcontrol-origin: border;
+    subcontrol-position: left; /* position at the top right corner */
+
+	width: 30px;
+	max-height: 40px;
+	min-height: 40px;
+	border: 2px solid #C4C4C4;
+	border-bottom-left-radius: 15px;
+	border-top-left-radius: 15px;
+}</string>
+   </property>
+   <property name="maximum">
+    <number>1000000</number>
+   </property>
+   <property name="value">
+    <number>123456</number>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

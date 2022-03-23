@@ -9,27 +9,28 @@
 #include <QtSvg/QSvgGenerator>
 #include <QtSvg/QSvgRenderer>
 
-PushButton::PushButton(QWidget* parent) :
-    QPushButton(parent),
-    sizeSvg(24, 24)
-{
+PushButton::PushButton(QWidget *parent) :
+        QPushButton(parent),
+        sizeIcon(QSize(24, 24)) {
+
     const int fontPixel = 16;//px
     font.setPixelSize(fontPixel);
 }
 
-PushButton::PushButton(const QString &text, QWidget *parent) : QPushButton(parent) {
+PushButton::PushButton(const QString &text, QWidget *parent) :
+        QPushButton(parent),
+        sizeIcon(QSize(24, 24)) {
 
     const int fontPixel = 16;//px
     font.setPixelSize(fontPixel);
-
     this->text = text;
+    resize(sizeHint());
 }
 
-PushButton::~PushButton()
-{
+PushButton::~PushButton() {
 }
 
-void PushButton::setText(const QString& text) {
+void PushButton::setText(const QString &text) {
 
     this->text = text;
 
@@ -37,49 +38,44 @@ void PushButton::setText(const QString& text) {
 }
 
 
-QSize PushButton::sizeHint () const
-{
+QSize PushButton::sizeHint() const {
     const auto parentHint = QPushButton::sizeHint();
     // add margins here if needed
 
     QFontMetrics fm(font);
-    int pixelsWide = fm.horizontalAdvance(text);
-    const int iconWide = sizeSvg.width();
+    int textWide = fm.horizontalAdvance(text);
+    const int iconWide = sizeIcon.width();
 
-    const int width = pixelsWide + iconWide + paddingW;
-    const int height = std::max(parentHint.height(), sizeSvg.height());
+    const int width = textWide + iconWide + padding.width();
+    const int height = std::max(parentHint.height(), sizeIcon.height());
 
     return QSize(width, height);
 }
 
-void PushButton::paintEvent(QPaintEvent* e)
-{
+void PushButton::paintEvent(QPaintEvent *e) {
     QPushButton::paintEvent(e);
 
-    qDebug() << sizeHint().height() << height();
-
     QPainter painter(this);
-
     painter.setFont(font);
+    QSize size = sizeHint();
 
     if (!isError) {
-        QRect textRect(0, 0, sizeHint().width(), sizeHint().height());
+        QRect textRect(0, 0, size.width(), size.height());
         painter.drawText(textRect, Qt::AlignHCenter | Qt::AlignVCenter, text);
-        painter.drawLine(QPointF(0, 10), QPointF(sizeHint().width(), 10));
+//        painter.drawLine(QPointF(0, 10), QPointF(sizeHint().width(), 10));
     } else {
 
-        const int rectW = sizeHint().width();
-        const int textax = paddingW / 2;
-        QRect textRect(textax, 0, rectW, sizeHint().height());
+        const int rectW = size.width();
+        const int textax = padding.left;
+        QRect textRect(textax, 0, rectW, size.height());
         painter.drawText(textRect, Qt::AlignLeft | Qt::AlignVCenter, text);
 
-        QSize sizeSvg(24, 24);
-        const int y = (height() - sizeSvg.height()) / 2; // add margin if needed
-        const int paddingRIcon = 10;
-        const int x = sizeHint().width() - sizeSvg.width() - paddingRIcon;
-        QPointF pointSvg(x, y);
+        const int y = (height() - sizeIcon.height()) / 2; // add margin if needed
+        const int paddingFromText = padding.rigth - 5;
+        const int x = size.width() - sizeIcon.width() - paddingFromText;
+        QPointF pointIcon(x, y);
         QSvgRenderer svgRenderer(QString(":/error.svg"));
-        svgRenderer.render(&painter, QRectF(pointSvg, sizeSvg));
+        svgRenderer.render(&painter, QRectF(pointIcon, sizeIcon));
     }
 
     painter.end();

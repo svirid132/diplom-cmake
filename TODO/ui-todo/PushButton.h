@@ -5,7 +5,6 @@
 #ifndef DIPLOM_CMAKE_PUSHBUTTON_H
 #define DIPLOM_CMAKE_PUSHBUTTON_H
 
-
 #include <QPushButton>
 
 class PushButton : public QPushButton
@@ -26,10 +25,14 @@ protected:
 private:
     QString text;
     QFont font;
-    QSize sizeSvg;
+    QSize sizeIcon;
     bool isError;
 
-    const int paddingW = 30;
+    struct Padding {
+        int left = 15;
+        int rigth = 15;
+        int width() const { return left + rigth; }
+    } padding;
 };
 
 

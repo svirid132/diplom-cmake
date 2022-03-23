@@ -24,15 +24,22 @@ WidgetMain::WidgetMain(QWidget *parent)
       secondWidget(nullptr),
       layout(new QHBoxLayout())
 {
-    layout->setSpacing(5);
-    layout->setMargin(10);
+//    layout->setSpacing(5);
+//    layout->setMargin(5);
 
     QFormLayout *layoutPanel = new QFormLayout;
     layoutPanel->setVerticalSpacing(10);
     fillLayoutPanel(layoutPanel);
-    leftPanel = new QWidget();
-    leftPanel->setLayout(layoutPanel);
-    leftPanel->setFixedWidth(190);
+
+    QWidget* panelWidget = new QWidget();
+    panelWidget->setLayout(layoutPanel);
+
+    leftPanel = new QScrollArea();
+    leftPanel->setWidgetResizable(true);
+//    leftPanel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    leftPanel->setWidget(panelWidget);
+    leftPanel->setFixedWidth(220);
+//    leftPanel->setFixedHeight(300);
 
     layout->addWidget(leftPanel);
     this->setLayout(layout);
@@ -60,19 +67,31 @@ void WidgetMain::setLabelFilename(const QString& path, bool preChange)
 {
     int positionFilename = path.lastIndexOf("/") + 1;
     if (preChange) setEnabledXMLbtn(false);
-    QString strChange = preChange ? this->preChange : "";
-    QString filename = strChange + path.mid(positionFilename);
+    QString filename = path.mid(positionFilename);
     const int wordWidth = 15;
     const int countPath = filename.size() / wordWidth;
     for (int i = 0; i < countPath; ++i) {
         filename.insert(wordWidth * (i + 1) + i, '\n');
     }
+
+    if (preChange) {
+        QFont font = labelFile->font();
+        font.setUnderline(true);
+        labelFile->setFont(font);
+    } else {
+        QFont font = labelFile->font();
+        font.setUnderline(false);
+        labelFile->setFont(font);
+    }
+
     labelFile->setStyleSheet("padding: 2px;");
     labelFile->setText(filename);
 }
 
 void WidgetMain::fillLayoutPanel(QFormLayout *const layout)
 {
+    layout->setSizeConstraint(QLayout::SetFixedSize);
+
     labelsLsh = new QLabel(strLsh);
     labelsh = new QLabel(strh);
     QDoubleSpinBox* spinBoxLsh = new QDoubleSpinBox;
@@ -83,19 +102,28 @@ void WidgetMain::fillLayoutPanel(QFormLayout *const layout)
     layout->addRow(labelsh, spinBoxh);
     connect(spinBoxLsh, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [=](double value) {
         middleResult.Lsh = float(value);
-        if (middleResult.Lsh == successResult.Lsh) {
-            labelsLsh->setText(strLsh);
+        if (middleResult.Lsh != successResult.Lsh) {
+            QFont f = labelsLsh->font();
+            f.setUnderline(true);
+            labelsLsh->setFont(f);
         } else {
-            labelsLsh->setText(preChange + strLsh);
+            QFont font = labelsLsh->font();
+            font.setUnderline(false);
+            labelsLsh->setFont(font);
         }
+
         updateEnabledXMLbtn();
     });
     connect(spinBoxh, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [=](double value) {
         middleResult.h = float(value);
-        if (middleResult.h == successResult.h) {
-            labelsh->setText(strh);
+        if (middleResult.h != successResult.h) {
+            QFont f = labelsLsh->font();
+            f.setUnderline(true);
+            labelsh->setFont(f);
         } else {
-            labelsh->setText(preChange + strh);
+            QFont font = labelFile->font();
+            font.setUnderline(false);
+            labelsh->setFont(font);
         }
         updateEnabledXMLbtn();
     });
@@ -103,27 +131,39 @@ void WidgetMain::fillLayoutPanel(QFormLayout *const layout)
     QPushButton* selectButton = new QPushButton("Обзор");
     selectButton->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum));
     connect(selectButton, &QPushButton::clicked, this, &WidgetMain::openFile);
-    labelFile = new QLabel();
+
+    labelFile = new QLabel("");
+    QFont font = labelFile->font();
+    font.setUnderline(true);
+    labelFile->setFont(font);
+
     labelFile->setSizePolicy(QSizePolicy(QSizePolicy::Ignored, QSizePolicy::Minimum));
     QVBoxLayout* vertical = new QVBoxLayout();
     vertical->addWidget(labelFile);
     vertical->addWidget(selectButton);
+    vertical->setSpacing(10);
     QGroupBox* groupBox = new QGroupBox(this);
     groupBox->setTitle("Выбор файла");
     groupBox->setLayout(vertical);
     layout->addRow(groupBox);
+    groupBox->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
-    labelPeriod = new QLabel(strPeriod + skip);
+    labelPeriod = new QLabel(strPeriod);
     spinBoxPeriod = new QSpinBox;
     spinBoxPeriod->setMinimum(1);
     connect(spinBoxPeriod, QOverload<int>::of(&QSpinBox::valueChanged), this, [=](int num){
         spinBoxPeriod->setStyleSheet("");
         middleResult.period = num;
-        if (middleResult.period == successResult.period) {
-            labelPeriod->setText(strPeriod + skip);
+        if (middleResult.period != successResult.period) {
+            QFont f = labelsLsh->font();
+            f.setUnderline(true);
+            labelPeriod->setFont(f);
         } else {
-            labelPeriod->setText(preChange + strPeriod);
+            QFont font = labelFile->font();
+            font.setUnderline(false);
+            labelPeriod->setFont(font);
         }
+
         updateEnabledXMLbtn();
     });
     layout->addRow(labelPeriod, spinBoxPeriod);
@@ -203,7 +243,7 @@ void WidgetMain::successChange() {
     labelsLsh->setText(strLsh);
     labelsh->setText(strh);
     setLabelFilename(filenameAPI, false);
-    labelPeriod->setText(strPeriod + skip);
+    labelPeriod->setText(strPeriod);
 
     setEnabledXMLbtn(true);
 }

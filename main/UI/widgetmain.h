@@ -7,6 +7,7 @@
 #include <QFormLayout>
 #include <QPushButton>
 #include <QGroupBox>
+#include <QScrollArea>
 
 class WidgetMain : public QWidget
 {
@@ -44,16 +45,14 @@ private:
     QLabel* labelKoefZap;
     QPushButton* XMLbtn;
     QWidget* secondWidget;
-    QWidget* leftPanel;
+    QScrollArea* leftPanel;
     QList<QWidget*> blockingWdgs;
 
     QHBoxLayout* layout;
 
-    const QString preChange = "(*) ";
     const QString strLsh = "Lsh:";
     const QString strh = "h:";
     const QString strPeriod = "Period(sec):";
-    const QString skip = "      ";
 
     //Label
     QLabel* labelsLsh;

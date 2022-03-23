@@ -1,9 +1,9 @@
 #include "preloader.h"
 
 #include <preloader/InitDialogCommission.h>
-#include <QtCore/QDir>
 #include <preloader/FileSystem.h>
 #include <preloader/InitDialogConverter.h>
+#include <preloader/initStyles.h>
 
 #include "UI/widget-xml.h"
 
@@ -14,6 +14,10 @@
 void preloader(MainWindow& window) {
     //FileSystems
     FileSystems::mkdirDirFiles();
+
+    //initStyle
+    QString styleSheet = SettingsUI::getStylesheet(":/dir-styles");
+    window.setStyleSheet(styleSheet);
 
     //share logic
     CmdChart* cmdChart = new CmdChart();

@@ -6,7 +6,7 @@ add_library(preloader
         init-widget-chart.cpp
         init-widget-main.cpp
         InitDialogCommission.cpp
-        InitDialogCommission.h preloader-var.h FileSystem.cpp FileSystem.h InitDialogConverter.cpp InitDialogConverter.h)
+        InitDialogCommission.h preloader-var.h FileSystem.cpp FileSystem.h InitDialogConverter.cpp InitDialogConverter.h initStyles.cpp initStyles.h)
 
 target_include_directories(preloader
         INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}

@@ -1,0 +1,84 @@
+* {
+	font-size: 16px;
+}
+
+/* start form */
+QPushButton, QSpinBox, QDoubleSpinBox, QLineEdit, QComboBox {
+    padding: 3px 0px;
+    background-color: white;
+    max-height: 20px;
+    min-height: 20px;
+    border: 2px solid #C4C4C4;
+    border-radius: 15px;
+}
+
+QLineEdit, QComboBox {
+    padding: 3px 6px;
+}
+/* end form */
+
+/* form: hover focus*/
+QPushButton:hover, QPushButton:focus,
+QSpinBox:focus,
+QLineEdit:hover, QLineEdit:focus,
+QDoubleSpinBox:focus {
+    border-color: #34D5EB;
+}
+
+/* start section button */
+QDoubleSpinBox::up-button, QSpinBox::up-button {
+	subcontrol-origin: border;
+    subcontrol-position: right; /* position at the top right corner */
+
+	width: 30px;
+	max-height: 30px;
+	min-height: 30px;
+	border: 2px solid #C4C4C4;
+	border-top-right-radius: 15px;
+	border-bottom-right-radius: 15px;
+}
+
+QDoubleSpinBox::down-button, QSpinBox::down-button {
+ 	subcontrol-origin: border;
+    subcontrol-position: left; /* position at the top right corner */
+
+	width: 30px;
+	max-height: 30px;
+	min-height: 30px;
+	border: 2px solid #C4C4C4;
+	border-bottom-left-radius: 15px;
+	border-top-left-radius: 15px;
+}
+
+QSpinBox::up-button:hover, QSpinBox::up-button:focus,
+ QDoubleSpinBox::up-button:hover, QDoubleSpinBox::up-button:focus{
+    border: 2px solid #34D5EB;
+}
+
+QSpinBox::down-button:hover, QSpinBox::down-button:focus,
+ QDoubleSpinBox::down-button:hover, QDoubleSpinBox::down-button:focus
+{
+    border: 2px solid #34D5EB;
+}
+
+QSpinBox::up-arrow, QDoubleSpinBox::up-arrow {
+	image: url(":/plus.svg");
+}
+
+QSpinBox::down-arrow, QDoubleSpinBox::down-arrow {
+	image: url(":/minus.svg");
+}
+
+QSpinBox::up-arrow:hover, QSpinBox::up-arrow:focus,
+  QDoubleSpinBox::up-arrow:hover, QDoubleSpinBox::up-arrow:focus
+{
+	image: url(":/plus-blue.svg");
+}
+
+QSpinBox::down-arrow:hover, QSpinBox::down-arrow:focus,
+  QDoubleSpinBox::down-arrow:hover, QDoubleSpinBox::down-arrow:focus
+{
+	image: url(":/minus-blue.svg");
+}
+
+/* end section button */

@@ -1,0 +1,31 @@
+QScrollArea {
+    border: none;
+    background-color: transparent;
+}
+
+QScrollBar:vertical {
+    border: none;
+    background-color: transparent;
+    width: 5px;
+}
+
+QScrollBar:horizontal {
+    border: none;
+    background-color:transparent;
+    height: 5px;
+}
+
+QScrollBar::add-line, QScrollBar::sub-line {
+    border: none;
+    width: 0px;
+    height: 0px;
+}
+
+QScrollBar::add-page, QScrollBar::sub-page {
+    background-color: transparent;
+}
+
+QScrollBar::handle {
+    background-color: #C4C4C4;
+    border-radius: 2px;
+}

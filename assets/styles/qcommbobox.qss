@@ -1,0 +1,14 @@
+QComboBox::drop-down {
+ 	subcontrol-origin: margin;
+	border-radius: 15px;
+	margin-right: 15px;
+}
+
+QComboBox::down-arrow  {
+	image: url(":/arrow-down.svg");
+}
+
+QComboBox QAbstractItemView {
+    border: 2px solid darkgray;
+    selection-background-color: lightgray;
+}

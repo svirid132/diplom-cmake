@@ -15,14 +15,14 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(PROJECT_SOURCES
         main.cpp
-        ../../main/file.qrc
+        ../../main/main-file.qrc
         PushButton.cpp
         PushButton.h
         mainwindow.cpp
         mainwindow.h
-        LineEdit.cpp LineEdit.h)
+        LineEdit.cpp LineEdit.h SettingsUI.cpp SettingsUI.h)
 
-#qt5_add_resources(PROJECT_SOURCES file.qrc)
+#qt5_add_resources(PROJECT_SOURCES main-file.qrc)
 
 add_executable(TODO_UI
     ${PROJECT_SOURCES}

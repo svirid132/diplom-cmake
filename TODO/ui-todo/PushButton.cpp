@@ -57,12 +57,11 @@ void PushButton::paintEvent(QPaintEvent *e) {
 
     QPainter painter(this);
     painter.setFont(font);
-    QSize size = sizeHint();
+    QSize size = QSize(width(), height());
 
     if (!isError) {
         QRect textRect(0, 0, size.width(), size.height());
         painter.drawText(textRect, Qt::AlignHCenter | Qt::AlignVCenter, text);
-//        painter.drawLine(QPointF(0, 10), QPointF(sizeHint().width(), 10));
     } else {
 
         const int rectW = size.width();

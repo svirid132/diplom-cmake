@@ -20,7 +20,7 @@ set(PROJECT_SOURCES
         PushButton.h
         mainwindow.cpp
         mainwindow.h
-        )
+        LineEdit.cpp LineEdit.h)
 
 #qt5_add_resources(PROJECT_SOURCES file.qrc)
 

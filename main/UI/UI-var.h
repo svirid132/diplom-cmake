@@ -5,6 +5,11 @@
 #include <QString>
 #include <QMetaType>
 
+enum MODE_CALC {
+    RAW,
+    XML
+};
+
 struct DataWgtXML {
     QDate date;
     QString rudnik;

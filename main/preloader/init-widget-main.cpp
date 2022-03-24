@@ -31,6 +31,9 @@ void test(MathLogic *const logic, CmdChart *const cmdChart, WidgetMain *const wi
         list << QString::number(value.countAmps);
     }
     model->setStringList(list);
+
+    widgetMain->setModeCalc(MODE_CALC::XML);
+
 }
 
 //For xml
@@ -80,6 +83,7 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
     MathLogic* logic = new MathLogic();
     WidgetMain* widgetMain = new WidgetMain();
     widgetMain->setWidget(widgetChart);
+    widgetMain->setModeCalc(MODE_CALC::RAW);
 
     NModel* listModel = new NModel();
     QWidget* widgetnJoinXML = initWidgetJoinXml(widgetXML, listModel);
@@ -88,8 +92,17 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
 
     QObject::connect(widgetMain, &WidgetMain::executeAPI, widgetMain, [=, &window](float Lsh, float h, int period, QString path) {
         try {
-            QVector<CountOverAmps> Nimp = RawFile::handleFile(path, period);
-            logic->calc(Nimp, Lsh, h);
+            QVector<CountOverAmps> Nimp;
+            switch (widgetMain->modelCalc()) {
+                case MODE_CALC::RAW:
+                   Nimp = RawFile::handleFile(path, period);
+                    logic->calc(Nimp, Lsh, h);
+                    break;
+                case MODE_CALC::XML:
+                    Nimp = logic->getNimp();
+                    logic->calc(Lsh, h);
+                    break;
+            }
 
             float koefZap = logic->getKoefZap();
             CATEGORY category = logic->getCategory();
@@ -154,6 +167,7 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
                     Nimp.append(CountOverAmps({val, -1}));
                 }
                 logic->calc(Nimp, xmlData.Lsh, xmlData.h);
+                logic->setNimp(Nimp);
 
                 float koefZap = logic->getKoefZap();
                 CATEGORY category = logic->getCategory();
@@ -168,6 +182,8 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
                     list << QString::number(value.countAmps);
                 }
                 listModel->setStringList(list);
+
+                widgetMain->setModeCalc(MODE_CALC::XML);
 
                 window.viewSuccess("Файл успешно прочитан!");
             } else {

@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include <QGroupBox>
 #include <QScrollArea>
+#include "UI-var.h"
 
 class WidgetMain : public QWidget
 {
@@ -23,6 +24,8 @@ public:
     void setEnabledPanel(bool flag);
     void successChange();
     QString openFileXml();
+    void setModeCalc(MODE_CALC mode);
+    MODE_CALC modelCalc();
 
 signals:
     void executeAPI(float Lsh, float h, int period, QString path);
@@ -51,8 +54,10 @@ private:
     QScrollArea* leftPanel;
     QList<QWidget*> blockingWdgs;
     QPushButton* selectButton;
+    QPushButton* fromXmlbtn;
 
     QHBoxLayout* layout;
+    MODE_CALC modeCalc;
 
     const QString strLsh = "Lsh:";
     const QString strh = "h:";
@@ -67,7 +72,7 @@ private:
     void setEnabledXMLbtn(bool flag);
     void setLabelFilename(const QString &path, bool preChange = true);
     void fillLayoutPanel(QFormLayout *const layout);
-    bool isChange();
+    bool isChange(MODE_CALC mode);
     void updateEnabledXMLbtn();
 };
 

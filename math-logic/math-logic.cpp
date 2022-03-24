@@ -109,3 +109,11 @@ QPointF MathLogic::calcCriticalPoint(float X1_h, float Nmax_N0){
     QPointF point = {X1_h, Nmax_N0};
     return point;
 }
+
+void MathLogic::calc(float Lsh, float h) {
+    calc(Nimp, Lsh, h);
+}
+
+void MathLogic::setNimp(const QVector<CountOverAmps> &Nimp) {
+    this->Nimp = Nimp;
+}

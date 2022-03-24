@@ -16,6 +16,7 @@
 #include <qchartview.h>
 #include "../global-var.h"
 #include "../preloader/initStyles.h"
+#include "UI-var.h"
 
 WidgetMain::WidgetMain(QWidget *parent)
     : QWidget{parent},
@@ -85,8 +86,8 @@ void WidgetMain::setLabelFilename(const QString& path, bool preChange)
         labelFile->setFont(font);
     }
 
-    selectButton->setStyleSheet("");
     labelFile->setText(filename);
+    setModeCalc(MODE_CALC::RAW);
 }
 
 void WidgetMain::fillLayoutPanel(QFormLayout *const layout)
@@ -201,7 +202,7 @@ void WidgetMain::fillLayoutPanel(QFormLayout *const layout)
         emit executeAPI(middleResult.Lsh, middleResult.h, middleResult.period, filenameAPI);
     });
 
-    QPushButton* fromXmlbtn = new QPushButton("Вычислить из XML");
+    fromXmlbtn = new QPushButton("Вычислить из XML");
     layout->addRow(fromXmlbtn);
     connect(fromXmlbtn, &QPushButton::clicked, this, [=](){
         emit fromXml();
@@ -215,15 +216,27 @@ void WidgetMain::fillLayoutPanel(QFormLayout *const layout)
     layout->addRow(XMLbtn);
 }
 
-bool WidgetMain::isChange()
+bool WidgetMain::isChange(MODE_CALC mode)
 {
-    return !(middleResult.Lsh == successResult.Lsh && middleResult.h == successResult.h
-             && middleResult.period == successResult.period);
+    bool isEdit = false;
+    switch (mode) {
+        case MODE_CALC::RAW:
+            isEdit = !(middleResult.Lsh == successResult.Lsh &&
+                       middleResult.h == successResult.h &&
+                       middleResult.period == successResult.period
+            );
+            break;
+        case MODE_CALC::XML:
+            isEdit = !(middleResult.Lsh == successResult.Lsh && middleResult.h == successResult.h);
+            break;
+    }
+
+    return isEdit;
 }
 
 void WidgetMain::updateEnabledXMLbtn()
 {
-    if (isChange()){
+    if (isChange(modelCalc())){
         setEnabledXMLbtn(false);
     } else {
         setEnabledXMLbtn(true);
@@ -292,8 +305,35 @@ void WidgetMain::setEnabledXMLbtn(bool flag)
 }
 
 void WidgetMain::setEnabledPanel(bool flag) {
-    XMLbtn->setText(flag ? "Создать XML" : "Отменить сохр. XML");
+    if (flag) {
+        XMLbtn->setText("Создать файл");
+//        XMLbtn->setStyleSheet("");
+    } else {
+//        const QString style = "background-color: #34D5EB;";
+//        XMLbtn->setStyleSheet(style);
+        XMLbtn->setText("Отменить созд. файла");
+    }
     for (auto&& wdg: blockingWdgs) {
         wdg->setEnabled(flag);
     }
+}
+
+void WidgetMain::setModeCalc(MODE_CALC mode) {
+    const QString style = "background-color: #34D5EB;";
+    switch (mode) {
+        case MODE_CALC::RAW:
+            selectButton->setStyleSheet(style);
+            fromXmlbtn->setStyleSheet("");
+            break;
+        case MODE_CALC::XML:
+            selectButton->setStyleSheet("");
+            fromXmlbtn->setStyleSheet(style);
+            labelFile->setText("");
+            break;
+    }
+    modeCalc = mode;
+}
+
+MODE_CALC WidgetMain::modelCalc() {
+    return modeCalc;
 }

@@ -16,6 +16,8 @@ public:
     MathLogic();
 
     void calc(const QVector<CountOverAmps>& Nimp, float Lsh, float h);
+    void calc(float Lsh, float h);
+    void setNimp(const QVector<CountOverAmps>& Nimp);
 
     static QVector<QPointF> getDefaultPoints(int count = 20) {
         QVector<QPointF> points;
@@ -43,6 +45,7 @@ public:
     int getNmax(){return Nmax; };
     float getNmax_N0(){ return Nmax_N0; };
     float getX1_h(){ return X1_h; };
+
 private:
     QVector<CountOverAmps> Nimp;
     QPointF criticalPoint;

@@ -143,6 +143,39 @@ WidgetMain* initWidgetMain(MainWindow& window, WidgetXML* widgetXML, WidgetChart
         }
     });
 
+    QObject::connect(widgetMain, &WidgetMain::fromXml, widgetMain, [=, &window]() {
+        QString filepath = widgetMain->openFileXml();
+        if (filepath != "") {
+            bool ok;
+            XmlData xmlData = XMLFile::read(filepath, ok);
+            if (ok) {
+                QVector<CountOverAmps> Nimp;
+                for (int val: xmlData.imps) {
+                    Nimp.append(CountOverAmps({val, -1}));
+                }
+                logic->calc(Nimp, xmlData.Lsh, xmlData.h);
+
+                float koefZap = logic->getKoefZap();
+                CATEGORY category = logic->getCategory();
+                QString categoryString = getCategoryString(category);
+                widgetMain->setKoefZapCategory(koefZap, categoryString);
+
+                cmdChart->update(logic);
+                widgetMain->successChange();
+
+                QStringList list;
+                for (auto&& value : Nimp) {
+                    list << QString::number(value.countAmps);
+                }
+                listModel->setStringList(list);
+
+                window.viewSuccess("Файл успешно прочитан!");
+            } else {
+                window.viewError("Файл не прочитан!");
+            }
+        }
+    });
+
     QObject::connect(widgetXML, &WidgetXML::createDocx, widgetXML, [=, &window]() {
 
         Docx docx;

@@ -22,9 +22,12 @@ public:
     void setWidget(QWidget* widget);
     void setEnabledPanel(bool flag);
     void successChange();
+    QString openFileXml();
+
 signals:
     void executeAPI(float Lsh, float h, int period, QString path);
     void clickedSaveXML(bool);
+    void fromXml();
 
 private slots:
     void openFile();
@@ -47,6 +50,7 @@ private:
     QWidget* secondWidget;
     QScrollArea* leftPanel;
     QList<QWidget*> blockingWdgs;
+    QPushButton* selectButton;
 
     QHBoxLayout* layout;
 

@@ -3,7 +3,7 @@
 }
 
 /* start form */
-QPushButton, QSpinBox, QDoubleSpinBox, QLineEdit, QComboBox {
+QPushButton, QSpinBox, QDoubleSpinBox, QLineEdit, QComboBox, QDateEdit, QTextEdit {
     padding: 3px 0px;
     background-color: white;
     max-height: 20px;
@@ -12,8 +12,12 @@ QPushButton, QSpinBox, QDoubleSpinBox, QLineEdit, QComboBox {
     border-radius: 15px;
 }
 
-QLineEdit, QComboBox {
-    padding: 3px 6px;
+QLineEdit, QComboBox, QPushButton {
+    padding: 3px 10px;
+}
+
+QTextEdit{
+   max-height: 1080px;
 }
 /* end form */
 
@@ -21,12 +25,14 @@ QLineEdit, QComboBox {
 QPushButton:hover, QPushButton:focus,
 QSpinBox:focus,
 QLineEdit:hover, QLineEdit:focus,
-QDoubleSpinBox:focus {
+QDoubleSpinBox:focus,
+QDateEdit:focus,
+ QTextEdit:hover, QTextEdit:focus{
     border-color: #34D5EB;
 }
 
 /* start section button */
-QDoubleSpinBox::up-button, QSpinBox::up-button {
+QDoubleSpinBox::up-button, QSpinBox::up-button, QDateEdit::up-button {
 	subcontrol-origin: border;
     subcontrol-position: right; /* position at the top right corner */
 
@@ -38,7 +44,7 @@ QDoubleSpinBox::up-button, QSpinBox::up-button {
 	border-bottom-right-radius: 15px;
 }
 
-QDoubleSpinBox::down-button, QSpinBox::down-button {
+QDoubleSpinBox::down-button, QSpinBox::down-button, QDateEdit::down-button {
  	subcontrol-origin: border;
     subcontrol-position: left; /* position at the top right corner */
 
@@ -51,32 +57,36 @@ QDoubleSpinBox::down-button, QSpinBox::down-button {
 }
 
 QSpinBox::up-button:hover, QSpinBox::up-button:focus,
- QDoubleSpinBox::up-button:hover, QDoubleSpinBox::up-button:focus{
+ QDoubleSpinBox::up-button:hover, QDoubleSpinBox::up-button:focus,
+ QDateEdit::up-button:hover, QDateEdit::up-button:focus{
     border: 2px solid #34D5EB;
 }
 
 QSpinBox::down-button:hover, QSpinBox::down-button:focus,
- QDoubleSpinBox::down-button:hover, QDoubleSpinBox::down-button:focus
+ QDoubleSpinBox::down-button:hover, QDoubleSpinBox::down-button:focus,
+ QDateEdit::down-button:hover, QDateEdit::down-button:focus
 {
     border: 2px solid #34D5EB;
 }
 
-QSpinBox::up-arrow, QDoubleSpinBox::up-arrow {
+QSpinBox::up-arrow, QDoubleSpinBox::up-arrow, QDateEdit::up-arrow {
 	image: url(":/plus.svg");
 }
 
-QSpinBox::down-arrow, QDoubleSpinBox::down-arrow {
+QSpinBox::down-arrow, QDoubleSpinBox::down-arrow, QDateEdit::down-arrow {
 	image: url(":/minus.svg");
 }
 
 QSpinBox::up-arrow:hover, QSpinBox::up-arrow:focus,
-  QDoubleSpinBox::up-arrow:hover, QDoubleSpinBox::up-arrow:focus
+  QDoubleSpinBox::up-arrow:hover, QDoubleSpinBox::up-arrow:focus,
+  QDateEdit::up-arrow:hover, QDateEdit::up-arrow:focus
 {
 	image: url(":/plus-blue.svg");
 }
 
 QSpinBox::down-arrow:hover, QSpinBox::down-arrow:focus,
-  QDoubleSpinBox::down-arrow:hover, QDoubleSpinBox::down-arrow:focus
+  QDoubleSpinBox::down-arrow:hover, QDoubleSpinBox::down-arrow:focus,
+  QDateEdit::down-arrow:hover, QDateEdit::down-arrow:focus
 {
 	image: url(":/minus-blue.svg");
 }

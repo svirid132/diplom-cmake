@@ -10,6 +10,7 @@
 #include <QPushButton>
 #include <QSpinBox>
 #include <QStringListModel>
+#include "../preloader/initStyles.h"
 
 WidgetXML::WidgetXML(QWidget *parent) : QWidget(parent)
 {
@@ -17,6 +18,7 @@ WidgetXML::WidgetXML(QWidget *parent) : QWidget(parent)
 
     this->date = QDate::currentDate();
     QDateEdit* dateEdit = new QDateEdit(QDate::currentDate());
+    SettingsUI::dateTimeEdit(dateEdit);
     connect(dateEdit, &QDateEdit::userDateChanged, dateEdit, [=](const QDate &date) {
         this->date = date;
     });
@@ -53,6 +55,7 @@ WidgetXML::WidgetXML(QWidget *parent) : QWidget(parent)
     const int decimals = 1;
     this->XX = 0;
     QDoubleSpinBox* XXEdit = new QDoubleSpinBox();
+    SettingsUI::doubleSpinBox(XXEdit);
     XXEdit->setMaximum(max);
     XXEdit->setMinimum(min);
     XXEdit->setDecimals(decimals);
@@ -63,6 +66,7 @@ WidgetXML::WidgetXML(QWidget *parent) : QWidget(parent)
 
     this->YY = 0;
     QDoubleSpinBox* YYEdit = new QDoubleSpinBox();
+    SettingsUI::doubleSpinBox(YYEdit);
     YYEdit->setMaximum(max);
     YYEdit->setMinimum(min);
     YYEdit->setDecimals(decimals);
@@ -73,9 +77,10 @@ WidgetXML::WidgetXML(QWidget *parent) : QWidget(parent)
 
     this->ZZ = 0;
     QDoubleSpinBox* ZZEdit = new QDoubleSpinBox();
+    SettingsUI::doubleSpinBox(ZZEdit);
     ZZEdit->setDecimals(decimals);
-    ZZEdit->setMaximum(min);
-    ZZEdit->setMinimum(decimals);
+    ZZEdit->setMaximum(max);
+    ZZEdit->setMinimum(min);
     formLayout->addRow(new QLabel("ZZ:"), ZZEdit);
     connect(ZZEdit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), ZZEdit, [=](double num) {
         this->ZZ = num;
@@ -110,22 +115,24 @@ WidgetXML::WidgetXML(QWidget *parent) : QWidget(parent)
         if(ok) emit this->createDocx();
     });
 
+//    formLayout->setAlignment(Qt::AlignJustify);
+//    formLayout->setRowWrapPolicy(QFormLayout::WrapLongRows);
     btnCommission = new QPushButton("Состав Коммисии");
     connect(btnCommission, &QPushButton::clicked, [=]() {
         btnCommission->setStyleSheet("");
         emit this->clickedCommission();
     });
-    btnCommission->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum);
-    btnCommission->setFixedWidth(lengthLabelWidth);
+    btnCommission->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Maximum);
     formLayout->addRow(btnCommission, btnDocx);
+//    formLayout->setFieldGrowthPolicy(QFormLayout::FieldsStayAtSizeHint);
 
-    QPushButton* btnConverter = new QPushButton("Конвер. XML в DOCX");
-    connect(btnConverter, &QPushButton::clicked, this, &WidgetXML::clickedXmlToDocx);
-    formLayout->addWidget(btnConverter);
+//    QPushButton* btnConverter = new QPushButton("Конвер. XML в DOCX");
+//    connect(btnConverter, &QPushButton::clicked, this, &WidgetXML::clickedXmlToDocx);
+//    formLayout->addWidget(btnConverter);
 
 
     this->setLayout(formLayout);
-    this->setFixedWidth(310);
+    this->setFixedWidth(350);
 }
 
 DataWgtXML WidgetXML::getData()

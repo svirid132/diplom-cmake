@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QXmlStreamWriter>
+#include <QtCore/QDate>
 
 void XMLFile::write(QString path, const QList<QPair<QString, QString>>& tag_texts)
 {
@@ -38,4 +39,72 @@ void XMLFile::write(QString path, const QList<QPair<QString, QString>>& tag_text
 XMLFile::XMLFile()
 {
 
+}
+
+XmlData XMLFile::read(const QString &path, bool& ok) {
+
+    ok = false;
+
+    QFile xmlFile(path);
+    if (!xmlFile.open(QIODevice::ReadOnly)) {
+        return XmlData();
+    }
+
+    XmlData xmlData;
+
+    QXmlStreamReader xml;
+    xml.setDevice(&xmlFile);
+    QList<int> imps;
+    float Lsh;
+    while(!xml.atEnd()) {
+        xml.readNext();
+        if (xml.isStartElement()) {
+            QString tag = xml.name().toString();
+            xml.readNext();
+            QString text = xml.text().toString();
+            if (tag == "Date") {
+                QDate date = QDate::fromString(text, "yyyy-MM-dd");
+                xmlData.product = date.toString("dd.MM.yyyy");
+            } else if(tag == "Rudnik") {
+                xmlData.rudnik = text;
+            } else if (tag == "N") {
+                imps.append(QString(text).toInt());
+            } else if(tag == "X1") {
+                xmlData.Xm = QString(text).toFloat();
+            } else if (tag == "Lsh") {
+                Lsh = QString(text).toFloat();
+                xmlData.Lsh = Lsh;
+            } else if (tag == "h") {
+                xmlData.h = QString(text).toFloat();
+            } else if (tag == "N0") {
+                xmlData.N0 = QString(text).toInt();
+            } else if (tag == "Nmax") {
+                xmlData.Nmax = QString(text).toInt();
+            } else if (tag == "Nzam") {
+
+            } else if (tag == "Nmax_N0") {
+            } else if (tag == "X1_h") {
+            } else if (tag == "koefZap") {
+                xmlData.koefZap = QString(text).toFloat();
+            } else if(tag == "Kategor") {
+                xmlData.category = text;
+            } else if (tag == "XX") {
+                xmlData.X = QString(text).toFloat();
+            } else if(tag == "YY") {
+                xmlData.Y = QString(text).toFloat();
+            } else if(tag == "ZZ") {
+                xmlData.Z = QString(text).toFloat();
+            } else if (tag == "NameVirab") {
+                xmlData.product = QString(text);
+            } else if (tag == "IzmVip") {
+                xmlData.person = QString(text);
+            }
+        }
+    }
+
+    xmlData.imps = imps;
+    if(xmlData.N0 != -1) ok = true;
+
+
+    return xmlData;
 }

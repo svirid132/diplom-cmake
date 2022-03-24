@@ -15,6 +15,7 @@
 #include <qchartview.h>
 #include <qchartview.h>
 #include "../global-var.h"
+#include "../preloader/initStyles.h"
 
 WidgetMain::WidgetMain(QWidget *parent)
     : QWidget{parent},
@@ -47,7 +48,7 @@ WidgetMain::WidgetMain(QWidget *parent)
 
 void WidgetMain::errorFile()
 {
-    labelFile->setStyleSheet("background-color: red; padding: 2px;");
+    selectButton->setStyleSheet("background-color: red;");
 }
 
 void WidgetMain::errorPeriod()
@@ -84,7 +85,7 @@ void WidgetMain::setLabelFilename(const QString& path, bool preChange)
         labelFile->setFont(font);
     }
 
-    labelFile->setStyleSheet("padding: 2px;");
+    selectButton->setStyleSheet("");
     labelFile->setText(filename);
 }
 
@@ -96,10 +97,23 @@ void WidgetMain::fillLayoutPanel(QFormLayout *const layout)
     labelsh = new QLabel(strh);
     QDoubleSpinBox* spinBoxLsh = new QDoubleSpinBox;
     QDoubleSpinBox* spinBoxh = new QDoubleSpinBox;
+    SettingsUI::doubleSpinBox(spinBoxLsh);
+    SettingsUI::doubleSpinBox(spinBoxh);
     spinBoxLsh->setMinimum(1);
     spinBoxh->setMinimum(1);
-    layout->addRow(labelsLsh, spinBoxLsh);
-    layout->addRow(labelsh, spinBoxh);
+
+    QFormLayout* formLayout = new QFormLayout();
+    formLayout->setMargin(0);
+    formLayout->setSpacing(10);
+    formLayout->setHorizontalSpacing(40);
+    formLayout->addRow(labelsLsh, spinBoxLsh);
+    formLayout->addRow(labelsh, spinBoxh);
+    QWidget* formWid = new QWidget();
+    formWid->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Maximum);
+    formWid->setLayout(formLayout);
+    layout->addRow(formWid);
+    layout->addItem(new QSpacerItem(0, 3));
+
     connect(spinBoxLsh, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [=](double value) {
         middleResult.Lsh = float(value);
         if (middleResult.Lsh != successResult.Lsh) {
@@ -128,22 +142,19 @@ void WidgetMain::fillLayoutPanel(QFormLayout *const layout)
         updateEnabledXMLbtn();
     });
 
-    QPushButton* selectButton = new QPushButton("Обзор");
+    selectButton = new QPushButton("Обзор");
     selectButton->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum));
     connect(selectButton, &QPushButton::clicked, this, &WidgetMain::openFile);
 
     labelFile = new QLabel("");
-    QFont font = labelFile->font();
-    font.setUnderline(true);
-    labelFile->setFont(font);
-
+    labelFile->setStyleSheet("padding: 2px;");
     labelFile->setSizePolicy(QSizePolicy(QSizePolicy::Ignored, QSizePolicy::Minimum));
     QVBoxLayout* vertical = new QVBoxLayout();
     vertical->addWidget(labelFile);
     vertical->addWidget(selectButton);
     vertical->setSpacing(10);
     QGroupBox* groupBox = new QGroupBox(this);
-    groupBox->setTitle("Выбор файла");
+    groupBox->setTitle("Выбор raw файла");
     groupBox->setLayout(vertical);
     layout->addRow(groupBox);
     groupBox->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
@@ -151,6 +162,7 @@ void WidgetMain::fillLayoutPanel(QFormLayout *const layout)
     labelPeriod = new QLabel(strPeriod);
     spinBoxPeriod = new QSpinBox;
     spinBoxPeriod->setMinimum(1);
+    SettingsUI::spinBox(spinBoxPeriod);
     connect(spinBoxPeriod, QOverload<int>::of(&QSpinBox::valueChanged), this, [=](int num){
         spinBoxPeriod->setStyleSheet("");
         middleResult.period = num;
@@ -182,15 +194,22 @@ void WidgetMain::fillLayoutPanel(QFormLayout *const layout)
 
     layout->addItem(new QSpacerItem(0, 5));
 
-    QPushButton* executeButton = new QPushButton("Выполнить");
+
+    QPushButton* executeButton = new QPushButton("Вычислить");
     layout->addRow(executeButton);
     connect(executeButton, &QPushButton::clicked, this, [=](){
         emit executeAPI(middleResult.Lsh, middleResult.h, middleResult.period, filenameAPI);
     });
 
-    blockingWdgs << spinBoxLsh << spinBoxh << groupBox << spinBoxPeriod << executeButton;
+    QPushButton* fromXmlbtn = new QPushButton("Вычислить из XML");
+    layout->addRow(fromXmlbtn);
+    connect(fromXmlbtn, &QPushButton::clicked, this, [=](){
+        emit fromXml();
+    });
 
-    XMLbtn = new QPushButton("Создать XML");
+    blockingWdgs << spinBoxLsh << spinBoxh << groupBox << spinBoxPeriod << executeButton << fromXmlbtn;
+
+    XMLbtn = new QPushButton("Создать файл");
     connect(XMLbtn, QOverload<bool>::of(&QPushButton::clicked), this, &WidgetMain::clickedSaveXML);
     XMLbtn->setCheckable(true);
     layout->addRow(XMLbtn);
@@ -227,6 +246,25 @@ void WidgetMain::openFile()
         filenameAPI = dialog.selectedFiles().at(0);
         setLabelFilename(filenameAPI);
     }
+}
+
+QString WidgetMain::openFileXml() {
+    QFileDialog dialog;
+    const QString filter = "xml files (*.xml)";
+    dialog.setNameFilter(filter);
+    int width = 500;
+    int height = 400;
+    dialog.setGeometry(
+            WIDTH_SCREEN / 2 - width / 2,
+            HEIGHT_SCREEN / 2 - height / 2,
+            width,
+            height);
+    if (dialog.exec() == QDialog::Accepted) { // accept = 1
+        QString filename = dialog.selectedFiles().at(0);
+        return filename;
+    }
+
+    return "";
 }
 
 void WidgetMain::setWidget(QWidget* widget) {

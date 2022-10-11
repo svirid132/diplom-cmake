@@ -5,7 +5,7 @@
 #include <QDebug>
 #include <QtCore/QProcess>
 #include <QtCore/QCoreApplication>
-#include <windows.h>
+//#include <windows.h>
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
 #include <docx.h>

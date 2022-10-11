@@ -5,6 +5,7 @@
 #include <QtCore/QDebug>
 #include <QtCore/QSettings>
 #include "InitDialogCommission.h"
+#include "../global-var.h"
 
 std::function<DataCommission(const DialogParam& param, const DataCommission& data, bool& ok)> initDialogCommission(MainWindow& window){
     const QString organization = "settings";
@@ -33,6 +34,14 @@ std::function<DataCommission(const DialogParam& param, const DataCommission& dat
     return [=](const DialogParam& param, const DataCommission& data, bool& ok) {
         DialogCommission dialog(param.mainWidget);
         dialog.setDataCommission(data);
+        const int width = dialog.width();
+        const int height = dialog.height();
+        dialog.setGeometry(
+                WIDTH_SCREEN / 2 - width / 2,
+                HEIGHT_SCREEN / 2 - height / 2,
+                width,
+                height);
+        dialog.saveGeometry();
         dialog.show();
         dialog.exec();
         dialog.result() == 1 ? ok = true : ok = false;

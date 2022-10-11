@@ -18,6 +18,7 @@ WidgetXML::WidgetXML(QWidget *parent) : QWidget(parent)
 
     this->date = QDate::currentDate();
     QDateEdit* dateEdit = new QDateEdit(QDate::currentDate());
+//    dateEdit->setObjectName("date");
     SettingsUI::dateTimeEdit(dateEdit);
     connect(dateEdit, &QDateEdit::userDateChanged, dateEdit, [=](const QDate &date) {
         this->date = date;
@@ -132,7 +133,7 @@ WidgetXML::WidgetXML(QWidget *parent) : QWidget(parent)
 
 
     this->setLayout(formLayout);
-    this->setFixedWidth(350);
+    this->setFixedWidth(390);
 }
 
 DataWgtXML WidgetXML::getData()

@@ -40,7 +40,7 @@ WidgetMain::WidgetMain(QWidget *parent)
     leftPanel->setWidgetResizable(true);
 //    leftPanel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     leftPanel->setWidget(panelWidget);
-    leftPanel->setFixedWidth(220);
+    leftPanel->setFixedWidth(234);
 //    leftPanel->setFixedHeight(300);
 
     layout->addWidget(leftPanel);

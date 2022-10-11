@@ -8,6 +8,7 @@ QPushButton, QSpinBox, QDoubleSpinBox, QLineEdit, QComboBox, QDateEdit, QTextEdi
     background-color: white;
     max-height: 20px;
     min-height: 20px;
+    min-width: 50px;
     border: 2px solid #C4C4C4;
     border-radius: 15px;
 }
